@@ -11,3 +11,7 @@ https://www.youtube.com/watch?v=-X47BJ3H0Lw&t=301s
 https://www.youtube.com/shorts/SyPh3-RGnRM
 ```
 
+## Books and Articles
+
+- Левантовский В.И. Механика космического полета в элементарном изложении
+	- http://alexandr4784.narod.ru/lewantov.htm
