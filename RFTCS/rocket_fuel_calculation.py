@@ -16,23 +16,51 @@ GO = 9.81
 K = 400
 
 
-def _format_func(num: int) -> str:
-	return f"Сумма всех скоростей = {str(num)} км/с"
+def _format_func(num: float) -> str:
+	return f"Сумма всех скоростей = {str(num)} м/с"
 
 # Функция нахождения натурального логарифма
-def _natural_logarithm(Mf: int, Me: int) -> float:
+def _natural_logarithm(Mf: float, Me: float) -> float:
 	num = Mf / Me
-	yield log(num)
+	return np.log(num)
 
 # Сумма всех скоростей
-def total_speed(Isp: int, Mf: int, Me: int):
+def total_speed(Isp: float, Mf: float, Me: float):
 	natural_log = _natural_logarithm(Mf, Me)
-	print(type(natural_log))
 	delta_V = Isp * GO * natural_log
-	return type(delta_V)
+	return delta_V
 
+
+def _euler(delta_V: float, Isp: float) -> float:
+	return np.exp(delta_V/(Isp*GO))
+
+# Функция для расчета топлива
+def total_oil(Isp: float, delta_V: float, Me: float) -> float:
+	e = _euler(delta_V, Isp)
+	Mp = Me * (e - 1)
+	return Mp
+
+
+# Функция расчета массы конструкции ракеты
+def massa_construction_rocket(Mp: float) -> float:
+	Mk = Mp / K
+	return Mk
+
+
+def main(Isp: float, Mf: float, Me: float) -> float:
+	delta_V = total_speed(Isp, Mf, Me)
+	Mp = total_oil(Isp, delta_V, Me)
+	Mk = massa_construction_rocket(Mp)
+	return Mk
 
 
 if __name__ == "__main__":
-	res = total_speed(280, 579, 524)
+	res = main(420000.0, 5790000.0, 524.0)
 	print(res)
+# Для: 4200.0, 579.0, 524.0
+# Сумма всех скоростей = 4112.404303566974 км/с
+# Сумма массы = 55.0
+# Масса топлива ракеты = 0.13750000000000012
+
+# Для: 420000.0, 5790000.0, 524.0
+# Масса топлива ракеты = 14473.690000000008
