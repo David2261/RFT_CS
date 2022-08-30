@@ -6,18 +6,17 @@
 	- 
 """
 from typing import NamedTuple
-
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+
+from format import RocketFormat
+
 
 # Константы
 GO = 9.81
 K = 400
 
-
-def _format_func(num: float) -> str:
-	return f"Сумма всех скоростей = {str(num)} м/с"
 
 # Функция нахождения натурального логарифма
 def _natural_logarithm(Mf: float, Me: float) -> float:
@@ -27,12 +26,15 @@ def _natural_logarithm(Mf: float, Me: float) -> float:
 # Сумма всех скоростей
 def total_speed(Isp: float, Mf: float, Me: float):
 	natural_log = _natural_logarithm(Mf, Me)
+	print(RocketFormat._rocket_natural_logarithm(natural_log))
+
 	delta_V = Isp * GO * natural_log
 	return delta_V
 
 
 def _euler(delta_V: float, Isp: float) -> float:
 	return np.exp(delta_V/(Isp*GO))
+
 
 # Функция для расчета топлива
 def total_oil(Isp: float, delta_V: float, Me: float) -> float:
@@ -49,6 +51,8 @@ def massa_construction_rocket(Mp: float) -> float:
 
 def main(Isp: float, Mf: float, Me: float) -> float:
 	delta_V = total_speed(Isp, Mf, Me)
+	print(RocketFormat._rocket_total_speed(delta_V))
+
 	Mp = total_oil(Isp, delta_V, Me)
 	Mk = massa_construction_rocket(Mp)
 	return Mk
@@ -56,7 +60,8 @@ def main(Isp: float, Mf: float, Me: float) -> float:
 
 if __name__ == "__main__":
 	res = main(420000.0, 5790000.0, 524.0)
-	print(res)
+
+	print(RocketFormat._rocket_total_oil(res))
 # Для: 4200.0, 579.0, 524.0
 # Сумма всех скоростей = 4112.404303566974 км/с
 # Сумма массы = 55.0
