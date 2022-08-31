@@ -21,3 +21,15 @@ class FlightFormat:
 	def _flight_resistance_force(num: float) -> str:
 		return f"Сила сопротивления = {num} м/с^2"
 
+
+# Функция для вывода результатов, той или иной функции
+def main_rocket_format(num: float, idea: int) -> str:
+	if idea == 1:
+		return RocketFormat._rocket_total_speed(num)
+	elif idea == 2:
+		return RocketFormat._rocket_natural_logarithm(num)
+	elif idea == 3:
+		return RocketFormat._rocket_massa_construction(num)
+	else:
+		return RocketFormat._rocket_total_oil(num)
+

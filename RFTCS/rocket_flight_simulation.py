@@ -1,3 +1,6 @@
+"""
+Файл для численного моделирования траектории полета ракеты
+"""
 from rocket_fuel_calculation import total_speed
 from format import FlightFormat
 
