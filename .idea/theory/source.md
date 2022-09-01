@@ -15,3 +15,5 @@ https://www.youtube.com/shorts/SyPh3-RGnRM
 
 - Левантовский В.И. Механика космического полета в элементарном изложении
 	- http://alexandr4784.narod.ru/lewantov.htm
+- Использование формулы Циолковского при проектировании ракет
+	- http://spaceracexx.narod.ru/index2c.html
