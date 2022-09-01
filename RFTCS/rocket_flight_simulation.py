@@ -4,11 +4,9 @@
 from rocket_fuel_calculation import total_speed
 from format import FlightFormat
 
-# плотность воздуха, кг/м^3
-AD = 1
 # молярная масса, кг/моль
 MM = 0.029
-# температура, K
+# Температура, K
 T = 300
 # Ускорение свободного падения
 GO = 9.81
