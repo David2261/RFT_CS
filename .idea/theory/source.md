@@ -17,3 +17,8 @@ https://www.youtube.com/shorts/SyPh3-RGnRM
 	- http://alexandr4784.narod.ru/lewantov.htm
 - Использование формулы Циолковского при проектировании ракет
 	- http://spaceracexx.narod.ru/index2c.html
+- Движение тел в среде с сопротивлением
+	- https://online.mephi.ru/courses/physics/osnovi_mehaniki/data/lecture/9/p4.html
+- Сила сопротивления воздуха
+	- https://studref.com/350928/tehnika/sila_soprotivleniya_vozduha#146
+

@@ -21,6 +21,9 @@ class FlightFormat:
 	def _flight_resistance_force(num: float) -> str:
 		return f"Сила сопротивления = {num} м/с^2"
 
+	def _flight_resistance_force_env(num: float) -> str:
+		return f"Сила сопротивления среды = {num} м/с^2"
+
 
 # Функция для вывода результатов, той или иной функции
 def main_rocket_format(num: float, idea: int) -> str:
