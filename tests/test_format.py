@@ -37,13 +37,13 @@ class TestFlightFormat(unittest.TestCase):
 	def setUp(self):
 		self.fight_format = FlightFormat()
 
-	def test_flight_resistance_force(unittest.TestCase):
+	def test_flight_resistance_force(self):
 		self.assertEqual(
 				self.fight_format._flight_resistance_force(65.2),
 				"Сила сопротивления = 65.2 м/с^2"
 				)
 
-	def test_flight_resistance_force_env(unittest.TestCase):
+	def test_flight_resistance_force_env(self):
 		self.assertEqual(
 				self.fight_format._flight_resistance_force_env(43.6),
 				"Сила сопротивления среды = 43.6 м/с^2"
@@ -52,4 +52,3 @@ class TestFlightFormat(unittest.TestCase):
 
 if __name__ == "__main__":
 	unittest.main()
-

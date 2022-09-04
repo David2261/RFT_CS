@@ -25,6 +25,7 @@ def _body_area(height: float, width: float) -> float:
 	total = height * width
 	return total
 
+
 # Функция расчета силы сопротивления
 def resistance_force(height: float, width: float) -> float:
 	area = _body_area(height, width)
@@ -37,6 +38,7 @@ def resistance_force(height: float, width: float) -> float:
 def frontal_area(w: float, h: float) -> float:
 	return CRFf * w * h
 
+
 # Функция расчета сопротивления среды
 def resistance_force_env(h: float, w: float, delta_V: float) -> float:
 	Mrf = 0.5 * CRFf * RHO_A * (delta_V**2) * frontal_area(w, h)
@@ -48,10 +50,12 @@ def gravity_losses(gamma: float) -> float:
 	Vg = GO * cos(gamma)
 	return Vg
 
+
 # Функция Аэродинамические потери
 def aerodynamic_loses(A: float, m: float) -> float:
 	Va = A / m
 	return Va
+
 
 # Функция потери скорости на управление
 def loss_speed_on_control(F: float, m: float, alpha: float) -> float:

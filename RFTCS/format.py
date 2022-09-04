@@ -35,4 +35,3 @@ def main_rocket_format(num: float, idea: int) -> str:
 		return RocketFormat._rocket_massa_construction(num)
 	else:
 		return RocketFormat._rocket_total_oil(num)
-
