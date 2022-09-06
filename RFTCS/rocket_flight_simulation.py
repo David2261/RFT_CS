@@ -1,6 +1,8 @@
 """
 Файл для численного моделирования траектории полета ракеты
 """
+import numpy as np
+
 from rocket_fuel_calculation import total_speed
 from format import FlightFormat
 
@@ -15,7 +17,7 @@ RHO = 16900
 # Коэфициент формы
 Cf = 1.2
 # Плотность воздуха, кг/м^3
-RHO_A = 1.27
+RHO_A = 1.2754
 # Коэффициент лобового сопротивления
 CRFf = 0.14
 
@@ -39,15 +41,21 @@ def frontal_area(w: float, h: float) -> float:
 	return CRFf * w * h
 
 
+# k - Сопротивление среды
+def environmental_resistance(rocket_form: float) -> float:
+	er = 0.5 * RHO_A * CRFf * rocket_form
+	return er
+
+
 # Функция расчета сопротивления среды
-def resistance_force_env(h: float, w: float, delta_V: float) -> float:
-	Mrf = 0.5 * CRFf * RHO_A * (delta_V**2) * frontal_area(w, h)
+def resistance_force_env(h: float, w: float, speed: float) -> float:
+	Mrf = environmental_resistance(frontal_area(w, h)) * (speed ** 2)
 	return Mrf
 
 
 # Функция расчета гравитационных потерь
 def gravity_losses(gamma: float) -> float:
-	Vg = GO * cos(gamma)
+	Vg = GO * np.cos(gamma)
 	return Vg
 
 
@@ -59,7 +67,7 @@ def aerodynamic_loses(A: float, m: float) -> float:
 
 # Функция потери скорости на управление
 def loss_speed_on_control(F: float, m: float, alpha: float) -> float:
-	Vu = (F / m) * (1 - cos(alpha))
+	Vu = (F / m) * (1 - np.cos(alpha))
 	return Vu
 
 
