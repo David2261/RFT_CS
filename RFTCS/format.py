@@ -19,10 +19,10 @@ class RocketFormat:
 
 class FlightFormat:
 	def _flight_resistance_force(num: float) -> str:
-		return f"Сила сопротивления = {num} м/с^2"
+		return f"Сила сопротивления = {str(num)} м/с^2"
 
 	def _flight_resistance_force_env(num: float) -> str:
-		return f"Сила сопротивления среды = {num} м/с^2"
+		return f"Сила сопротивления среды = {str(num)} м/с^2"
 
 
 # Функция для вывода результатов, той или иной функции
@@ -35,4 +35,3 @@ def main_rocket_format(num: float, idea: int) -> str:
 		return RocketFormat._rocket_massa_construction(num)
 	else:
 		return RocketFormat._rocket_total_oil(num)
-

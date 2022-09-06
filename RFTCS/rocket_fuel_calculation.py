@@ -4,10 +4,9 @@
 	- Сумма всех скоростей [V = l_(sp) * g_(o) * ln(Mf/Me)]
 	- Масса конструкции ракеты [Mk = Mp/k]
 """
-from typing import NamedTuple
 import numpy as np
-import matplotlib as mpl
-import matplotlib.pyplot as plt
+# import matplotlib as mpl
+# import matplotlib.pyplot as plt
 
 from format import main_rocket_format
 
@@ -27,7 +26,7 @@ def natural_logarithm(Mf: float, Me: float) -> float:
 
 # Функция расчет с помощью Эйлерова числа E
 def euler(delta_V: float, Isp: float) -> float:
-	return np.exp(delta_V/(Isp*GO))
+	return np.exp(delta_V / (Isp * GO))
 
 
 # Сумма всех скоростей
@@ -70,4 +69,3 @@ if __name__ == "__main__":
 # Скорость = 2500 м/с
 # Масса ксенона = ?
 # Сумма всего топлива = 32.77897645413678 кг
-

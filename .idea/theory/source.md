@@ -21,4 +21,6 @@ https://www.youtube.com/shorts/SyPh3-RGnRM
 	- https://online.mephi.ru/courses/physics/osnovi_mehaniki/data/lecture/9/p4.html
 - Сила сопротивления воздуха
 	- https://studref.com/350928/tehnika/sila_soprotivleniya_vozduha#146
+- Полет баллистической ракеты
+	- https://portal.tpu.ru/SHARED/s/SKEA/uchebnaya/miiafe/miiafe_zad/polet_balistich_rakety.pdf
 
