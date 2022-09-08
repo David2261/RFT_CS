@@ -1,3 +1,8 @@
+import os, sys
+
+path = os.path.join(os.getcwd(), '../RFTCS/')
+sys.path.append(path)
+
 import unittest
 
 from test_main import *
