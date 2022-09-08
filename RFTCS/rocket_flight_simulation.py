@@ -60,7 +60,7 @@ def gravity_losses(gamma: float) -> float:
 
 
 # Функция Аэродинамические потери
-def aerodynamic_loses(A: float, m: float) -> float:
+def aerodynamic_losses(A: float, m: float) -> float:
 	Va = A / m
 	return Va
 
