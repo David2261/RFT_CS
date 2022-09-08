@@ -8,6 +8,7 @@ path = os.path.join(os.getcwd(), '../RFTCS/')
 sys.path.append(path)
 
 import pytest
+import numpy as np
 
 from rocket_landing_calculation import (
 	calculation_rocket_movement,
@@ -117,3 +118,106 @@ class TestVSError:
 	def test_vector_speed_less_args(self):
 		with pytest.raises(TypeError):
 			vector_speed(self.radius)
+
+
+@pytest.mark.rfd
+class TestRFD:
+	"""Тест rocket_flight_description"""
+	data = data_rlc()
+	speed = data[0]
+	resistance = data[1]
+	vs = vector_speed(data[2], data[3])
+	mass = data[4]
+	teta = data[5]
+
+	def test_rocket_flight_description(self):
+		y = self.speed * np.sin(self.teta)
+		x = self.speed * np.cos(self.teta)
+		numerator = 1 * 2 / 3 - self.resistance
+		rocket_speed = numerator / self.mass - (self.vs * np.sin(self.teta))
+		main_teta = - (self.vs * (np.cos(self.teta) / self.speed))
+
+		test_result = [rocket_speed, main_teta, y, x]
+		result = rocket_flight_description(
+				self.teta,
+				self.speed,
+				self.mass,
+				self.resistance,
+				self.vs)
+		assert result == test_result
+
+	def test_rocket_flight_description_isinstance(self):
+		result = result = rocket_flight_description(
+				self.teta,
+				self.speed,
+				self.mass,
+				self.resistance,
+				self.vs)
+		assert isinstance(result, (list))
+
+	def test_rocket_flight_description_isinstance_objects(self):
+		result = rocket_flight_description(
+				self.teta,
+				self.speed,
+				self.mass,
+				self.resistance,
+				self.vs)
+		obj_1 = isinstance(result[0], (float))
+		obj_2 = isinstance(result[1], (float))
+		obj_3 = isinstance(result[2], (float))
+		obj_4 = isinstance(result[3], (float))
+		assert obj_1 and obj_2 and obj_3 and obj_4
+
+	def test_rocket_flight_description_less(self):
+		result = rocket_flight_description(
+				self.teta,
+				self.speed,
+				self.mass,
+				self.resistance,
+				self.vs)
+		y = self.speed * np.sin(self.teta)
+		x = self.speed * np.cos(self.teta)
+		numerator = 1 * 2 / 3 - self.resistance
+		rocket_speed = numerator / self.mass - (self.vs * np.sin(self.teta))
+		main_teta = - (self.vs * (np.cos(self.teta) / self.speed)) + 1
+		test_result = [rocket_speed, main_teta, y, x]
+		assert result <= test_result
+
+
+@pytest.mark.rfd
+@pytest.mark.exception
+class TestRFDError:
+	"""Тест rocket_flight_description с ошибкой"""
+	data = data_rlc()
+	speed = data[0]
+	resistance = data[1]
+	vs = vector_speed(data[2], data[3])
+	mass = data[4]
+	teta = data[5]
+
+	def test_rocket_flight_description_error(self):
+		with pytest.raises(TypeError):
+			rocket_flight_description(
+				'(17,',
+				self.speed,
+				self.mass,
+				self.resistance,
+				self.vs)
+
+	def test_rocket_flight_description_more_args(self):
+		with pytest.raises(TypeError):
+			rocket_flight_description(
+				self.teta,
+				self.speed,
+				self.mass,
+				self.resistance,
+				self.vs,
+				12.2)
+
+	def test_rocket_flight_description_less_args(self):
+		with pytest.raises(TypeError):
+			rocket_flight_description(
+				self.teta,
+				self.speed,
+				self.mass,
+				self.resistance)
