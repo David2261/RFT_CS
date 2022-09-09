@@ -10,6 +10,7 @@ from format import RocketFormat, FlightFormat
 
 
 class TestRocketFormat:
+	"""Тест RocketFormat"""
 	def test_rocket_total_speed(self):
 		test_result = RocketFormat._rocket_total_speed(23.3)
 		result = "Сумма всех скоростей = 23.3 м/с" 
@@ -32,7 +33,7 @@ class TestRocketFormat:
 
 
 class TestFlightFormat:
-
+	"""Тест FlightFormat"""
 	def test_flight_resistance_force(self):
 		test_result = FlightFormat._flight_resistance_force(65.2)
 		result = "Сила сопротивления = 65.2 м/с^2"
