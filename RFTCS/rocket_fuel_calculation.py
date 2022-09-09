@@ -32,8 +32,6 @@ def euler(delta_V: float, Isp: float) -> float:
 # Сумма всех скоростей
 def total_speed(Isp: float, Mf: float, Me: float):
 	natural_log = natural_logarithm(Mf, Me)
-	print(main_rocket_format(natural_log, 2))
-
 	delta_V = Isp * GO * natural_log
 	return delta_V
 
