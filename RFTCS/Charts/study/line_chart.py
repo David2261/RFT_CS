@@ -4,7 +4,7 @@ import numpy as np
 
 
 
-def line_graph():
+def price_to_value():
 
 	# plt.plot([1, 4, 2, 6, 9, 2]) # Только по Y
 	# По осям Y и X
@@ -31,9 +31,30 @@ def line_graph():
 	plt.show()
 
 
+def sell_cars():
+	x = [1, 3, 6, 8, 10, 20]
+	y1 = [1, 2, 5, 9, 12, 26]
+	plt.plot(x, y1, '--r', label='Renault')
+	y2 = [i*1.2 + 1 for i in y1]
+	plt.plot(x, y2, '-', label='Porsche')
+	y3 = [i*1.2 + 1 for i in y2]
+	plt.plot(x, y3, '-.', label='Mercedes')
+	y4 = [i*1.2 + 1 for i in y3]
+	plt.plot(x, y4, 'ro', label='Volkswagen')
+	y5 = [i*1.2 + 1 for i in y4]
+	plt.plot(x, y5, ':', label='Audi')
+
+	plt.title('Sells', size=20)
+	plt.legend()
+	plt.show()
+
+
+
+
+
 
 if __name__ == "__main__":
-	line_graph()
+	sell_cars()
 
 
 
