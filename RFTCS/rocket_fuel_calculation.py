@@ -54,7 +54,7 @@ def main(Isp: float, delta_V: float, Me: float) -> float:
 	# print(main_rocket_format(delta_V, 1))
 
 	Mp = total_oil(Isp, delta_V, Me)
-	return Mp
+	return round(Mp, 2)
 
 
 if __name__ == "__main__":
