@@ -13,7 +13,7 @@ def display_info():
 def fuel_display(stack: list) -> None:
 	pt.clear()
 	pt.field_names = ["Speed total", "Total oil"]
-	pt.add_row([stack[0], stack[1]])
+	pt.add_row(stack)
 	print(pt)
 
 
