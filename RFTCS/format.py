@@ -19,16 +19,16 @@ class RocketFormat:
 
 class FlightFormat:
 	def _flight_resistance_force(num: float) -> str:
-		return f"Сила сопротивления = {str(num)} м/с^2"
+		return f"Сила сопротивления = {str(num)} H"
 
 	def _flight_resistance_force_env(num: float) -> str:
-		return f"Сила сопротивления среды = {str(num)} м/с^2"
+		return f"Сила сопротивления среды = {str(num)} H"
 
 	def _flight_distance(num: float) -> str:
-		return f"Расстояние полета ракеты = {str(num)} м/с^2"
+		return f"Расстояние полета ракеты = {str(num)} км"
 
 	def _flight_mass(num: float) -> str:
-		return f"Масса ракеты = {str(num)} м/с^2"
+		return f"Масса ракеты = {str(num)} т"
 
 
 # Функция для вывода результатов, той или иной функции

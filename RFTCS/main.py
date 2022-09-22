@@ -15,14 +15,13 @@ def output_info() -> list:
 
 
 
-def fuel_input() -> list:
+def fuel_input(stage: int) -> list:
 	speed = 0
 	Isp_total = 0
 	Mass_full_total = 0
 	Mass_empty_total = 0
 	Mass_fuel_total = 0
 
-	stage = int(input("Напишите количество ступеней: "))
 	n = 0
 	while (n <= stage):
 		Isp = float(input(
@@ -46,38 +45,43 @@ def fuel_input() -> list:
 	return [speed, Mass_fuel_total]
 
 
-def flight_model_input() -> list:
+def flight_model_input(stage: int) -> list:
+	n = 0
 	height = float(input("Напишите высоту ракеты: "))
 	width = float(input("Напишите ширину ракеты: "))
-	speed = float(input("Напишите скорость ракеты: "))
-	etf = float(input("Напишите силу тяги двигателя: "))
-	mass = float(input("Напишите массу ракеты: "))
-	gamma = float(input("Напишите угол между вектором силы тяги и \
-		местным вектором: "))
-	fad = float(input("Сила лобового аэродинамического сопротивления: "))
 
-	res_env = resistance_force_env(height, width, speed)
-	gl = gravity_losses(gamma)
-	al = aerodynamic_losses(fad, mass)
-	lsc = loss_speed_on_control(etf, mass, gamma)
+	while (n <= stage):
+		speed = float(input("Напишите скорость ракеты: "))
+		etf = float(input("Напишите силу тяги двигателя: "))
+		mass = float(input("Напишите массу ракеты: "))
+		gamma = float(input("Напишите угол между вектором силы тяги и \
+			местным вектором: "))
+		fad = float(input("Сила лобового аэродинамического сопротивления: "))
+		time = float(input("Время работы двигателя: "))
+
+		res_env = resistance_force_env(height, width, speed)
+		gl = gravity_losses(etf, gamma, time)
+		al = aerodynamic_losses(fad, mass, time)
+		lsc = loss_speed_on_control(etf, mass, gamma, time)
+		n += 1
 
 	total_resistance = gl + al + lsc + res_env
 	distance = 1.2
 	return [total_resistance, distance, mass]
 
 
-def function_output(enter: list) -> None:
+def function_output(enter: list, stage: int) -> None:
 	# 1 - строка, 2 - таблица
 	display = enter[0]
 	# 1 - топливо, 2 - Полет, 3 - Моделирование полета
 	function = enter[1]
 	if function == 1:
 		if display == 1:
-			fuel_data = fuel_input()
+			fuel_data = fuel_input(stage)
 			print(main_rocket_format(round(fuel_data[0], 2), 1))
 			print(main_rocket_format(round(fuel_data[1], 2), 4))
 		elif display == 2:
-			fuel_data = fuel_input()
+			fuel_data = fuel_input(stage)
 			stack = [round(fuel_data[0], 2), round(fuel_data[1], 2)]
 			fuel_display(stack)
 		else:
@@ -86,12 +90,12 @@ def function_output(enter: list) -> None:
 		...
 	elif function == 3:
 		if display == 1:
-			flight_data = flight_model_input()
+			flight_data = flight_model_input(stage)
 			print(main_rocket_format(round(flight_data[0], 2), 5))
 			print(main_rocket_format(round(flight_data[1], 2), 6))
 			print(main_rocket_format(round(flight_data[2], 2), 7))
 		elif display == 2:
-			flight_data = flight_model_input()
+			flight_data = flight_model_input(stage)
 			stack = [
 				round(flight_data[0], 2),
 				round(flight_data[1], 2),
@@ -102,8 +106,9 @@ def function_output(enter: list) -> None:
 			...
 
 def main() -> None:
+	stage = int(input("Напишите количество ступеней: "))
 	screen = output_info()
-	function_output(screen)
+	function_output(screen, stage)
 
 
 if __name__ == "__main__":
