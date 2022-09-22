@@ -24,6 +24,12 @@ class FlightFormat:
 	def _flight_resistance_force_env(num: float) -> str:
 		return f"Сила сопротивления среды = {str(num)} м/с^2"
 
+	def _flight_distance(num: float) -> str:
+		return f"Расстояние полета ракеты = {str(num)} м/с^2"
+
+	def _flight_mass(num: float) -> str:
+		return f"Масса ракеты = {str(num)} м/с^2"
+
 
 # Функция для вывода результатов, той или иной функции
 def main_rocket_format(num: float, idea: int) -> str:
@@ -33,5 +39,11 @@ def main_rocket_format(num: float, idea: int) -> str:
 		return RocketFormat._rocket_natural_logarithm(num)
 	elif idea == 3:
 		return RocketFormat._rocket_massa_construction(num)
-	else:
+	elif idea == 4:
 		return RocketFormat._rocket_total_oil(num)
+	elif idea == 5:
+		return FlightFormat._flight_resistance_force(num)
+	elif idea == 6:
+		return FlightFormat._flight_distance(num)
+	elif idea == 7:
+		return FlightFormat._flight_mass(num)
