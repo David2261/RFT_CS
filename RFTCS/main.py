@@ -23,7 +23,7 @@ def fuel_input(stage: int) -> list:
 	Mass_fuel_total = 0
 
 	n = 0
-	while (n <= stage):
+	while (n < stage):
 		Isp = float(input(
 			f"Напишите удельный импульс для {n + 1} ступени: "))
 		Isp_total += Isp
@@ -47,10 +47,14 @@ def fuel_input(stage: int) -> list:
 
 def flight_model_input(stage: int) -> list:
 	n = 0
+	sum_resistance = 0
+	total_speed = 0
+	total_time = 0
+	total_resistance = 0
 	height = float(input("Напишите высоту ракеты: "))
 	width = float(input("Напишите ширину ракеты: "))
 
-	while (n <= stage):
+	while (n < stage):
 		speed = float(input("Напишите скорость ракеты: "))
 		etf = float(input("Напишите силу тяги двигателя: "))
 		mass = float(input("Напишите массу ракеты: "))
@@ -59,14 +63,17 @@ def flight_model_input(stage: int) -> list:
 		fad = float(input("Сила лобового аэродинамического сопротивления: "))
 		time = float(input("Время работы двигателя: "))
 
-		res_env = resistance_force_env(height, width, speed)
+		res_env = resistance_force(speed, 0.04)
 		gl = gravity_losses(etf, gamma, time)
 		al = aerodynamic_losses(fad, mass, time)
 		lsc = loss_speed_on_control(etf, mass, gamma, time)
-		n += 1
+		sum_resistance = gl + al + lsc + res_env
 
-	total_resistance = gl + al + lsc + res_env
-	distance = 1.2
+		total_resistance += sum_resistance
+		total_speed += speed
+		total_time += time
+		n += 1
+	distance = total_speed * time - total_resistance
 	return [total_resistance, distance, mass]
 
 

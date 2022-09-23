@@ -54,6 +54,7 @@ def resistance_force_env(h: float, w: float, speed: float) -> float:
 	return Mrf
 
 
+# Дополнение к функции расчета гравитационных потерь
 def addition_gl(time: float, gamma: float, F) -> float:
 	Vg = F * np.cos(gamma)
 	return Vg
