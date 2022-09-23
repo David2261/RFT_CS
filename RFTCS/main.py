@@ -58,8 +58,7 @@ def flight_model_input(stage: int) -> list:
 		speed = float(input("Напишите скорость ракеты: "))
 		etf = float(input("Напишите силу тяги двигателя: "))
 		mass = float(input("Напишите массу ракеты: "))
-		gamma = float(input("Напишите угол между вектором силы тяги и \
-			местным вектором: "))
+		gamma = float(input("Напишите угол между вектором силы тяги и местным вектором: "))
 		fad = float(input("Сила лобового аэродинамического сопротивления: "))
 		time = float(input("Время работы двигателя: "))
 
@@ -75,6 +74,23 @@ def flight_model_input(stage: int) -> list:
 		n += 1
 	distance = total_speed * time - total_resistance
 	return [total_resistance, distance, mass]
+
+
+def landing_model_input(stage: int) -> list:
+	n = 0
+	mm = 0
+	x = 0
+	y = 0
+	while (n < stage):
+		speed = float(input("Напишите скорость ракеты: "))
+		resistance = float(input("Напишите общее сопротивление: "))
+		teta = float(input("Напишите угол между вектором силы тяги и местным вектором: "))
+		mm += calculation_rocket_movement(speed, resistance)
+		stack = rocket_flight_description(teta, speed, 1, resistance, 1)
+		y += stack[0]
+		x += stack[1]
+		n += 1
+	return [mm, x, y]
 
 
 def function_output(enter: list, stage: int) -> None:
@@ -94,7 +110,17 @@ def function_output(enter: list, stage: int) -> None:
 		else:
 			...
 	elif function == 2:
-		...
+		if display == 1:
+			land_data = landing_model_input(stage)
+			print(f"Математическая модель полета ракеты = {round(land_data[0], 2)}")
+			print(f"x ракеты = {round(land_data[1], 2)}")
+			print(f"y ракеты = {round(land_data[2], 2)}")
+		elif display == 2:
+			land_data = landing_model_input(stage)
+			stack = [round(land_data[0], 2), round(land_data[1], 2), round(land_data[2], 2)]
+			landing_display(stack)
+		else:
+			...
 	elif function == 3:
 		if display == 1:
 			flight_data = flight_model_input(stage)
