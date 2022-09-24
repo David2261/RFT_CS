@@ -2,6 +2,7 @@
 Файл для численного моделирования траектории полета ракеты
 """
 import numpy as np
+from scipy import integrate
 
 from rocket_fuel_calculation import total_speed
 from format import FlightFormat
@@ -15,7 +16,7 @@ GO = 9.81
 # Ро - плотность
 RHO = 16900
 # Коэфициент формы
-Cf = 1.2
+Cf = 0.2
 # Плотность воздуха, кг/м^3
 RHO_A = 1.2754
 # Коэффициент лобового сопротивления
@@ -29,10 +30,10 @@ def _body_area(height: float, width: float) -> float:
 
 
 # Функция расчета силы сопротивления
-def resistance_force(height: float, width: float) -> float:
-	area = _body_area(height, width)
-	dealta_V = total_speed(420000.0, 5790000.0, 524.0)
-	F = Cf * (RHO * dealta_V**2) / 2 * area
+def resistance_force(speed: float, area: float) -> float:
+	#area = _body_area(height, width)
+	dealta_V = speed
+	F = Cf * area * dealta_V**2 * RHO_A / 2
 	return F
 
 
@@ -53,27 +54,58 @@ def resistance_force_env(h: float, w: float, speed: float) -> float:
 	return Mrf
 
 
-# Функция расчета гравитационных потерь
-def gravity_losses(gamma: float) -> float:
-	Vg = GO * np.cos(gamma)
+# Дополнение к функции расчета гравитационных потерь
+def addition_gl(time: float, gamma: float, F) -> float:
+	Vg = F * np.cos(gamma)
 	return Vg
 
 
-# Функция Аэродинамические потери
-def aerodynamic_losses(A: float, m: float) -> float:
-	Va = A / m
+# Функция расчета гравитационных потерь
+def gravity_losses(F: float, gamma: float, time: float) -> float:
+	res = integrate.quad(addition_gl, 0, time, args=(gamma, F))
+	return res[1]
+
+
+# Дополнение к функции Аэродинамические потери
+def addition_al(time, A: float, m: float) -> float:
+	Va = (A * time) / (m * time)
 	return Va
 
 
-# Функция потери скорости на управление
-def loss_speed_on_control(F: float, m: float, alpha: float) -> float:
-	Vu = (F / m) * (1 - np.cos(alpha))
+# Функция Аэродинамические потери
+def aerodynamic_losses(A: float, m: float, time: float) -> float:
+	res = integrate.quad(addition_al, 0, time, args=(A, m))
+	return res[0]
+
+
+# Дополнение к функции потери скорости на управление
+def addition_lsc(
+		time,
+		F: float,
+		mass: float,
+		Alpha: float) -> float:
+	Vu = ((F * time) / (mass * time)) * \
+		(1 - np.cos(Alpha * time))
 	return Vu
 
 
+# Функция потери скорости на управление
+def loss_speed_on_control(
+		F: float,
+		mass: float,
+		Alpha: float,
+		time: float) -> float:
+	res = integrate.quad(
+		addition_lsc,
+		0,
+		time,
+		args=(F, mass, Alpha))
+	return res[0]
+
+
 if __name__ == "__main__":
-	res = resistance_force_env(100.0, 30.0, 2500.0)
-	print(FlightFormat._flight_resistance_force_env(res))
+	res = gravity_losses(2080.0, 1.2, 900)
+	print(FlightFormat._flight_resistance_force(res))
 
 # Натуральный логарифм = 9.310151165228136
 # Сила сопротивления = 4.47619780864866e+22 м/с^2
