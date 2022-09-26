@@ -1,16 +1,35 @@
-from format import *
-from rocket_flight_simulation import *
-from rocket_fuel_calculation import *
-from rocket_landing_calculation import *
-from display_table import *
+from format import main_rocket_format
+from rocket_flight_simulation import (
+	resistance_force,
+	gravity_losses,
+	aerodynamic_losses,
+	loss_speed_on_control
+)
+from rocket_fuel_calculation import (
+	total_oil,
+	total_speed
+)
+from rocket_landing_calculation import (
+	calculation_rocket_movement,
+	rocket_flight_description
+)
+from display_table import (
+	display_info,
+	fuel_display,
+	flight_simulation_display,
+	landing_display
+)
+from exception import invalid_entire
 
 
+# Вывод первой подсказки
 def output_info() -> list:
-	print("Какой формат вывода информации хотите?\n" + \
-		"В виде текста (1) или ввиде таблицы (2):")
-	num = int(input( ))
+	print(
+		"Какой формат вывода информации хотите?\n"
+		"В виде текста (1) или ввиде таблицы (2): ")
+	num = int(input())
 	display_info()
-	selection = int(input( ))
+	selection = int(input())
 	return [num, selection]
 
 
@@ -87,8 +106,10 @@ def landing_model_input(stage: int) -> list:
 		resistance = float(input("Напишите общее сопротивление: "))
 		teta = float(input(
 			"Напишите угол между вектором силы тяги и местным вектором: "))
+		mass = float(input("Напишите массу ракеты: "))
+
 		mm += calculation_rocket_movement(speed, resistance)
-		stack = rocket_flight_description(teta, speed, 1, resistance, 1)
+		stack = rocket_flight_description(teta, speed, mass, resistance, 1)
 		y += stack[0]
 		x += stack[1]
 		n += 1
@@ -110,7 +131,7 @@ def function_output(enter: list, stage: int) -> None:
 			stack = [round(fuel_data[0], 2), round(fuel_data[1], 2)]
 			fuel_display(stack)
 		else:
-			...
+			invalid_entire(f"Не тот вывод информации {display}")
 	elif function == 2:
 		if display == 1:
 			land_data = landing_model_input(stage)
@@ -119,10 +140,14 @@ def function_output(enter: list, stage: int) -> None:
 			main_rocket_format(round(land_data[2], 2), 11)
 		elif display == 2:
 			land_data = landing_model_input(stage)
-			stack = [round(land_data[0], 2), round(land_data[1], 2), round(land_data[2], 2)]
+			stack = [
+				round(land_data[0], 2),
+				round(land_data[1], 2),
+				round(land_data[2], 2)
+			]
 			landing_display(stack)
 		else:
-			...
+			invalid_entire(f"Не тот вывод информации {display}")
 	elif function == 3:
 		if display == 1:
 			flight_data = flight_model_input(stage)
@@ -138,7 +163,8 @@ def function_output(enter: list, stage: int) -> None:
 			]
 			flight_simulation_display(stack)
 		else:
-			...
+			invalid_entire(f"Не тот вывод информации {display}")
+
 
 def main() -> None:
 	stage = int(input("Напишите количество ступеней: "))
@@ -148,4 +174,3 @@ def main() -> None:
 
 if __name__ == "__main__":
 	main()
-

@@ -30,6 +30,7 @@ def landing_display(stack: list) -> None:
 	pt.add_row(stack)
 	print(pt)
 
+
 if __name__ == "__main__":
 	display_info()
 	num = int(input("Write your choice: "))
@@ -44,14 +45,3 @@ if __name__ == "__main__":
 		flight_simulation_display(data_flight)
 	else:
 		print("Bad request!")
-
-
-
-
-"""
-+-------------+-----------+
-| Speed total | Total oil |
-+-------------+-----------+
-|   52258.61  |   32.78   |
-+-------------+-----------+
-"""
