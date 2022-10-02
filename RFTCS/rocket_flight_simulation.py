@@ -63,19 +63,19 @@ def addition_gl(time: float, gamma: float, F) -> float:
 # Функция расчета гравитационных потерь
 def gravity_losses(F: float, gamma: float, time: float) -> float:
 	res = integrate.quad(addition_gl, 0, time, args=(gamma, F))
-	return res[1]
+	return res[1] - res[0]
 
 
 # Дополнение к функции Аэродинамические потери
 def addition_al(time, A: float, m: float) -> float:
-	Va = (A * time) / (m * time)
+	Va = A / m
 	return Va
 
 
 # Функция Аэродинамические потери
 def aerodynamic_losses(A: float, m: float, time: float) -> float:
 	res = integrate.quad(addition_al, 0, time, args=(A, m))
-	return res[0]
+	return res[1] - res[0]
 
 
 # Дополнение к функции потери скорости на управление
@@ -84,8 +84,7 @@ def addition_lsc(
 		F: float,
 		mass: float,
 		Alpha: float) -> float:
-	Vu = ((F * time) / (mass * time)) * \
-		(1 - np.cos(Alpha * time))
+	Vu = (F / mass) * (1 - np.cos(Alpha))
 	return Vu
 
 
@@ -100,7 +99,7 @@ def loss_speed_on_control(
 		0,
 		time,
 		args=(F, mass, Alpha))
-	return res[0]
+	return res[1] - res[0]
 
 
 if __name__ == "__main__":
