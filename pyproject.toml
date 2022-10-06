@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Rocket fuel and trajectory computing system"
 authors = ["David2261 <bulatnasirov2003@gmail.com>"]
 license = "GNU GENERAL PUBLIC LICENSE"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
