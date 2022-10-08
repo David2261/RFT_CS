@@ -44,7 +44,7 @@ The project is based on the use of formulas:
 ## Install
 ```bash
 poetry install
-.venv\\Scripts\\activate
+.venv\Scripts\activate
 ```
 
 ## Example
