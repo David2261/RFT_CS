@@ -28,14 +28,15 @@ def data_rfs():
 	return array
 
 
+@pytest.mark.skip()
 class TestMixinRFS:
 	data = data_rfs()
 	height = data[0]
 	width = data[1]
 
-	# def test_isinstance(function, self):
-	# 	result = function(self.height, self.width)
-	# 	assert isinstance(result, (int, float))
+	def test_isinstance(function, self):
+		result = function(self.height, self.width)
+		assert isinstance(result, (int, float))
 	
 	def test_type_error(function, height, width):
 		with pytest.raises(TypeError):
