@@ -9,27 +9,34 @@ init()
 from colorama import Fore, Back, Style
 
 
-class Number(NamedTuple):
-	num: float
+def checker(number):
+	if isinstance(number, (float, int)):
+		return number
+	else: 
+		ValueError()
+
 
 
 class RocketFormat:
-	def _rocket_total_speed(Number: Number) -> str:
-		res = Number.num
-		text = f"Сумма всех скоростей = {str(res)} м/с"
+	@checker
+	def _rocket_total_speed(num) -> str:
+		text = f"Сумма всех скоростей = {str(num)} м/с"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _rocket_natural_logarithm(num: Union[int, float]) -> str:
 		text = f"Натуральный логарифм = {str(num)}"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _rocket_massa_construction(num: Union[int, float]) -> str:
 		text = f"Сумма всей конструкции ракеты = {str(num)} кг"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _rocket_total_oil(num: Union[int, float]) -> str:
 		text = f"Сумма всего топлива = {str(num)} кг"
 		print(Fore.GREEN + text)
@@ -37,21 +44,25 @@ class RocketFormat:
 
 
 class FlightFormat:
+	@checker
 	def _flight_resistance_force(num: float) -> str:
 		text = f"Сила сопротивления = {str(num)} H"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _flight_resistance_force_env(num: float) -> str:
 		text = f"Сила сопротивления среды = {str(num)} H"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _flight_distance(num: float) -> str:
 		text = f"Расстояние полета ракеты = {str(num)} км"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _flight_mass(num: float) -> str:
 		text = f"Масса ракеты = {str(num)} т"
 		print(Fore.GREEN + text)
@@ -59,21 +70,25 @@ class FlightFormat:
 
 
 class LandingFormat:
+	@checker
 	def _calculation_rocket_movement(num: float) -> str:
 		text = f"Математическая модель полета ракеты = {num}"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _vector_speed(num: float) -> str:
 		text = f"Вектор скорости = {num} км/c"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _rocket_flight_y(num: float) -> str:
 		text = f"Координата ракеты y = {num}"
 		print(Fore.GREEN + text)
 		return text
 
+	@checker
 	def _rocket_flight_x(num: float) -> str:
 		text = f"Координата ракеты x = {num}"
 		print(Fore.GREEN + text)
@@ -104,3 +119,7 @@ def main_rocket_format(num: float, idea: int) -> str:
 		return LandingFormat._rocket_flight_y(num)
 	elif idea == 11:
 		return LandingFormat._rocket_flight_x(num)
+
+
+if __name__ == '__main__':
+	main_rocket_format('sdasd', 1)

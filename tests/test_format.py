@@ -92,16 +92,16 @@ class TestFlightFormat:
 
 	def test_flight_resistance_force_type_error(self):
 		with pytest.raises(TypeError):
-			self.main_rocket_format('sdaa/sa', 6)
+			main_rocket_format('sdaa/sa', 6)
 
 	def test_flight_resistance_force_more_args(self):
 		with pytest.raises(TypeError):
-			self.main_rocket_format(23.2, 6, 231.2)
+			main_rocket_format(23.2, 6, 231.2)
 
 	def test_flight_resistance_force_env_type_error(self):
 		with pytest.raises(TypeError):
-			self.main_rocket_format('sdaa/sa', 6)
+			main_rocket_format('sdaa/sa', 6)
 
 	def test_flight_resistance_force_env_more_args(self):
 		with pytest.raises(TypeError):
-			self.main_rocket_format(23.2, 6, 231.2)
+			main_rocket_format(23.2, 6, 231.2)
