@@ -30,7 +30,8 @@ cd Python-3.10.2
 
 ./configure --enable-optimizations
 make altinstall
-
+make -j 2
+sudo make install
 echo 'Помолимся вместе со мной, чтобы всё было чики-пуки!!!'
 sleep 1
 
