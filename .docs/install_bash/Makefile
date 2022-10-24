@@ -13,7 +13,3 @@ download_python: $(IP)
 
 create_env: $(CE)
 	$(CE)
-
-
-
-

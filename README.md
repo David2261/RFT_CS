@@ -1,5 +1,5 @@
 # RFT_CS
-*Rocket fuel and trajectory computing system*
+> Rocket fuel and trajectory computing system
 *An application for calculating the amount of rocket fuel and oxidizer used. Numerical simulation of rocket flight, (i.e. simulation of the rocket flight environment). Determination of the coordinates of the flight and landing of the rocket (both for ballistic missiles and for space)*
 
 [![GitHub stars](https://img.shields.io/github/stars/David2261/RFT_CS)](https://github.com/David2261/RFT_CS/stargazers)
