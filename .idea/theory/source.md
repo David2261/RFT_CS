@@ -23,4 +23,5 @@ https://www.youtube.com/shorts/SyPh3-RGnRM
 	- https://studref.com/350928/tehnika/sila_soprotivleniya_vozduha#146
 - Полет баллистической ракеты
 	- https://portal.tpu.ru/SHARED/s/SKEA/uchebnaya/miiafe/miiafe_zad/polet_balistich_rakety.pdf
-
+- Математическое моделирование процессов, связанных с полётом ракеты
+	- http://genius.pstu.ru/file.php/1/pupils_works_2014/Romanov_Nikita.pdf
