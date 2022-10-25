@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 """ The Main formulas of mathematical modeling """
+import os
+import sys
+
+path = os.path.join(os.getcwd(), '../')
+sys.path.append(path)
+
 import numpy as np
 
 from setup.constant import (

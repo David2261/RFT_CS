@@ -1,69 +1,53 @@
+#!/usr/bin/env python
 """
 В данном файле будут производиться расчеты топлива ракеты.
 Основные формулы:
 	- Сумма всех скоростей [V = l_(sp) * g_(o) * ln(Mf/Me)]
 	- Масса конструкции ракеты [Mk = Mp/k]
 """
+import os
+import sys
+
+path = os.path.join(os.getcwd(), '../')
+sys.path.append(path)
+
 import numpy as np
-# import matplotlib as mpl
-# import matplotlib.pyplot as plt
-
-from format import main_rocket_format
+from setup.constant import ACCELERATION_FREE_FALL
 
 
-# Константы
-# Ускорение свободного падения
-GO = 9.81
-# Коэффициент массы конструкции для единицы массы топлива
-K = 400
+class TotalOil:
+	""" Расчет общей скорости """
+	def __init__(self, m_empty_rocket, mass_rocket, Isp):
+		self.Me = m_empty_rocket
+		self.Mf = mass_rocket
+		self.Isp = Isp
 
+	@classmethod
+	# Функция нахождения натурального логарифма
+	def _natural_logarithm(cls) -> float:
+		num = Mf / Me
+		return np.log(num)
 
-# Функция нахождения натурального логарифма
-def natural_logarithm(Mf: float, Me: float) -> float:
-	num = Mf / Me
-	return np.log(num)
+	# Функция расчет с помощью Эйлерова числа E
+	def _euler(self) -> float:
+		G = ACCELERATION_FREE_FALL
+		return np.exp(self.total_speed() / (self.Isp * G))
 
+	# Сумма всех скоростей
+	def total_speed(self):
+		G = ACCELERATION_FREE_FALL
+		delta_V = self.Isp * G * self._natural_logarithm()
+		return delta_V
 
-# Функция расчет с помощью Эйлерова числа E
-def euler(delta_V: float, Isp: float) -> float:
-	return np.exp(delta_V / (Isp * GO))
-
-
-# Сумма всех скоростей
-def total_speed(Isp: float, Mf: float, Me: float):
-	natural_log = natural_logarithm(Mf, Me)
-	delta_V = Isp * GO * natural_log
-	return delta_V
-
-
-# Функция для расчета топлива
-def total_oil(Isp: float, delta_V: float, Me: float) -> float:
-	e = euler(delta_V, Isp)
-	Mp = Me * (e - 1)
-	return Mp
-
-
-# Функция расчета массы конструкции ракеты
-def massa_construction_rocket(Mp: float) -> float:
-	Mk = Mp / K
-	return Mk
-
-
-def main(Isp: float, delta_V: float, Me: float) -> float:
-	# delta_V = total_speed(Isp, Mf, Me)
-	# print(main_rocket_format(delta_V, 1))
-
-	Mp = total_oil(Isp, delta_V, Me)
-	return round(Mp, 2)
+	# Функция для расчета топлива
+	def total_oil(self) -> float:
+		return self.Me * (self._euler() - 1)
 
 
 if __name__ == "__main__":
-	res = main(4200.0, 2500.0, 524.0)
-
-	print(main_rocket_format(res, 4))
-
-# Масса спутника 524 кг
-# Isp = 4200 с
-# Скорость = 2500 м/с
-# Масса ксенона = ?
-# Сумма всего топлива = 32.77897645413678 кг
+	Me = 524
+	Mf = 579
+	Isp = 4200
+	a = TotalOil(Me, Mf, Isp)
+	print(a.total_oil())
+	# 55.00000000000005

@@ -1,6 +1,12 @@
 """
 Файл для математическое моделирование движения тел
 """
+import os
+import sys
+
+path = os.path.join(os.getcwd(), '../')
+sys.path.append(path)
+
 import numpy as np
 
 from rocket_flight_simulation import resistance_force_env
