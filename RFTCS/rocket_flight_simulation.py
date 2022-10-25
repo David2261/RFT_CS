@@ -1,110 +1,142 @@
-"""
-Файл для численного моделирования траектории полета ракеты
-"""
+#!/usr/bin/env python
+""" The Main formulas of mathematical modeling """
 import numpy as np
-from scipy import integrate
 
-from rocket_fuel_calculation import total_speed
-from format import FlightFormat
-
-# молярная масса, кг/моль
-MM = 0.029
-# Температура, K
-T = 300
-# Ускорение свободного падения
-GO = 9.81
-# Ро - плотность
-RHO = 16900
-# Коэфициент формы
-Cf = 0.2
-# Плотность воздуха, кг/м^3
-RHO_A = 1.2754
-# Коэффициент лобового сопротивления
-CRFf = 0.14
+from setup.constant import (
+	ATMOSPHERIC_PRESSURE,
+	ATMOSPHERIC_DENSITY,
+	ACCELERATION_FREE_FALL,
+	CROSS_SECTION_AREA,
+	VOLUME_EMPTY_CC,
+	UNIVERSAL_GAS_CONSTANT
+)
+from setup.settings import (
+	INITIAL_DISTANCE,
+	FUEL_DENSITY,
+	AVERAGE_MOLAR_MASS,
+	BURNING_TEMPERATURE,
+	FPV,
+	TVV
+)
 
 
-# Функция расчета площади
-def _body_area(height: float, width: float) -> float:
-	total = height * width
-	return total
+""" Расстояние от горящей поверхности топлива до стенки камеры сгорания. """
+def distance_N_step(U: int, n: int) -> float:
+	r0 = INITIAL_DISTANCE
+	r_n = r0 - n * U
+	return float(r_n)
 
 
-# Функция расчета силы сопротивления
-def resistance_force(speed: float, area: float) -> float:
-	#area = _body_area(height, width)
-	dealta_V = speed
-	F = Cf * area * dealta_V**2 * RHO_A / 2
-	return F
+""" Масса всей ракеты """
+def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
+	return float(m_empty_rocket + m_fuel_rocket)
 
 
-# Функция расчета лобовой площади
-def frontal_area(w: float, h: float) -> float:
-	return CRFf * w * h
+""" Количество выделяемого газа за 1 моль """
+def amount_gas_released(mass):
+	amm = AVERAGE_MOLAR_MASS
+	return float(mass / amm)
 
 
-# k - Сопротивление среды
-def environmental_resistance(rocket_form: float) -> float:
-	er = 0.5 * RHO_A * CRFf * rocket_form
-	return er
+""" Избыточное давление в камере сгорания на n-шаге """
+def overpressure(U) -> float:
+	amm = AVERAGE_MOLAR_MASS
+	ugc = UNIVERSAL_GAS_CONSTANT
+	bt = BURNING_TEMPERATURE
+	h = amm * ugc * bt
+	return float(h / U)
 
 
-# Функция расчета сопротивления среды
-def resistance_force_env(h: float, w: float, speed: float) -> float:
-	Mrf = environmental_resistance(frontal_area(w, h)) * (speed ** 2)
-	return Mrf
+""" Сила выталкивания (тяги) газов через сопло """
+def thrust_force(P_n: int):
+	csa = CROSS_SECTION_AREA
+	return P_n * csa
 
 
-# Дополнение к функции расчета гравитационных потерь
-def addition_gl(time: float, gamma: float, F) -> float:
-	Vg = F * np.cos(gamma)
-	return Vg
+""" Импульс, сообщаемого ракете на n-шаге """
+def impuls(P_n, time):
+	tf = thrust_force(P_n)
+	return float(tf * time)
 
 
-# Функция расчета гравитационных потерь
-def gravity_losses(F: float, gamma: float, time: float) -> float:
-	res = integrate.quad(addition_gl, 0, time, args=(gamma, F))
-	return res[1] - res[0]
+""" Высота ракеты над стартовой площадкой """
+def height_rocket(h_n, u, t):
+	return float(h_n + u * t)
 
 
-# Дополнение к функции Аэродинамические потери
-def addition_al(time, A: float, m: float) -> float:
-	Va = A / m
-	return Va
+class CylindricalCavity:
+	""" Расчет объема внутренней цилиндрической полости """
+	def __init__(self, speed_burning_fuel: int, step: int, Long: int):
+		self.U = speed_burning_fuel
+		self.n = step
+		self.L = Long
+
+	@classmethod
+	# Радиус внутренней цилиндрической полости
+	def _cylindrical_cavity(cls) -> float:
+		R_0 = INITIAL_DISTANCE
+		R_n = R_0 + n * U
+		return R_n
+
+	# Объем цилиндрической полости
+	def volume_cylindrical_cavity(self):
+		R_n = self._cylindrical_cavity()
+		V = np.pi * float((R_n ** 2) * self.L)
+		return V
 
 
-# Функция Аэродинамические потери
-def aerodynamic_losses(A: float, m: float, time: float) -> float:
-	res = integrate.quad(addition_al, 0, time, args=(A, m))
-	return res[1] - res[0]
+class Resistance:
+	""" Сопротивление """
+	def __init__(self, speed: int, tf: int, mass: int):
+		self.V = speed
+		self.thrust_force = tf
+		self.mass = mass
+
+	@classmethod
+	# Аэродинамический напор
+	def _aerodynamic_pressure(cls):
+		AD = ATMOSPHERIC_DENSITY
+		return (AD * (V ** 2)) / 2
+
+	""" Аэродинамическое сопротивление """
+	def aerodynamic_drag(self):
+		Cx = CROSS_SECTION_AREA
+		S = Cx
+		Q = _aerodynamic_pressure()
+		return Cx * S * Q
+
+	""" Гравитационные потери """
+	def gravitation_losses(self):
+		G = ACCELERATION_FREE_FALL
+		angel = np.sin(FPV)
+		return G * angel
+
+	""" Потеря скорости на управление """
+	def control_losses(self):
+		angel = 1 - np.cos(TVV)
+		return (self.thrust_force / self.mass) * angel
 
 
-# Дополнение к функции потери скорости на управление
-def addition_lsc(
-		time,
-		F: float,
-		mass: float,
-		Alpha: float) -> float:
-	Vu = (F / mass) * (1 - np.cos(Alpha))
-	return Vu
+class Speed:
+	""" Скорость """
+	def __init__(self, tf, gr, m, time, speed_0):
+		self.thrust_force = tf
+		self.gravitation_losses = gr
+		self.mass = m
+		self.time = time
+		self.speed_0 = speed_0
 
+	@classmethod
+	# Равнодействующая сила
+	def _resultant_force(cls):
+		G = ACCELERATION_FREE_FALL
+		return (self.thrust_force * self.gravitation_losses - self.mass * G)
 
-# Функция потери скорости на управление
-def loss_speed_on_control(
-		F: float,
-		mass: float,
-		Alpha: float,
-		time: float) -> float:
-	res = integrate.quad(
-		addition_lsc,
-		0,
-		time,
-		args=(F, mass, Alpha))
-	return res[1] - res[0]
+	def rocket_acceleration(self):
+		F = _resultant_force()
+		return F / self.mass
 
+	def rocket_speed(self):
+		a = rocket_acceleration()
+		return speed_0 + a * self.time
 
-if __name__ == "__main__":
-	res = gravity_losses(2080.0, 1.2, 900)
-	print(FlightFormat._flight_resistance_force(res))
-
-# Натуральный логарифм = 9.310151165228136
-# Сила сопротивления = 4.47619780864866e+22 м/с^2
