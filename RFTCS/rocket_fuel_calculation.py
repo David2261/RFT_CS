@@ -5,13 +5,8 @@
 	- Сумма всех скоростей [V = l_(sp) * g_(o) * ln(Mf/Me)]
 	- Масса конструкции ракеты [Mk = Mp/k]
 """
-import os
-import sys
-
-path = os.path.join(os.getcwd(), '../')
-sys.path.append(path)
-
 import numpy as np
+
 from setup.constant import ACCELERATION_FREE_FALL
 
 
@@ -36,7 +31,8 @@ class TotalOil:
 	# Сумма всех скоростей
 	def total_speed(self):
 		G = ACCELERATION_FREE_FALL
-		delta_V = self.Isp * G * self._natural_logarithm()
+		nl = self._natural_logarithm()
+		delta_V = self.Isp * G * nl
 		return delta_V
 
 	# Функция для расчета топлива

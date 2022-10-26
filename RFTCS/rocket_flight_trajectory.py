@@ -1,7 +1,7 @@
 import numpy as np
 
-from setup.constant import ACCELERATION_FREE_FALL, FPV
-
+from setup.constant import ACCELERATION_FREE_FALL
+from setup.settings import FPV
 
 class FlightBallistics:
 	""" Балистический полет ракеты, внутри Земли """
