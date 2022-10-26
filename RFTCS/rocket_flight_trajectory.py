@@ -9,7 +9,7 @@ class FlightBallistics:
 		self.speed = speed
 
 	@classmethod
-	# Синус двойного угола 
+	# Синус двойного угла
 	def _double_angle_sine(cls):
 		A = FPV
 		return 2 * np.sin(A) * np.cos(A)
@@ -26,10 +26,3 @@ class FlightBallistics:
 		G = ACCELERATION_FREE_FALL
 		A = FPV
 		return ((2 * self.speed * np.sin(A)) / G)
-
-
-
-
-
-
-
