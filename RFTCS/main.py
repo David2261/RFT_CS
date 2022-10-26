@@ -1,3 +1,9 @@
+import os
+import sys
+
+path = os.path.join(os.getcwd(), '../')
+sys.path.append(path)
+
 from format import main_rocket_format
 from rocket_flight_simulation import (
 	resistance_force,
