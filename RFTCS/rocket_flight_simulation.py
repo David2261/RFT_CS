@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """ The Main formulas of mathematical modeling """
+import logging
 import numpy as np
 
 from setup.constant import (
@@ -18,13 +19,22 @@ from setup.settings import (
 	FPV,
 	TVV
 )
+from exceptions import logger
+
+
+log = logger.get_logger(__name__)
 
 
 """ Расстояние от горящей поверхности топлива до стенки камеры сгорания. """
 def distance_N_step(U: int, n: int) -> float:
-	r0 = INITIAL_DISTANCE
-	r_n = r0 - n * U
-	return float(r_n)
+	try:
+		r0 = INITIAL_DISTANCE
+		r_n = r0 - n * U
+		return float(r_n)
+	except Exception as e:
+		log.error("Value error")
+		raise ValueError("Некорректные данные!!!")
+
 
 
 """ Масса всей ракеты """
