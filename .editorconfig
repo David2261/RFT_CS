@@ -1,0 +1,33 @@
+# Source: David2261 RFT_CS repo
+
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+
+[*.{js,c,h,py,rst,ini}]
+charset = utf-8
+
+[*.py]
+indent_style = tab
+
+[Makefile]
+indent_style = tab
+
+[*.js]
+indent_style = space
+indent_size = 4
+
+[*.c]
+indent_style = tab
+
+[*.h]
+indent_style = tab
+
+[*.yml]
+indent_style = space
+indent_size = 2
+
