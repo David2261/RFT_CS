@@ -4,7 +4,7 @@ import sys
 path = os.path.join(os.getcwd(), '../')
 sys.path.append(path)
 
-from format import main_rocket_format
+from display.format import main_rocket_format
 from rocket_flight_simulation import (
 	resistance_force,
 	gravity_losses,
@@ -15,17 +15,14 @@ from rocket_fuel_calculation import (
 	total_oil,
 	total_speed
 )
-from rocket_landing_calculation import (
-	calculation_rocket_movement,
-	rocket_flight_description
-)
-from display_table import (
+from rocket_flight_trajectory import FlightBallistics
+from display.display_table import (
 	display_info,
 	fuel_display,
 	flight_simulation_display,
 	landing_display
 )
-from exception import invalid_entire
+from exceptions.exception import invalid_entire
 
 
 # Вывод первой подсказки
@@ -113,8 +110,9 @@ def landing_model_input(stage: int) -> list:
 		teta = float(input(
 			"Напишите угол между вектором силы тяги и местным вектором: "))
 		mass = float(input("Напишите массу ракеты: "))
+		ballistic = FlightBallistics(speed)
 
-		mm += calculation_rocket_movement(speed, resistance)
+		mm += ballistic.flight_range()
 		stack = rocket_flight_description(teta, speed, mass, resistance, 1)
 		y += stack[0]
 		x += stack[1]

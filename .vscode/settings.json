@@ -1,0 +1,4 @@
+{
+    "editor.formatOnSave": true,
+    "python.envFile": "${workspaceFolder}/.venv/bin/activate"
+}
