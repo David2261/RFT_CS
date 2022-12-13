@@ -112,7 +112,7 @@ class Resistance:
 	def aerodynamic_drag(self):
 		Cx = CROSS_SECTION_AREA
 		S = Cx
-		Q = _aerodynamic_pressure()
+		Q = self._aerodynamic_pressure()
 		return Cx * S * Q
 
 	""" Гравитационные потери """
