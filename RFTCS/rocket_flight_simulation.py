@@ -1,5 +1,11 @@
-#!/usr/bin/env python
-""" The Main formulas of mathematical modeling """
+#!/usr/bin/env python3
+"""
+В данном файле производиться математическое моделирование полета ракеты.
+Основные формулы:
+	- Эллептическое расстояние полета ракеты
+	- Общее сопротивление
+	- Общая скорость
+"""
 import logging
 import numpy as np
 

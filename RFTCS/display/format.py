@@ -84,13 +84,13 @@ class LandingFormat:
 
 	@checker
 	def _rocket_flight_y(num: float) -> str:
-		text = f"Координата ракеты y = {num}"
+		text = f"Расстояние полета ракеты = {num}"
 		print(Fore.GREEN + text)
 		return text
 
 	@checker
 	def _rocket_flight_x(num: float) -> str:
-		text = f"Координата ракеты x = {num}"
+		text = f"Угол поворота ракеты tg Beta = {num}"
 		print(Fore.GREEN + text)
 		return text
 
