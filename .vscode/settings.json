@@ -1,4 +1,5 @@
 {
-    "editor.formatOnSave": true,
-    "python.envFile": "${workspaceFolder}/.venv/bin/activate"
+  "editor.formatOnSave": true,
+  "python.envFile": "${workspaceFolder}/.venv/bin/activate",
+  "python.pipenvPath": ".venv/bin/activate"
 }
