@@ -6,10 +6,9 @@ sys.path.append(path)
 
 from display.format import main_rocket_format
 from rocket_flight_simulation import (
-	resistance_force,
-	gravity_losses,
-	aerodynamic_losses,
-	loss_speed_on_control
+	Resistance,
+	Speed,
+	ModelFlight
 )
 from rocket_fuel_calculation import (
 	total_oil,
@@ -72,23 +71,18 @@ def flight_model_input(stage: int) -> list:
 	total_speed = 0
 	total_time = 0
 	total_resistance = 0
-	height = float(input("Напишите высоту ракеты: "))
-	width = float(input("Напишите ширину ракеты: "))
 
 	while (n < stage):
 		speed = float(input("Напишите скорость ракеты: "))
-		etf = float(input("Напишите силу тяги двигателя: "))
+		fuel_flow = float(input("Напишите расход ступени: "))
 		mass = float(input("Напишите массу ракеты: "))
-		gamma = float(input(
-			"Напишите угол между вектором силы тяги и местным вектором: "))
-		fad = float(input(
-			"Сила лобового аэродинамического сопротивления: "))
 		time = float(input("Время работы двигателя: "))
+		resistance = Resistance(speed, fuel_flow, mass)
 
-		res_env = resistance_force(speed, 0.04)
-		gl = gravity_losses(etf, gamma, time)
-		al = aerodynamic_losses(fad, mass, time)
-		lsc = loss_speed_on_control(etf, mass, gamma, time)
+		res_env = resistance.resistance_force()
+		gl = resistance.gravity_losses()
+		al = resistance.aerodynamic_losses()
+		lsc = resistance.loss_speed_on_control()
 		sum_resistance = gl + al + lsc + res_env
 
 		total_resistance += sum_resistance
@@ -102,22 +96,18 @@ def flight_model_input(stage: int) -> list:
 def landing_model_input(stage: int) -> list:
 	n = 0
 	mm = 0
-	x = 0
-	y = 0
+	stage = float(input("Напишите количество ступеней: "))
+	time = float(input("Время полета раакеты: "))
+	speed_0 = float(input("Напишите начальную скорость ракеты: "))
 	while (n < stage):
-		speed = float(input("Напишите скорость ракеты: "))
-		resistance = float(input("Напишите общее сопротивление: "))
-		teta = float(input(
-			"Напишите угол между вектором силы тяги и местным вектором: "))
-		mass = float(input("Напишите массу ракеты: "))
-		ballistic = FlightBallistics(speed)
+		mass = float(input(f"Напишите массу ступени ({stage}): "))
+		fuel_flow = float(input("Напишите расход ступени: "))
+		model = ModelFlight(fuel_flow, mass, speed_0, time)
+		model_stack = model.model_stack()
+		ballistic = FlightBallistics(model_stack[1])
 
 		mm += ballistic.flight_range()
-		stack = rocket_flight_description(teta, speed, mass, resistance, 1)
-		y += stack[0]
-		x += stack[1]
-		n += 1
-	return [mm, x, y]
+	return [mm, model_stack[2], model_stack[3]]
 
 
 def function_output(enter: list, stage: int) -> None:

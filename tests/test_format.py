@@ -6,7 +6,7 @@ sys.path.append(path)
 
 import pytest
 
-from format import main_rocket_format
+from display.format import main_rocket_format
 
 
 @pytest.mark.format
@@ -14,7 +14,7 @@ class TestRocketFormat:
 	"""Тест RocketFormat"""
 	def test_rocket_total_speed(self):
 		test_result = main_rocket_format(23.3, 1)
-		result = "Сумма всех скоростей = 23.3 м/с" 
+		result = "Сумма всех скоростей = 23.3 м/с"
 		assert test_result == result
 
 	def test_rocket_natural_logarithm(self):

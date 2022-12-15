@@ -1,5 +1,11 @@
-#!/usr/bin/env python
-""" The Main formulas of mathematical modeling """
+#!/usr/bin/env python3
+"""
+В данном файле производиться математическое моделирование полета ракеты.
+Основные формулы:
+	- Эллептическое расстояние полета ракеты
+	- Общее сопротивление
+	- Общая скорость
+"""
 import logging
 import numpy as np
 
@@ -9,7 +15,8 @@ from setup.constant import (
 	ACCELERATION_FREE_FALL,
 	CROSS_SECTION_AREA,
 	VOLUME_EMPTY_CC,
-	UNIVERSAL_GAS_CONSTANT
+	UNIVERSAL_GAS_CONSTANT,
+	EARTH_RADIUS
 )
 from setup.settings import (
 	INITIAL_DISTANCE,
@@ -17,7 +24,8 @@ from setup.settings import (
 	AVERAGE_MOLAR_MASS,
 	BURNING_TEMPERATURE,
 	FPV,
-	TVV
+	TVV,
+	BEGIN_RADIUS_ROCKET
 )
 from exceptions import logger
 
@@ -36,6 +44,18 @@ def distance_N_step(U: int, n: int) -> float:
 		raise ValueError("Некорректные данные!!!")
 
 
+def tg_Beta(speed: int):
+	R = EARTH_RADIUS
+	v = (speed ** 2 * BEGIN_RADIUS_ROCKET) / 398_621
+	tg_Beta = v / (2 * np.sqrt(1-v))
+	return tg_Beta
+
+""" Эллиптическая дальность полета """
+def elliptical_range(speed: int) -> float:
+	R = EARTH_RADIUS
+	L = 2 * R * np.arctan(tg_Beta)
+	return L
+
 
 """ Масса всей ракеты """
 def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
@@ -43,7 +63,7 @@ def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
 
 
 """ Количество выделяемого газа за 1 моль """
-def amount_gas_released(mass):
+def amount_gas_released(mass: int) -> float:
 	amm = AVERAGE_MOLAR_MASS
 	return float(mass / amm)
 
@@ -58,7 +78,7 @@ def overpressure(U) -> float:
 
 
 """ Сила выталкивания (тяги) газов через сопло """
-def thrust_force(P_n: int):
+def thrust_force(P_n: float):
 	csa = CROSS_SECTION_AREA
 	return P_n * csa
 
@@ -85,7 +105,7 @@ class CylindricalCavity:
 	# Радиус внутренней цилиндрической полости
 	def _cylindrical_cavity(cls) -> float:
 		R_0 = INITIAL_DISTANCE
-		R_n = R_0 + n * U
+		R_n = R_0 + cls.n * cls.U
 		return R_n
 
 	# Объем цилиндрической полости
@@ -106,7 +126,7 @@ class Resistance:
 	# Аэродинамический напор
 	def _aerodynamic_pressure(cls):
 		AD = ATMOSPHERIC_DENSITY
-		return (AD * (V ** 2)) / 2
+		return (AD * (cls.V ** 2)) / 2
 
 	""" Аэродинамическое сопротивление """
 	def aerodynamic_drag(self):
@@ -129,9 +149,9 @@ class Resistance:
 
 class Speed:
 	""" Скорость """
-	def __init__(self, tf, gr, m, time, speed_0):
+	def __init__(self, tf, gl, m, time, speed_0):
 		self.thrust_force = tf
-		self.gravitation_losses = gr
+		self.gravitation_losses = gl
 		self.mass = m
 		self.time = time
 		self.speed_0 = speed_0
@@ -140,13 +160,48 @@ class Speed:
 	# Равнодействующая сила
 	def _resultant_force(cls):
 		G = ACCELERATION_FREE_FALL
-		return (self.thrust_force * self.gravitation_losses - self.mass * G)
+		return (cls.thrust_force * cls.gravitation_losses - cls.mass * G)
 
+	# Ускорение ракеты
 	def rocket_acceleration(self):
-		F = _resultant_force()
+		F = self._resultant_force()
 		return F / self.mass
 
 	def rocket_speed(self):
-		a = rocket_acceleration()
-		return speed_0 + a * self.time
+		a = self.rocket_acceleration()
+		return self.speed_0 + a * self.time
 
+class ModelFlight:
+	""" Моделирование полета """
+	def __init__(self, fuel_flow: float, mass: float, speed_0: float, time: int):
+		self.mass = mass
+		self.speed_0 = speed_0
+		self.time = time
+		self.tf = thrust_force(fuel_flow)
+
+	# Общее сопротивление
+	@classmethod
+	def _total_resistance(cls):
+		speed = cls._total_speed()
+		resistance = Resistance(speed, cls.tf, cls.mass)
+
+	# Общая скорость
+	@classmethod
+	def _total_speed(cls):
+		resistance = Resistance(cls.speed_0, cls.tf, cls.mass)
+		gl = resistance.gravitation_losses()
+		speed = Speed(cls.tf, gl, cls.mass, cls.time, cls.speed_0)
+
+	# Общее расстояние
+	@classmethod
+	def _total_distance(cls) -> float:
+		speed = cls._total_speed()
+		elliptical_range(speed)
+		return elliptical_range
+
+	def model_stack(self) -> list:
+		resistance = self._total_resistance
+		speed = self._total_speed
+		distance = self._total_distance
+		Beta = tg_Beta(speed)
+		return [resistance, speed, distance, Beta]

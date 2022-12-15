@@ -1,4 +1,8 @@
 {
-    "editor.formatOnSave": true,
-    "python.envFile": "${workspaceFolder}/.venv/bin/activate"
+  "editor.formatOnSave": true,
+  "python.envFile": "${workspaceFolder}/.venv/bin/activate",
+  "python.pipenvPath": "${workspaceFolder}/.venv/bin/activate",
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python3",
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.languageServer": "Pylance"
 }

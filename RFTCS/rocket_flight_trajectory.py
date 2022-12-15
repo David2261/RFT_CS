@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+"""
+В данном файле производиться расчет траектории полета ракеты.
+Основные формулы:
+	- Полет баллистической ракеты
+	- Полет космического аппарата
+"""
 import numpy as np
 
 from setup.constant import ACCELERATION_FREE_FALL
