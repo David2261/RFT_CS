@@ -162,6 +162,7 @@ class Speed:
 		G = ACCELERATION_FREE_FALL
 		return (cls.thrust_force * cls.gravitation_losses - cls.mass * G)
 
+	# Ускорение ракеты
 	def rocket_acceleration(self):
 		F = self._resultant_force()
 		return F / self.mass
@@ -177,24 +178,27 @@ class ModelFlight:
 		self.speed_0 = speed_0
 		self.time = time
 		self.tf = thrust_force(fuel_flow)
-	
+
+	# Общее сопротивление
 	@classmethod
 	def _total_resistance(cls):
 		speed = cls._total_speed()
 		resistance = Resistance(speed, cls.tf, cls.mass)
-	
+
+	# Общая скорость
 	@classmethod
 	def _total_speed(cls):
 		resistance = Resistance(cls.speed_0, cls.tf, cls.mass)
 		gl = resistance.gravitation_losses()
 		speed = Speed(cls.tf, gl, cls.mass, cls.time, cls.speed_0)
-	
+
+	# Общее расстояние
 	@classmethod
 	def _total_distance(cls) -> float:
 		speed = cls._total_speed()
 		elliptical_range(speed)
 		return elliptical_range
-	
+
 	def model_stack(self) -> list:
 		resistance = self._total_resistance
 		speed = self._total_speed
