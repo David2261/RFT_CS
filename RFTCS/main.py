@@ -1,8 +1,13 @@
 import os
 import sys
+import traceback
+import logging
 
 path = os.path.join(os.getcwd(), '../')
 sys.path.append(path)
+dir = os.path.abspath(os.curdir)
+this_name_file = os.path.abspath(__file__)
+
 
 from display.format import main_rocket_format
 from rocket_flight_simulation import (
@@ -10,10 +15,7 @@ from rocket_flight_simulation import (
 	Speed,
 	ModelFlight
 )
-from rocket_fuel_calculation import (
-	total_oil,
-	total_speed
-)
+from rocket_fuel_calculation import TotalOil
 from rocket_flight_trajectory import FlightBallistics
 from display.display_table import (
 	display_info,
@@ -161,9 +163,16 @@ def function_output(enter: list, stage: int) -> None:
 
 
 def main() -> None:
-	stage = int(input("Напишите количество ступеней: "))
-	screen = output_info()
-	function_output(screen, stage)
+	stage = input("Напишите количество ступеней: ")
+	try:
+		stage = int(stage)
+		screen = output_info()
+		function_output(screen, stage)
+	except ValueError:
+		frame = traceback.extract_tb(sys.exc_info()[2])
+		# Номер строки
+		line_no = str(frame[0]).split()[4]
+		logging.error(f"Вы ввели некоректные данные: {stage}")
 
 
 if __name__ == "__main__":
