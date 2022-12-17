@@ -1,8 +1,11 @@
 import os
 import sys
+import logging
+import logging.config
 
 path = os.path.join(os.getcwd(), '../')
 sys.path.append(path)
+
 
 from display.format import main_rocket_format
 from rocket_flight_simulation import (
@@ -10,10 +13,7 @@ from rocket_flight_simulation import (
 	Speed,
 	ModelFlight
 )
-from rocket_fuel_calculation import (
-	total_oil,
-	total_speed
-)
+from rocket_fuel_calculation import TotalOil
 from rocket_flight_trajectory import FlightBallistics
 from display.display_table import (
 	display_info,
@@ -22,6 +22,14 @@ from display.display_table import (
 	landing_display
 )
 from exceptions.exception import invalid_entire
+
+
+# Логгирование
+logging.config.fileConfig('log.conf')
+
+logger = logging.getLogger('dev')
+
+
 
 
 # Вывод первой подсказки
@@ -161,9 +169,13 @@ def function_output(enter: list, stage: int) -> None:
 
 
 def main() -> None:
-	stage = int(input("Напишите количество ступеней: "))
-	screen = output_info()
-	function_output(screen, stage)
+	stage = input("Напишите количество ступеней: ")
+	try:
+		stage = int(stage)
+		screen = output_info()
+		function_output(screen, stage)
+	except ValueError:
+		logger.error(f"Вы ввели некоректные данные: {stage}")
 
 
 if __name__ == "__main__":
