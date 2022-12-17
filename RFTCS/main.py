@@ -1,7 +1,6 @@
 import os
 import sys
 import logging
-import logging.config
 
 path = os.path.join(os.getcwd(), '../')
 sys.path.append(path)
@@ -25,10 +24,60 @@ from exceptions.exception import invalid_entire
 
 
 # Логгирование
-logging.config.fileConfig('log.conf')
+import logging.config
+# logging.config.fileConfig('log.conf')
+# logger = logging.getLogger('dev')
+# logging.basicConfig(
+# 	filename='__logs__/main.log',
+# 	encoding='utf-8',
+# 	level=logging.NOTSET,
+# 	format='%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s((%lineno)d) - %(message)s')
 
-logger = logging.getLogger('dev')
+DEBUG = True
 
+LOGGING_CONF = {
+    "disable_existing_loggers": True,
+    "version": 1,
+    "formatters": {
+        "standart": {
+            "format": "%(asctime)s - %(filename)s - %(name)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+        "exception": {
+            "format": "%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s((%lineno)d) - %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        }
+    },
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "formatter": "standart",
+			"args": ('__logs__/main.log', "w")
+        },
+        "dev_file": {
+            "level": "NOTSET",
+            "class": "logging.FileHandler",
+            "formatter": "exception",
+			"args": ('__logs__/error.log', "w")
+        },
+    },
+    "loggers": {
+        "root": {
+            "level": "INFO",
+            "handlers": ["file"],
+        },
+        "dev": {
+            "level": "ERROR",
+            "handlers": ["dev_file"],
+        },
+    },
+}
+
+
+logging.config.dictConfig(LOGGING_CONF)
+
+logger = logging.getLogger("dev")
 
 
 
@@ -169,6 +218,7 @@ def function_output(enter: list, stage: int) -> None:
 
 
 def main() -> None:
+	logger.info("Начало функции")
 	stage = input("Напишите количество ступеней: ")
 	try:
 		stage = int(stage)
