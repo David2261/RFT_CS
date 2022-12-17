@@ -1,12 +1,10 @@
 import os
 import sys
-import traceback
 import logging
+import logging.config
 
 path = os.path.join(os.getcwd(), '../')
 sys.path.append(path)
-dir = os.path.abspath(os.curdir)
-this_name_file = os.path.abspath(__file__)
 
 
 from display.format import main_rocket_format
@@ -24,6 +22,14 @@ from display.display_table import (
 	landing_display
 )
 from exceptions.exception import invalid_entire
+
+
+# Логгирование
+logging.config.fileConfig(fname="log.conf")
+
+logger = logging.getLogger('root')
+
+
 
 
 # Вывод первой подсказки
@@ -169,10 +175,7 @@ def main() -> None:
 		screen = output_info()
 		function_output(screen, stage)
 	except ValueError:
-		frame = traceback.extract_tb(sys.exc_info()[2])
-		# Номер строки
-		line_no = str(frame[0]).split()[4]
-		logging.error(f"Вы ввели некоректные данные: {stage}")
+		logger_error.error(f"Вы ввели некоректные данные: {stage}")
 
 
 if __name__ == "__main__":
