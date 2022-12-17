@@ -25,9 +25,9 @@ from exceptions.exception import invalid_entire
 
 
 # Логгирование
-logging.config.fileConfig(fname="log.conf")
+logging.config.fileConfig('log.conf')
 
-logger = logging.getLogger('root')
+logger = logging.getLogger('dev')
 
 
 
@@ -175,7 +175,7 @@ def main() -> None:
 		screen = output_info()
 		function_output(screen, stage)
 	except ValueError:
-		logger_error.error(f"Вы ввели некоректные данные: {stage}")
+		logger.error(f"Вы ввели некоректные данные: {stage}")
 
 
 if __name__ == "__main__":
