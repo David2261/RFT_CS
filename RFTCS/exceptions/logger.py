@@ -6,7 +6,6 @@ logging.basicConfig(level=logging.INFO, filename="__logs__/main.log", filemode="
 _log_format = f"%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s((%lineno)d) - %(message)s"
 
 
-
 def get_file_handler():
 	file_handler = logging.FileHandler("__logs__/main.log")
 	file_handler.setLevel(logging.WARNING)
@@ -27,5 +26,3 @@ def get_logger(name):
 	logger.addHandler(get_file_handler())
 	logger.addHandler(get_stream_handler())
 	return logger
-
-

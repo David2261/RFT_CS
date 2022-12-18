@@ -4,5 +4,9 @@
   "python.pipenvPath": "${workspaceFolder}/.venv/bin/activate",
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python3",
   "python.terminal.activateEnvInCurrentTerminal": true,
-  "python.languageServer": "Pylance"
+  "python.languageServer": "Pylance",
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.mypyEnabled": true
 }

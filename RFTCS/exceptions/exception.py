@@ -1,23 +1,47 @@
-import logging
-from .logger import *
+from pydoc import describe
 
 
-_log_format = f"%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s((%lineno)d) - %(message)s"
-
-logger = logging.getLogger(__name__)
-
-
-def invalid_entire(function: str, text: str, path: str, line_no) -> None:
+# Value error (ValueError)
+def invalid_entire(text: str) -> str:
 	description = f"Вы ввели некоректные данные: {text}"
-	print(description)
-	file_handler = logging.FileHandler("__logs__/error.log", encoding="utf-8")
-	file_handler.baseFileName(path)
-	file_handler.setLevel(logging.ERROR)
-	file_handler.setFormatter(logging.Formatter(_log_format))
-	return file_handler
+	return description
 
+# Attribute error (AttributeError)
+def invalid_attribute(text: str) -> str:
+	description = f"Вы пытаетесь вызвать не существующий параметр: {text}"
+	return description
 
+# IO error (IOError)
+def invalid_IO(text: str) -> str:
+	description = f"Не найден файл или диск заполнен: {text}"
+	return description
 
+# Import error (ImportError)
+def invalid_import(text: str) -> str:
+	description = f"Не получилось вызвать импорт: {text}"
+	return description
 
+# Index error (IndexError)
+def invalid_index(text: str) -> str:
+	description = f"Не найден индекс: {text}"
+	return description
 
+# Keyboard interrupt error (KeyboardInterrupt)
+def invalid_kbi() -> str:
+	description = f"Процесс остановлен в ручную!"
+	return description
 
+# Variable not found (NameError)
+def invalid_var(text: str) -> str:
+	description = f"Переменная не найдена: {text}"
+	return description
+
+# Type error (TypeError)
+def invalid_type(text: str) -> str:
+	description = f"Неправильный тип данных: {text}"
+	return description
+
+# Zero division (ZeroDivisionError)
+def invalid_zero_division(text: str) -> str:
+	description = f"Ошибка деления на 0: {text}"
+	return description
