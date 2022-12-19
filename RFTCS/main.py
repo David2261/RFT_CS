@@ -59,6 +59,8 @@ LOGGING_CONF = {
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
+log_info = logging.getLogger("root")
+
 
 
 try:
@@ -76,6 +78,7 @@ try:
 		flight_simulation_display,
 		landing_display
 	)
+	log_info.info("Импортирование файлов в main.py")
 except ImportError as e:
 	logger.error(invalid_IO(e))
 	sys.exit(1)
@@ -85,12 +88,21 @@ except Exception as e:
 
 # Вывод первой подсказки
 def output_info() -> list:
+	log_info.info("Запуск функции output_")
 	print(
 		"Какой формат вывода информации хотите?\n"
 		"В виде текста (1) или ввиде таблицы (2): ")
-	num = int(input())
+	try:
+		num = int(input())
+	except ValueError as e:
+		logger.error(invalid_entire(e))
+		sys.exit(1)
 	display_info()
-	selection = int(input())
+	try:
+		selection = int(input())
+	except ValueError as e:
+		logger.error(invalid_entire(e))
+		sys.exit(1)
 	return [num, selection]
 
 
@@ -100,6 +112,7 @@ def fuel_input(stage: int) -> list:
 	Mass_full_total = 0
 	Mass_empty_total = 0
 	Mass_fuel_total = 0
+	log_info.info("Включение функции 'fuel_input'")
 
 	n = 0
 	while (n < stage):
@@ -113,6 +126,7 @@ def fuel_input(stage: int) -> list:
 			Mass_empty = float(input(
 				f"Напишите масса без топлива для {n + 1} ступени: "))
 			Mass_empty_total += Mass_empty
+			log_info.info(f"Пройден цикл = {n+1}")
 		except ValueError as e:
 			logger.error(invalid_entire(e))
 			sys.exit(1)
@@ -133,6 +147,7 @@ def flight_model_input(stage: int) -> list:
 	total_speed = 0
 	total_time = 0
 	total_resistance = 0
+	log_info.info("Включение flight_model_input")
 
 	while (n < stage):
 		try:
@@ -154,6 +169,7 @@ def flight_model_input(stage: int) -> list:
 		total_resistance += sum_resistance
 		total_speed += speed
 		total_time += time
+		log_info.info(f"Пройден цикл = {n + 1}")
 		n += 1
 	distance = total_speed * time - total_resistance
 	return [total_resistance, distance, mass]
@@ -162,6 +178,7 @@ def flight_model_input(stage: int) -> list:
 def landing_model_input(stage: int) -> list:
 	n = 0
 	mm = 0
+	log_info.info("Включение landing_model_input")
 	try:
 		time = float(input("Время полета раакеты: "))
 		speed_0 = float(input("Напишите начальную скорость ракеты: "))
@@ -178,8 +195,9 @@ def landing_model_input(stage: int) -> list:
 		model = ModelFlight(fuel_flow, mass, speed_0, time)
 		model_stack = model.model_stack()
 		ballistic = FlightBallistics(model_stack[1])
-
 		mm += ballistic.flight_range()
+		log_info.info(f"Пройден цикл = {n + 1}")
+		n += 1
 	return [mm, model_stack[2], model_stack[3]]
 
 
@@ -188,6 +206,7 @@ def function_output(enter: list, stage: int) -> None:
 	display = enter[0]
 	# 1 - топливо, 2 - Полет, 3 - Моделирование полета
 	function = enter[1]
+	log_info.info("Включение function_output")
 	if function == 1:
 		if display == 1:
 			fuel_data = fuel_input(stage)
@@ -234,7 +253,7 @@ def function_output(enter: list, stage: int) -> None:
 
 
 def main() -> None:
-	logger.info("Начало функции")
+	log_info.info("Начало функции main")
 	stage = input("Напишите количество ступеней: ")
 	try:
 		stage = int(stage)

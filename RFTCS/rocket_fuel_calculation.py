@@ -20,13 +20,14 @@ class TotalOil:
 	@classmethod
 	# Функция нахождения натурального логарифма
 	def _natural_logarithm(cls) -> float:
-		num = Mf / Me
+		num = cls.Mf / cls.Me
 		return np.log(num)
 
+	@classmethod
 	# Функция расчет с помощью Эйлерова числа E
-	def _euler(self) -> float:
+	def _euler(cls) -> float:
 		G = ACCELERATION_FREE_FALL
-		return np.exp(self.total_speed() / (self.Isp * G))
+		return np.exp(cls.total_speed() / (cls.Isp * G))
 
 	# Сумма всех скоростей
 	def total_speed(self):

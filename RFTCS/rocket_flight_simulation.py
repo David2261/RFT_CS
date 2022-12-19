@@ -6,6 +6,7 @@
 	- Общее сопротивление
 	- Общая скорость
 """
+import sys
 import logging
 import numpy as np
 
@@ -40,8 +41,8 @@ def distance_N_step(U: int, n: int) -> float:
 		r_n = r0 - n * U
 		return float(r_n)
 	except Exception as e:
-		log.error("Value error")
-		raise ValueError("Некорректные данные!!!")
+		log.error(e)
+		sys.exit(1)
 
 
 def tg_Beta(speed: int):

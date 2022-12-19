@@ -8,5 +8,8 @@
   "python.linting.flake8Enabled": true,
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
-  "python.linting.mypyEnabled": true
+  "python.linting.mypyEnabled": true,
+  "python.linting.flake8Path": "${workspaceFolder}/setup.cfg",
+  "python.linting.pylintPath": "${workspaceFolder}/.editorconfig",
+  "python.testing.pytestEnabled": true
 }
