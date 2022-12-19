@@ -37,7 +37,7 @@ try:
 		TVV,
 		BEGIN_RADIUS_ROCKET
 	)
-	log_info("Включение импортов 'rocket_flight_simulation.py'")
+	log_info.info("Включение импортов 'rocket_flight_simulation.py'")
 except ImportError as e:
 	logger.error(invalid_import(e))
 	sys.exit(1)
@@ -164,7 +164,7 @@ class CylindricalCavity:
 	# Радиус внутренней цилиндрической полости
 	def _cylindrical_cavity(cls) -> float:
 		try:
-			log_info.info("Запуск функции 'height_rocket'")
+			log_info.info("Запуск функции '_cylindrical_cavity'")
 			R_0 = INITIAL_DISTANCE
 			R_n = R_0 + cls.n * cls.U
 		except Exception as e:
@@ -174,12 +174,18 @@ class CylindricalCavity:
 
 	# Объем цилиндрической полости
 	def volume_cylindrical_cavity(self):
-		R_n = self._cylindrical_cavity()
-		V = np.pi * float((R_n ** 2) * self.L)
+		try:
+			log_info.info("Запуск функции 'volume_cylindrical_cavity'")
+			R_n = self._cylindrical_cavity()
+			V = np.pi * float((R_n ** 2) * self.L)
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
 		return V
 
 
 class Resistance:
+	log_info.info("Запуск класса 'Resistance'")
 	""" Сопротивление """
 	def __init__(self, speed: int, tf: int, mass: int):
 		self.V = speed
@@ -189,29 +195,54 @@ class Resistance:
 	@classmethod
 	# Аэродинамический напор
 	def _aerodynamic_pressure(cls):
-		AD = ATMOSPHERIC_DENSITY
-		return (AD * (cls.V ** 2)) / 2
+		try:
+			log_info.info("Запуск функции '_aerodynamic_pressure'")
+			AD = ATMOSPHERIC_DENSITY
+			res = (AD * (cls.V ** 2)) / 2
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return res
 
 	""" Аэродинамическое сопротивление """
 	def aerodynamic_drag(self):
-		Cx = CROSS_SECTION_AREA
-		S = Cx
-		Q = self._aerodynamic_pressure()
-		return Cx * S * Q
+		try:
+			log_info.info("Запуск функции 'aerodynamic_drag'")
+			Cx = CROSS_SECTION_AREA
+			S = Cx
+			Q = self._aerodynamic_pressure()
+			res = Cx * S * Q
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return res
 
 	""" Гравитационные потери """
 	def gravitation_losses(self):
-		G = ACCELERATION_FREE_FALL
-		angel = np.sin(FPV)
-		return G * angel
+		try:
+			log_info.info("Запуск функции 'gravitation_losses'")
+			G = ACCELERATION_FREE_FALL
+			angel = np.sin(FPV)
+			res = G * angel
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return res
 
 	""" Потеря скорости на управление """
 	def control_losses(self):
-		angel = 1 - np.cos(TVV)
-		return (self.thrust_force / self.mass) * angel
+		try:
+			log_info.info("Запуск функции 'control_losses'")
+			angel = 1 - np.cos(TVV)
+			res = (self.thrust_force / self.mass) * angel
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return res
 
 
 class Speed:
+	log_info.info("Запуск класса 'Speed'")
 	""" Скорость """
 	def __init__(self, tf, gl, m, time, speed_0):
 		self.thrust_force = tf
@@ -223,19 +254,38 @@ class Speed:
 	@classmethod
 	# Равнодействующая сила
 	def _resultant_force(cls):
-		G = ACCELERATION_FREE_FALL
-		return (cls.thrust_force * cls.gravitation_losses - cls.mass * G)
+		try:
+			log_info.info("Запуск функции '_resultant_force'")
+			G = ACCELERATION_FREE_FALL
+			res = cls.thrust_force * cls.gravitation_losses - cls.mass * G
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return res
 
 	# Ускорение ракеты
 	def rocket_acceleration(self):
-		F = self._resultant_force()
-		return F / self.mass
+		try:
+			log_info.info("Запуск функции 'rocket_acceleration'")
+			F = self._resultant_force()
+			res = F / self.mass
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return res
 
 	def rocket_speed(self):
-		a = self.rocket_acceleration()
-		return self.speed_0 + a * self.time
+		try:
+			log_info.info("Запуск функции 'rocket_speed'")
+			a = self.rocket_acceleration()
+			res = self.speed_0 + a * self.time
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return res
 
 class ModelFlight:
+	log_info.info("Запуск класса 'ModelFlight'")
 	""" Моделирование полета """
 	def __init__(self, fuel_flow: float, mass: float, speed_0: float, time: int):
 		self.mass = mass
@@ -246,26 +296,48 @@ class ModelFlight:
 	# Общее сопротивление
 	@classmethod
 	def _total_resistance(cls):
-		speed = cls._total_speed()
-		resistance = Resistance(speed, cls.tf, cls.mass)
+		try:
+			log_info.info("Запуск функции '_total_resistance'")
+			speed = cls._total_speed()
+			resistance = Resistance(speed, cls.tf, cls.mass)
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return resistance
 
 	# Общая скорость
 	@classmethod
 	def _total_speed(cls):
-		resistance = Resistance(cls.speed_0, cls.tf, cls.mass)
-		gl = resistance.gravitation_losses()
-		speed = Speed(cls.tf, gl, cls.mass, cls.time, cls.speed_0)
+		try:
+			log_info.info("Запуск функции '_total_speed'")
+			resistance = Resistance(cls.speed_0, cls.tf, cls.mass)
+			gl = resistance.gravitation_losses()
+			speed = Speed(cls.tf, gl, cls.mass, cls.time, cls.speed_0)
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return speed
 
 	# Общее расстояние
 	@classmethod
 	def _total_distance(cls) -> float:
-		speed = cls._total_speed()
-		elliptical_range(speed)
-		return elliptical_range
+		try:
+			log_info.info("Запуск функции '_total_distance'")
+			speed = cls._total_speed()
+			res = elliptical_range(speed)
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
+		return res
 
 	def model_stack(self) -> list:
-		resistance = self._total_resistance
-		speed = self._total_speed
-		distance = self._total_distance
-		Beta = tg_Beta(speed)
+		try:
+			log_info.info("Запуск функции 'model_stack'")
+			resistance = self._total_resistance
+			speed = self._total_speed
+			distance = self._total_distance
+			Beta = tg_Beta(speed)
+		except Exception as e:
+			logger.error(e)
+			sys.exit(1)
 		return [resistance, speed, distance, Beta]
