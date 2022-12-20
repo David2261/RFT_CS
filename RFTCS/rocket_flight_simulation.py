@@ -56,23 +56,25 @@ def distance_N_step(U: int, n: int) -> float:
 
 
 
-def tg_Beta(speed: int):
+def tg_Beta(spd: int):
 	try:
 		log_info.info("Запуск функции 'tg_Beta'")
 		R = EARTH_RADIUS
-		v = (speed ** 2 * BEGIN_RADIUS_ROCKET) / 398_621
-		tg_Beta = v / (2 * np.sqrt(1-v))
+		start = BEGIN_RADIUS_ROCKET
+		v = (spd * start) / 398_621
+		corn = v / (2 * np.sqrt(abs(1-v)))
 	except Exception as e:
 		logger.error(e)
 		sys.exit(1)
-	return tg_Beta
+	return corn
 
 """ Эллиптическая дальность полета """
 def elliptical_range(speed: int) -> float:
 	try:
 		log_info.info("Запуск функции 'elliptical_range'")
 		R = EARTH_RADIUS
-		L = 2 * R * np.arctan(tg_Beta)
+		Tang = tg_Beta(speed)
+		L = 2 * R * np.arctan(Tang)
 	except Exception as e:
 		logger.error(e)
 		sys.exit(1)
@@ -192,13 +194,13 @@ class Resistance:
 		self.thrust_force = tf
 		self.mass = mass
 
-	@classmethod
 	# Аэродинамический напор
-	def _aerodynamic_pressure(cls):
+	def _aerodynamic_pressure(self):
 		try:
 			log_info.info("Запуск функции '_aerodynamic_pressure'")
 			AD = ATMOSPHERIC_DENSITY
-			res = (AD * (cls.V ** 2)) / 2
+			speed = self.V
+			res = (AD * (pow(speed, 2))) / 2
 		except Exception as e:
 			logger.error(e)
 			sys.exit(1)
@@ -251,13 +253,12 @@ class Speed:
 		self.time = time
 		self.speed_0 = speed_0
 
-	@classmethod
 	# Равнодействующая сила
-	def _resultant_force(cls):
+	def _resultant_force(self):
 		try:
 			log_info.info("Запуск функции '_resultant_force'")
 			G = ACCELERATION_FREE_FALL
-			res = cls.thrust_force * cls.gravitation_losses - cls.mass * G
+			res = thrust_force(self.speed_0) * self.gravitation_losses - self.mass * G
 		except Exception as e:
 			logger.error(e)
 			sys.exit(1)
@@ -291,39 +292,43 @@ class ModelFlight:
 		self.mass = mass
 		self.speed_0 = speed_0
 		self.time = time
-		self.tf = thrust_force(fuel_flow)
+		self.fuel_flow = fuel_flow
 
 	# Общее сопротивление
-	@classmethod
-	def _total_resistance(cls):
+	def _total_resistance(self):
 		try:
 			log_info.info("Запуск функции '_total_resistance'")
-			speed = cls._total_speed()
-			resistance = Resistance(speed, cls.tf, cls.mass)
+			speed = self._total_speed()
+			tf = thrust_force(self.fuel_flow)
+			resistance = Resistance(speed, tf, self.mass)
+			cont = resistance.control_losses()
+			gl = resistance.gravitation_losses()
+			ad = resistance.aerodynamic_drag()
+			res = cont + gl + ad
 		except Exception as e:
 			logger.error(e)
 			sys.exit(1)
-		return resistance
+		return res
 
 	# Общая скорость
-	@classmethod
-	def _total_speed(cls):
+	def _total_speed(self):
 		try:
 			log_info.info("Запуск функции '_total_speed'")
-			resistance = Resistance(cls.speed_0, cls.tf, cls.mass)
+			tf = thrust_force(self.fuel_flow)
+			resistance = Resistance(self.speed_0, tf, self.mass)
 			gl = resistance.gravitation_losses()
-			speed = Speed(cls.tf, gl, cls.mass, cls.time, cls.speed_0)
+			spd = Speed(tf, gl, self.mass, self.time, self.speed_0)
+			speed = spd.rocket_speed()
 		except Exception as e:
 			logger.error(e)
 			sys.exit(1)
 		return speed
 
 	# Общее расстояние
-	@classmethod
-	def _total_distance(cls) -> float:
+	def _total_distance(self) -> float:
 		try:
 			log_info.info("Запуск функции '_total_distance'")
-			speed = cls._total_speed()
+			speed = self._total_speed()
 			res = elliptical_range(speed)
 		except Exception as e:
 			logger.error(e)
@@ -333,11 +338,25 @@ class ModelFlight:
 	def model_stack(self) -> list:
 		try:
 			log_info.info("Запуск функции 'model_stack'")
-			resistance = self._total_resistance
-			speed = self._total_speed
-			distance = self._total_distance
+			resistance = self._total_resistance()
+			speed = self._total_speed()
+			distance = self._total_distance()
 			Beta = tg_Beta(speed)
 		except Exception as e:
 			logger.error(e)
 			sys.exit(1)
 		return [resistance, speed, distance, Beta]
+
+
+if __name__ == "__main__":
+	flow = 15
+	mass = 69
+	speed_0 = 360
+	time = 4
+	m = ModelFlight(flow, mass, speed_0, time)
+	stack = m.model_stack()
+	for i in range(3):
+		print(stack[i])
+	# 6.434864717732359
+	# 320.9329980000043
+	# 11679.656463692852

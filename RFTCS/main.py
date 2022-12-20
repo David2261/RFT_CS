@@ -98,7 +98,7 @@ def fuel_input(stage: int) -> list:
 		if n == stage:
 			break
 	fuel = TotalOil(Mass_empty_total, Mass_full_total, Isp_total)
-	speed += fuel.total_speed()
+	speed = fuel.total_speed()
 	return [speed, Mass_fuel_total]
 
 
@@ -141,7 +141,7 @@ def landing_model_input(stage: int) -> list:
 	mm = 0
 	log_info.info("Включение landing_model_input")
 	try:
-		time = float(input("Время полета раакеты: "))
+		time = float(input("Время полета ракеты: "))
 		speed_0 = float(input("Напишите начальную скорость ракеты: "))
 	except ValueError as e:
 		logger.error(invalid_entire(e))
