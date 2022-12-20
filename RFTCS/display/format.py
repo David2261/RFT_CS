@@ -1,17 +1,29 @@
 """
 В этом файле собраны все способы форматирования результатов
 """
-from typing import NamedTuple, Union
 from colorama import init
-
 init()
-
 from colorama import Fore, Back, Style
 
+import os
+import sys
 
+path = os.path.join(os.getcwd(), '../RFTCS/')
+sys.path.append(path)
+
+import logging
+import logging.config
+
+from exceptions.exception import *
+from setup.logging_conf import LOGGING_CONF
+
+logging.config.dictConfig(LOGGING_CONF)
+logger = logging.getLogger("dev")
+log_info = logging.getLogger("root")
 
 
 class RocketFormat:
+	log_info.info("Запуск класса 'RocketFormat'")
 	def __init__(self, num):
 		self.num = num
 
@@ -37,6 +49,7 @@ class RocketFormat:
 
 
 class FlightFormat:
+	log_info.info("Запуск класса 'FlightFormat'")
 	def __init__(self, num):
 		self.num = num
 
@@ -62,6 +75,7 @@ class FlightFormat:
 
 
 class LandingFormat:
+	log_info.info("Запуск класса 'LandingFormat'")
 	def __init__(self, num):
 		self.num = num
 
@@ -88,6 +102,7 @@ class LandingFormat:
 
 # Функция для вывода результатов, той или иной функции
 def main_rocket_format(num: float, idea: int) -> str:
+	log_info.info("Запуск функции 'main_rocket_format'")
 	num = str(num)
 	if idea == 1:
 		rf = RocketFormat(num)
