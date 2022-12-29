@@ -1,0 +1,7 @@
+\babel@toc {russian}{}
+\contentsline {chapter}{\numberline {1}Введение}{4}{}%
+\contentsline {section}{\numberline {1.1}Концепция}{4}{}%
+\contentsline {section}{\numberline {1.2}Цель}{4}{}%
+\contentsline {section}{\numberline {1.3}Технологии}{4}{}%
+\contentsline {section}{\numberline {1.4}Декомпозиция задачи}{5}{}%
+\contentsline {section}{\numberline {1.5}Обработка ошибок}{5}{}%
