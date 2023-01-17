@@ -5,18 +5,14 @@ path = os.path.join(os.getcwd(), '../RFTCS/')
 sys.path.append(path)
 
 import pytest
-import numpy as np
+# import numpy as np
 
 from main import (
-	output_info,
-	fuel_input,
-	flight_model_input,
-	function_output
+	flight_model_input
 )
 
 
-
-
+@pytest.mark.input
 class TestFlightModel:
 	"""Тест для ввода моделирование полета"""
 	stage = 1
@@ -33,6 +29,3 @@ class TestFlightModel:
 		res = flight_model_input(
 			self.stage)
 		assert res
-
-
-

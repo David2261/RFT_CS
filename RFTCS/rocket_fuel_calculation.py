@@ -10,7 +10,7 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import *
+from exceptions.exception import invalid_import
 from setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
@@ -19,14 +19,17 @@ log_info = logging.getLogger("root")
 
 try:
 	from setup.constant import ACCELERATION_FREE_FALL
+
 	log_info.info("Включение импортов 'rocket_fuel_calculation.py'")
 except ImportError as e:
 	logger.error(invalid_import(e))
 	sys.exit(1)
 
+
 class TotalOil:
 	log_info.info("Запуск класса 'TotalOil'")
 	""" Расчет общей скорости """
+
 	def __init__(self, m_empty_rocket, mass_rocket, Isp):
 		self.Me = m_empty_rocket
 		self.Mf = mass_rocket

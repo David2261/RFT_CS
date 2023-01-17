@@ -10,12 +10,12 @@ sys.path.append(path)
 import logging
 import logging.config
 
-from exceptions.exception import *
 from setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
 log_info = logging.getLogger("root")
+
 
 def display_info():
 	log_info.info("Запуск функции 'display_info'")

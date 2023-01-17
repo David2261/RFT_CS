@@ -11,7 +11,7 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import *
+from exceptions.exception import invalid_import
 from setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
@@ -20,23 +20,21 @@ log_info = logging.getLogger("root")
 
 try:
 	from setup.constant import (
-		ATMOSPHERIC_PRESSURE,
 		ATMOSPHERIC_DENSITY,
 		ACCELERATION_FREE_FALL,
 		CROSS_SECTION_AREA,
-		VOLUME_EMPTY_CC,
 		UNIVERSAL_GAS_CONSTANT,
-		EARTH_RADIUS
+		EARTH_RADIUS,
 	)
 	from setup.settings import (
 		INITIAL_DISTANCE,
-		FUEL_DENSITY,
 		AVERAGE_MOLAR_MASS,
 		BURNING_TEMPERATURE,
 		FPV,
 		TVV,
-		BEGIN_RADIUS_ROCKET
+		BEGIN_RADIUS_ROCKET,
 	)
+
 	log_info.info("Включение импортов 'rocket_flight_simulation.py'")
 except ImportError as e:
 	logger.error(invalid_import(e))
@@ -44,6 +42,8 @@ except ImportError as e:
 
 
 """ Расстояние от горящей поверхности топлива до стенки камеры сгорания. """
+
+
 def distance_N_step(U: int, n: int) -> float:
 	try:
 		r0 = INITIAL_DISTANCE
@@ -55,20 +55,21 @@ def distance_N_step(U: int, n: int) -> float:
 	return float(r_n)
 
 
-
 def tg_Beta(spd: int):
 	try:
 		log_info.info("Запуск функции 'tg_Beta'")
-		R = EARTH_RADIUS
 		start = BEGIN_RADIUS_ROCKET
 		v = (spd * start) / 398_621
-		corn = v / (2 * np.sqrt(abs(1-v)))
+		corn = v / (2 * np.sqrt(abs(1 - v)))
 	except Exception as e:
 		logger.error(e)
 		sys.exit(1)
 	return corn
 
+
 """ Эллиптическая дальность полета """
+
+
 def elliptical_range(speed: int) -> float:
 	try:
 		log_info.info("Запуск функции 'elliptical_range'")
@@ -82,6 +83,8 @@ def elliptical_range(speed: int) -> float:
 
 
 """ Масса всей ракеты """
+
+
 def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
 	try:
 		log_info.info("Запуск функции 'mass_rocket'")
@@ -93,6 +96,8 @@ def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
 
 
 """ Количество выделяемого газа за 1 моль """
+
+
 def amount_gas_released(mass: int) -> float:
 	try:
 		log_info.info("Запуск функции 'amount_gas_released'")
@@ -105,6 +110,8 @@ def amount_gas_released(mass: int) -> float:
 
 
 """ Избыточное давление в камере сгорания на n-шаге """
+
+
 def overpressure(U) -> float:
 	try:
 		log_info.info("Запуск функции 'overpressure'")
@@ -112,7 +119,7 @@ def overpressure(U) -> float:
 		ugc = UNIVERSAL_GAS_CONSTANT
 		bt = BURNING_TEMPERATURE
 		h = amm * ugc * bt
-		res =  float(h / U)
+		res = float(h / U)
 	except Exception as e:
 		logger.error(e)
 		sys.exit(1)
@@ -120,6 +127,8 @@ def overpressure(U) -> float:
 
 
 """ Сила выталкивания (тяги) газов через сопло """
+
+
 def thrust_force(P_n: float):
 	try:
 		log_info.info("Запуск функции 'thrust_force'")
@@ -132,11 +141,13 @@ def thrust_force(P_n: float):
 
 
 """ Импульс, сообщаемого ракете на n-шаге """
+
+
 def impuls(P_n, time):
 	try:
 		log_info.info("Запуск функции 'impuls'")
 		tf = thrust_force(P_n)
-		res =  float(tf * time)
+		res = float(tf * time)
 	except Exception as e:
 		logger.error(e)
 		sys.exit(1)
@@ -144,6 +155,8 @@ def impuls(P_n, time):
 
 
 """ Высота ракеты над стартовой площадкой """
+
+
 def height_rocket(h_n, u, t):
 	try:
 		log_info.info("Запуск функции 'height_rocket'")
@@ -155,8 +168,10 @@ def height_rocket(h_n, u, t):
 
 
 class CylindricalCavity:
-	""" Расчет объема внутренней цилиндрической полости """
+	"""Расчет объема внутренней цилиндрической полости"""
+
 	log_info.info("Запуск класса 'CylindricalCavity'")
+
 	def __init__(self, speed_burning_fuel: int, step: int, Long: int):
 		self.U = speed_burning_fuel
 		self.n = step
@@ -179,7 +194,7 @@ class CylindricalCavity:
 		try:
 			log_info.info("Запуск функции 'volume_cylindrical_cavity'")
 			R_n = self._cylindrical_cavity()
-			V = np.pi * float((R_n ** 2) * self.L)
+			V = np.pi * float((R_n**2) * self.L)
 		except Exception as e:
 			logger.error(e)
 			sys.exit(1)
@@ -189,6 +204,7 @@ class CylindricalCavity:
 class Resistance:
 	log_info.info("Запуск класса 'Resistance'")
 	""" Сопротивление """
+
 	def __init__(self, speed: int, tf: int, mass: int):
 		self.V = speed
 		self.thrust_force = tf
@@ -207,6 +223,7 @@ class Resistance:
 		return res
 
 	""" Аэродинамическое сопротивление """
+
 	def aerodynamic_drag(self):
 		try:
 			log_info.info("Запуск функции 'aerodynamic_drag'")
@@ -220,6 +237,7 @@ class Resistance:
 		return res
 
 	""" Гравитационные потери """
+
 	def gravitation_losses(self):
 		try:
 			log_info.info("Запуск функции 'gravitation_losses'")
@@ -232,6 +250,7 @@ class Resistance:
 		return res
 
 	""" Потеря скорости на управление """
+
 	def control_losses(self):
 		try:
 			log_info.info("Запуск функции 'control_losses'")
@@ -246,6 +265,7 @@ class Resistance:
 class Speed:
 	log_info.info("Запуск класса 'Speed'")
 	""" Скорость """
+
 	def __init__(self, tf, gl, m, time, speed_0):
 		self.thrust_force = tf
 		self.gravitation_losses = gl
@@ -285,9 +305,11 @@ class Speed:
 			sys.exit(1)
 		return res
 
+
 class ModelFlight:
 	log_info.info("Запуск класса 'ModelFlight'")
 	""" Моделирование полета """
+
 	def __init__(self, fuel_flow: float, mass: float, speed_0: float, time: int):
 		self.mass = mass
 		self.speed_0 = speed_0
@@ -357,6 +379,6 @@ if __name__ == "__main__":
 	stack = m.model_stack()
 	for i in range(3):
 		print(stack[i])
-	# 6.434864717732359
-	# 320.9329980000043
-	# 11679.656463692852
+# 6.434864717732359
+# 320.9329980000043
+# 11679.656463692852

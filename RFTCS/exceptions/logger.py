@@ -1,9 +1,14 @@
 """ A file with the main logging configuration using the standard library """
 import logging
 
-logging.basicConfig(level=logging.INFO, filename="__logs__/main.log", filemode="w")
+logging.basicConfig(
+	level=logging.INFO,
+	filename="__logs__/main.log",
+	filemode="w"
+)
 
-_log_format = f"%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s((%lineno)d) - %(message)s"
+_log_format = f"%(asctime)s - [%(levelname)s] - \
+	%(name)s - (%(filename)s).%(funcName)s((%lineno)d) - %(message)s"
 
 
 def get_file_handler():

@@ -21,7 +21,7 @@ class TestFlightBallistics:
 	speed = 29000
 
 	@classmethod
-	# Синус двойного угола 
+	# Синус двойного угола
 	def _double_angle_sine(cls):
 		A = FPV
 		return 2 * np.sin(A) * np.cos(A)
@@ -29,7 +29,6 @@ class TestFlightBallistics:
 	# Тестирвание вычисления функции
 	def test_flight_range(self):
 		G = ACCELERATION_FREE_FALL
-		A = FPV
 		sine = self._double_angle_sine()
 		answer = ((self.speed ** 2) * sine) / (2 * G)
 		result = FlightBallistics(self.speed)
@@ -44,7 +43,6 @@ class TestFlightBallistics:
 	# Тестирование на логическую операцию функции
 	def test_flight_range_less(self):
 		G = ACCELERATION_FREE_FALL
-		A = FPV
 		sine = self._double_angle_sine()
 		answer = ((self.speed ** 2) * sine) / (2 * G)
 		result = FlightBallistics(self.speed)
@@ -59,7 +57,7 @@ class TestFlightBallistics:
 		assert result.flight_time() == answer
 
 	# Тестирование типа вывода функции
-	def test_flight_range_type(self):
+	def test_flight_time_type(self):
 		result = FlightBallistics(self.speed)
 		res = result.flight_time()
 		assert isinstance(res, (float, int))

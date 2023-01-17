@@ -10,7 +10,7 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import *
+from exceptions.exception import invalid_import
 from setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
@@ -24,9 +24,11 @@ except ImportError as e:
 	logger.error(invalid_import(e))
 	sys.exit(1)
 
+
 class FlightBallistics:
 	log_info.info("Запуск класса 'FlightBallistics'")
 	""" Балистический полет ракеты, внутри Земли """
+
 	def __init__(self, speed):
 		self.speed = speed
 
@@ -46,9 +48,8 @@ class FlightBallistics:
 	def flight_range(self):
 		try:
 			G = ACCELERATION_FREE_FALL
-			A = FPV
 			sine = self._double_angle_sine()
-			res = ((self.speed ** 2) * sine) / (2 * G)
+			res = ((self.speed**2) * sine) / (2 * G)
 			log_info.info("Запуск функции 'flight_range'")
 		except Exception as e:
 			logger.error(e)
