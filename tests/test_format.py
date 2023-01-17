@@ -87,7 +87,7 @@ class TestFlightFormat:
 
 @pytest.mark.format
 @pytest.mark.exception
-class TestFlightFormat:
+class TestFlightFormatError:
 	"""Тест FlightFormat"""
 
 	def test_flight_resistance_force_type_error(self):

@@ -7,35 +7,32 @@ sys.path.append(path)
 import pytest
 import numpy as np
 
-from setup.constant import (
-	ATMOSPHERIC_PRESSURE,
-	ATMOSPHERIC_DENSITY,
-	ACCELERATION_FREE_FALL,
-	CROSS_SECTION_AREA,
-	VOLUME_EMPTY_CC,
-	UNIVERSAL_GAS_CONSTANT
-)
-from setup.settings import (
-	INITIAL_DISTANCE,
-	FUEL_DENSITY,
-	AVERAGE_MOLAR_MASS,
-	BURNING_TEMPERATURE,
-	FPV,
-	TVV
-)
+# from setup.constant import (
+# 	ATMOSPHERIC_PRESSURE,
+# 	ATMOSPHERIC_DENSITY,
+# 	ACCELERATION_FREE_FALL,
+# 	CROSS_SECTION_AREA,
+# 	VOLUME_EMPTY_CC,
+# 	UNIVERSAL_GAS_CONSTANT
+# )
+from setup.settings import INITIAL_DISTANCE
+# FUEL_DENSITY,
+# AVERAGE_MOLAR_MASS,
+# BURNING_TEMPERATURE,
+# FPV,
+# TVV
 from rocket_flight_simulation import (
-	distance_N_step,
-	mass_rocket,
-	amount_gas_released,
-	overpressure,
-	thrust_force,
-	impuls,
-	height_rocket,
-	CylindricalCavity,
-	Resistance,
-	Speed
+	# distance_N_step,
+	# mass_rocket,
+	# amount_gas_released,
+	# overpressure,
+	# thrust_force,
+	# impuls,
+	# height_rocket,
+	CylindricalCavity
+	# Resistance,
+	# Speed
 )
-
 
 
 @pytest.mark.rfs
@@ -65,7 +62,6 @@ class TestCylindricalCavity:
 		R_n = result._double_angle_sine()
 		answer = np.pi * float((R_n ** 2) * self.L)
 		assert result.volume_cylindrical_cavity() < (answer + 1)
-	
 
 
 @pytest.mark.rfs
@@ -73,4 +69,3 @@ class TestCylindricalCavity:
 class TestCylindricalCavityError:
 	"""Тест _body_area с ошибкой"""
 	...
-
