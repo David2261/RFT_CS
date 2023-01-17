@@ -11,5 +11,6 @@
   "python.linting.mypyEnabled": true,
   "python.linting.flake8Path": "${workspaceFolder}/setup.cfg",
   "python.linting.pylintPath": "${workspaceFolder}/.editorconfig",
-  "python.testing.pytestEnabled": true
+  "python.testing.pytestEnabled": true,
+  "poetryPath": "../poetry.lock",
 }

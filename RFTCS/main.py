@@ -1,10 +1,12 @@
-from multiprocessing.sharedctypes import Value
-import os
 import sys
 import logging
 import logging.config
 
-from exceptions.exception import *
+from exceptions.exception import (
+	invalid_entire,
+	invalid_IO,
+	invalid_type
+)
 from setup.logging_conf import LOGGING_CONF
 
 # Логгирование
@@ -14,7 +16,8 @@ from setup.logging_conf import LOGGING_CONF
 # 	filename='__logs__/main.log',
 # 	encoding='utf-8',
 # 	level=logging.NOTSET,
-# 	format='%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s((%lineno)d) - %(message)s')
+# 	format='%(asctime)s - [%(levelname)s] - %(name)s -
+# 	(%(filename)s).%(funcName)s((%lineno)d) - %(message)s')
 
 DEBUG = True
 
@@ -23,22 +26,18 @@ logger = logging.getLogger("dev")
 log_info = logging.getLogger("root")
 
 
-
 try:
 	from display.format import main_rocket_format
-	from rocket_flight_simulation import (
-		Resistance,
-		Speed,
-		ModelFlight
-	)
+	from rocket_flight_simulation import Resistance, ModelFlight
 	from rocket_fuel_calculation import TotalOil
 	from rocket_flight_trajectory import FlightBallistics
 	from display.display_table import (
 		display_info,
 		fuel_display,
 		flight_simulation_display,
-		landing_display
+		landing_display,
 	)
+
 	log_info.info("Импортирование файлов в main.py")
 except ImportError as e:
 	logger.error(invalid_IO(e))
@@ -47,12 +46,14 @@ except Exception as e:
 	logger.error(invalid_entire(e))
 	sys.exit(1)
 
+
 # Вывод первой подсказки
 def output_info() -> list:
 	log_info.info("Запуск функции output_")
 	print(
 		"Какой формат вывода информации хотите?\n"
-		"В виде текста (1) или ввиде таблицы (2): ")
+		"В виде текста (1) или ввиде таблицы (2): "
+	)
 	try:
 		num = int(input())
 	except ValueError as e:
@@ -76,16 +77,17 @@ def fuel_input(stage: int) -> list:
 	log_info.info("Включение функции 'fuel_input'")
 
 	n = 0
-	while (n < stage):
+	while n < stage:
 		try:
-			Isp = float(input(
-				f"Напишите удельный импульс для {n + 1} ступени: "))
+			Isp = float(input(f"Напишите удельный импульс для {n + 1} ступени: "))
 			Isp_total += Isp
-			Mass_full = float(input(
-				f"Напишите масса полного топлива для {n + 1} ступени: "))
+			Mass_full = float(
+				input(f"Напишите масса полного топлива для {n + 1} ступени: ")
+			)
 			Mass_full_total += Mass_full
-			Mass_empty = float(input(
-				f"Напишите масса без топлива для {n + 1} ступени: "))
+			Mass_empty = float(
+				input(f"Напишите масса без топлива для {n + 1} ступени: ")
+			)
 			Mass_empty_total += Mass_empty
 			log_info.info(f"Пройден цикл = {n+1}")
 		except ValueError as e:
@@ -110,7 +112,7 @@ def flight_model_input(stage: int) -> list:
 	total_resistance = 0
 	log_info.info("Включение flight_model_input")
 
-	while (n < stage):
+	while n < stage:
 		try:
 			speed = float(input("Напишите скорость ракеты: "))
 			fuel_flow = float(input("Напишите расход ступени: "))
@@ -146,7 +148,7 @@ def landing_model_input(stage: int) -> list:
 	except ValueError as e:
 		logger.error(invalid_entire(e))
 		sys.exit(1)
-	while (n < stage):
+	while n < stage:
 		try:
 			mass = float(input(f"Напишите массу ступени ({stage}): "))
 			fuel_flow = float(input("Напишите расход ступени: "))
@@ -190,7 +192,7 @@ def function_output(enter: list, stage: int) -> None:
 			stack = [
 				round(land_data[0], 2),
 				round(land_data[1], 2),
-				round(land_data[2], 2)
+				round(land_data[2], 2),
 			]
 			landing_display(stack)
 		else:
@@ -206,7 +208,7 @@ def function_output(enter: list, stage: int) -> None:
 			stack = [
 				round(flight_data[0], 2),
 				round(flight_data[1], 2),
-				round(flight_data[2], 2)
+				round(flight_data[2], 2),
 			]
 			flight_simulation_display(stack)
 		else:
@@ -228,7 +230,6 @@ def main() -> None:
 		text = invalid_entire(stage)
 		logger.error(text)
 		sys.exit(1)
-
 
 
 if __name__ == "__main__":
