@@ -3,7 +3,7 @@
 """
 from colorama import init
 init()
-from colorama import Fore, Back, Style
+from colorama import Fore
 
 import os
 import sys
@@ -14,7 +14,6 @@ sys.path.append(path)
 import logging
 import logging.config
 
-from exceptions.exception import *
 from setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
@@ -24,6 +23,7 @@ log_info = logging.getLogger("root")
 
 class RocketFormat:
 	log_info.info("Запуск класса 'RocketFormat'")
+
 	def __init__(self, num):
 		self.num = num
 
@@ -50,6 +50,7 @@ class RocketFormat:
 
 class FlightFormat:
 	log_info.info("Запуск класса 'FlightFormat'")
+
 	def __init__(self, num):
 		self.num = num
 
@@ -76,6 +77,7 @@ class FlightFormat:
 
 class LandingFormat:
 	log_info.info("Запуск класса 'LandingFormat'")
+
 	def __init__(self, num):
 		self.num = num
 
