@@ -12,7 +12,7 @@ float FUEL_DENSITY = 70.99;
 float AVERAGE_MOLAR_MASS = 0.07;
 
 // Температура горения, градусах
-float BURNING_TEMPERATURE = 510;
+float BURNING_TEMPERATURE = 510.0;
 
 // Угол вектора тяги над горизонтом, градусах
 int FPV = 15;
