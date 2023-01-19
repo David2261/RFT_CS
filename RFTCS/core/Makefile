@@ -9,15 +9,16 @@ FT = flight_trajectory.c
 FO = flight_trajectory.o
 
 all: trajectory
-
+# -shared -Wl,-soname,adder -o adder.so -fPIC
 trajectory: $(FT)
-	$(GG) -c $(GC) $(FT)
-	$(GG) -o Trajectory $(FO) -lm
+	$(GG) $(GC) -fPIC -shared -o Trajectory.so $(FT) -lm
 	$(MAKE) run_trajectory
 
 
 run_trajectory: $(FO)
-	mv Trajectory ./$(DIR_OUT)/Trajectory
+	mv Trajectory.so ./$(DIR_OUT)/Trajectory.so
+# 	mv $(FO) ./$(DIR_OUT)/$(FO)
 
 clean:
 	rm -rf $(DIR_OUT)/*
+	rm -f ./*.o && rm -f ./*.so
