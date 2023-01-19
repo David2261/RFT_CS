@@ -20,8 +20,8 @@ float api_aerodynamic_drag(float, float);
 float api_gravitation_losses(float, float);
 float api_control_losses(float, float, float);
 // Speed
-float api_resultant_force(float, float, float);
+float api_resultant_force(float, float, float, float);
 float api_rocket_acceleration(float, float);
-float api_rocket_speed(float, float, float);
+float api_rocket_speed(float, float, int);
 
 #endif // SIMULATION_H_

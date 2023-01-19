@@ -68,12 +68,14 @@ float api_cylindrical_cavity(float init_distance, float step, float burnFuel)
 
 float api_volume_cylindrical_cavity(float R_n, float distance)
 {
-	return ((float)M_PI * (R_n * *2) * distance);
+	double degree = 2.00;
+	return ((float)M_PI * pow(R_n, degree) * distance);
 }
 
 float api_aerodynamic_pressure(float speed, float density)
 {
-	return (density * pow(speed, 2)) / 2;
+	double degree = 2.00;
+	return (density * pow(speed, degree)) / 2;
 }
 
 float api_aerodynamic_drag(float pressure, float cross_section_area)
@@ -90,4 +92,21 @@ float api_control_losses(float TVV, float thrustF, float mass)
 {
 	float angel = 1 - cos(TVV);
 	return (thrustF / mass) * angel;
+}
+
+// Speed
+float api_resultant_force(float thrustF, float gravLost, float mass, float G)
+{
+	return thrustF * gravLost - mass * G;
+}
+
+float api_rocket_acceleration(float restF, float mass)
+{
+	return restF / mass;
+}
+
+float api_rocket_speed(float speed_0, float boost, int time)
+{
+	float clock = (float) time;
+	return speed_0 + boost * time;
 }
