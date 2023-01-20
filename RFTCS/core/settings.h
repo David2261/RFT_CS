@@ -1,6 +1,5 @@
-#ifndef SETTINGS_H_
-#define SETTINGS_H_
-
+#ifndef RFT_CS_RFTCS_CORE_SETTINGS_H_
+#define RFT_CS_RFTCS_CORE_SETTINGS_H_
 
 // Начальное расстояние, м
 float INITIAL_DISTANCE = 1.34;
@@ -23,5 +22,4 @@ int TVV = 12;
 // Масса конструкции ракеты, кг
 int MRS = 450000;
 
-
-#endif  //  SETTINGS_H_
+#endif // RFT_CS_RFTCS_CORE_SETTINGS_H_

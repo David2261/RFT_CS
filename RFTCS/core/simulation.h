@@ -1,5 +1,5 @@
-#ifndef SIMULATION_H_
-#define SIMULATION_H_
+#ifndef RFT_CS_RFTCS_CORE_SIMULATION_H_
+#define RFT_CS_RFTCS_CORE_SIMULATION_H_
 
 #include "main_extend.h"
 float api_distance_N_step(float, int, float);
@@ -24,4 +24,4 @@ float api_resultant_force(float, float, float, float);
 float api_rocket_acceleration(float, float);
 float api_rocket_speed(float, float, int);
 
-#endif // SIMULATION_H_
+#endif // RFT_CS_RFTCS_CORE_SIMULATION_H_

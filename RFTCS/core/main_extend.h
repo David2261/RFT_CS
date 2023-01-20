@@ -1,5 +1,5 @@
-#ifndef MAIN_EXTEND_H_
-#define MAIN_EXTEND_H_
+#ifndef RFT_CS_RFTCS_CORE_MAIN_EXTEND_H_
+#define RFT_CS_RFTCS_CORE_MAIN_EXTEND_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,4 +8,4 @@
 #include "constant.h"
 #include "settings.h"
 
-#endif // MAIN_EXTEND_H_
+#endif // RFT_CS_RFTCS_CORE_MAIN_EXTEND_H_

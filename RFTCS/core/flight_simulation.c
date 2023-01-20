@@ -107,6 +107,6 @@ float api_rocket_acceleration(float restF, float mass)
 
 float api_rocket_speed(float speed_0, float boost, int time)
 {
-	float clock = (float) time;
-	return speed_0 + boost * time;
+	float clock = (float)time;
+	return speed_0 + boost * clock;
 }
