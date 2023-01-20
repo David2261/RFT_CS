@@ -1,6 +1,5 @@
-#ifndef CONSTANT_H_
-#define CONSTANT_H_
-
+#ifndef RFT_CS_RFTCS_CORE_CONSTANT_H_
+#define RFT_CS_RFTCS_CORE_CONSTANT_H_
 
 // Давление атмосферы, Па
 int ATMOSPHERIC_PRESSURE = 100000;
@@ -20,5 +19,4 @@ float VOLUME_EMPTY_CC = 0.000037994;
 // Универсальная газовая константа
 float UNIVERSAL_GAS_CONSTANT = 8.314;
 
-
-#endif  //  CONSTANT_H_
+#endif // RFT_CS_RFTCS_CORE_CONSTANT_H_
