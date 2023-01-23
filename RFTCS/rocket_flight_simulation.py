@@ -206,7 +206,6 @@ class Resistance:
 		return res
 
 	""" Аэродинамическое сопротивление """
-
 	def aerodynamic_drag(self):
 		try:
 			log_info.info("Запуск функции 'aerodynamic_drag'")
@@ -220,7 +219,6 @@ class Resistance:
 		return res
 
 	""" Гравитационные потери """
-
 	def gravitation_losses(self):
 		try:
 			log_info.info("Запуск функции 'gravitation_losses'")
@@ -233,7 +231,6 @@ class Resistance:
 		return res
 
 	""" Потеря скорости на управление """
-
 	def control_losses(self):
 		try:
 			log_info.info("Запуск функции 'control_losses'")
