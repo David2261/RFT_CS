@@ -90,8 +90,6 @@ def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
 
 
 """ Количество выделяемого газа за 1 моль """
-
-
 def amount_gas_released(mass: int) -> float:
 	try:
 		log_info.info("Запуск функции 'amount_gas_released'")
@@ -104,8 +102,6 @@ def amount_gas_released(mass: int) -> float:
 
 
 """ Избыточное давление в камере сгорания на n-шаге """
-
-
 def overpressure(U) -> float:
 	try:
 		log_info.info("Запуск функции 'overpressure'")
@@ -121,13 +117,10 @@ def overpressure(U) -> float:
 
 
 """ Сила выталкивания (тяги) газов через сопло """
-
-
 def thrust_force(P_n: float):
 	try:
 		log_info.info("Запуск функции 'thrust_force'")
-		csa = CROSS_SECTION_AREA
-		res = P_n * csa
+		res = float(P_n) * float(CROSS_SECTION_AREA)
 	except Exception as e:
 		logger.error(e)
 		sys.exit(1)
@@ -135,13 +128,11 @@ def thrust_force(P_n: float):
 
 
 """ Импульс, сообщаемого ракете на n-шаге """
-
-
 def impuls(P_n, time):
 	try:
 		log_info.info("Запуск функции 'impuls'")
 		tf = thrust_force(P_n)
-		res = float(tf * time)
+		res = tf * float(time)
 	except Exception as e:
 		logger.error(e)
 		sys.exit(1)
@@ -149,12 +140,10 @@ def impuls(P_n, time):
 
 
 """ Высота ракеты над стартовой площадкой """
-
-
 def height_rocket(h_n, u, t):
 	try:
 		log_info.info("Запуск функции 'height_rocket'")
-		res = float(h_n + u * t)
+		res = float(h_n) + float(u) * float(t)
 	except Exception as e:
 		logger.error(e)
 		sys.exit(1)
