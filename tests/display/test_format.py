@@ -1,7 +1,7 @@
 import os
 import sys
 
-path = os.path.join(os.getcwd(), '../RFTCS/')
+path = os.path.join(os.getcwd(), '../../RFTCS/display/')
 sys.path.append(path)
 
 import pytest

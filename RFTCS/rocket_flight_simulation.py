@@ -42,12 +42,10 @@ except ImportError as e:
 
 
 """ Расстояние от горящей поверхности топлива до стенки камеры сгорания. """
-
-
-def distance_N_step(U: int, n: int) -> float:
+def distance_N_step(fuelFlow: int, n: int) -> float:
 	try:
 		r0 = INITIAL_DISTANCE
-		r_n = r0 - n * U
+		r_n = r0 - n * fuelFlow
 		log_info.info("Запуск функции 'distance_N_step'")
 	except Exception as e:
 		logger.error(e)
@@ -68,8 +66,6 @@ def tg_Beta(spd: int):
 
 
 """ Эллиптическая дальность полета """
-
-
 def elliptical_range(speed: int) -> float:
 	try:
 		log_info.info("Запуск функции 'elliptical_range'")
@@ -83,8 +79,6 @@ def elliptical_range(speed: int) -> float:
 
 
 """ Масса всей ракеты """
-
-
 def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
 	try:
 		log_info.info("Запуск функции 'mass_rocket'")
