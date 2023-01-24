@@ -1072,7 +1072,7 @@ class TestSpeed:
 		check = result + 1
 		assert result < check
 
-	def test_volume_cylindrical_cavity_more(self):
+	def test_resultant_force_more(self):
 		speed = Speed(
 			self.thrust_force,
 			self.gravitation_losses,
@@ -1095,12 +1095,885 @@ class TestSpeed:
 		result = speed._resultant_force()
 		assert result != None
 
+	# Тестирвание вычисления функции
+	def test_rocket_acceleration(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		check = speed.rocket_acceleration()
+		F = speed._resultant_force()
+		result = F / self.mass
+		assert result == check
+
+	# Тестирование типа вывода функции
+	def test_rocket_acceleration_type(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		result = speed.rocket_acceleration()
+		assert isinstance(result, (float, int))
+
+	# Тестирование на логическую операцию функции
+	def test_rocket_acceleration_less(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		result = speed.rocket_acceleration()
+		check = result + 1
+		assert result < check
+
+	def test_rocket_acceleration_more(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		result = speed.rocket_acceleration()
+		check = result - 1
+		assert result > check
+
+	def test_rocket_acceleration_ist_none(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		result = speed.rocket_acceleration()
+		assert result != None
+
+		# Тестирвание вычисления функции
+	def test_rocket_speed(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		check = speed.rocket_speed()
+		a = speed.rocket_acceleration()
+		result = self.speed_0 + a * self.time
+		assert result == check
+
+	# Тестирование типа вывода функции
+	def test_rocket_speed_type(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		result = speed.rocket_speed()
+		assert isinstance(result, (float, int))
+
+	# Тестирование на логическую операцию функции
+	def test_rocket_speed_less(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		result = speed.rocket_speed()
+		check = result + 1
+		assert result < check
+
+	def test_rocket_speed_more(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		result = speed.rocket_speed()
+		check = result - 1
+		assert result > check
+
+	def test_rocket_speed_ist_none(self):
+		speed = Speed(
+			self.thrust_force,
+			self.gravitation_losses,
+			self.mass,
+			self.time,
+			self.speed_0
+		)
+		result = speed.rocket_speed()
+		assert result != None
+
 
 @pytest.mark.rfs
 @pytest.mark.exception
 class TestSpeedError:
 	"""Тест Speed с ошибкой"""
-	burnFuel = 41187.93
-	step = 4
-	size = 0.45
+	thrust_force = 459
+	gravitation_losses = 0.45
+	mass =  650
+	time = 240
+	speed_0 = 280
 	fake = 'fake'
+
+	# Тестирование на ошибочный 1 тип параметра функции
+	def test_resultant_force_type_1_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.fake,
+				self.gravitation_losses,
+				self.mass,
+				self.time,
+				self.speed_0
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на ошибочный 2 тип параметра функции
+	def test_resultant_force_type_2_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.fake,
+				self.mass,
+				self.time,
+				self.speed_0
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на ошибочный 3 тип параметра функции
+	def test_resultant_force_type_3_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.fake,
+				self.time,
+				self.speed_0
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на ошибочный 4 тип параметра функции
+	def test_resultant_force_type_4_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.fake,
+				self.speed_0
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на ошибочный 5 тип параметра функции
+	def test_resultant_force_type_5_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.time,
+				self.fake
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на меньшое 1 кол-во аргументов
+	def test_resultant_force_less_to_1_args(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.gravitation_losses,
+				self.mass,
+				self.time,
+				self.speed_0
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на меньшое 2 кол-во аргументов
+	def test_resultant_force_less_to_2_args(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.mass,
+				self.time,
+				self.speed_0
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на меньшое 3 кол-во аргументов
+	def test_resultant_force_less_to_3_args(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.time,
+				self.speed_0
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на меньшое 4 кол-во аргументов
+	def test_resultant_force_less_to_4_args(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.speed_0
+			)
+			result = speed._resultant_force()
+
+	# Тестирование на меньшое 5 кол-во аргументов
+	def test_resultant_force_less_to_5_args(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.time
+			)
+			result = speed._resultant_force()
+
+	# Тестирование без аргументов аргументов
+	def test_resultant_force_without_args(self):
+		with pytest.raises(TypeError):
+			speed = Speed()
+			result = speed._resultant_force()
+
+	# Тестирование на большее кол-во аргументов
+	def test_resultant_force_more_args(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.time,
+				self.speed_0,
+				self.fake
+			)
+		result = speed._resultant_force()
+
+	# Тестирование на ошибочный 1 тип параметра функции
+	def test_rocket_acceleration_type_1_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.fake,
+				self.gravitation_losses,
+				self.mass,
+				self.time,
+				self.speed_0
+			)
+			result = speed.rocket_acceleration()
+
+	# Тестирование на ошибочный 2 тип параметра функции
+	def test_rocket_acceleration_type_2_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.fake,
+				self.mass,
+				self.time,
+				self.speed_0
+			)
+			result = speed.rocket_acceleration()
+
+	# Тестирование на ошибочный 3 тип параметра функции
+	def test_rocket_acceleration_type_3_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.fake,
+				self.time,
+				self.speed_0
+			)
+			result = speed.rocket_acceleration()
+
+	# Тестирование на ошибочный 4 тип параметра функции
+	def test_rocket_acceleration_type_4_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.fake,
+				self.speed_0
+			)
+			result = speed.rocket_acceleration()
+
+	# Тестирование на ошибочный 5 тип параметра функции
+	def test_rocket_acceleration_type_5_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.time,
+				self.fake
+			)
+			result = speed.rocket_acceleration()
+
+	# Тестирование на ошибочный 1 тип параметра функции
+	def test_rocket_speed_type_1_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.fake,
+				self.gravitation_losses,
+				self.mass,
+				self.time,
+				self.speed_0
+			)
+			result = speed.rocket_speed()
+
+	# Тестирование на ошибочный 2 тип параметра функции
+	def test_rocket_speed_type_2_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.fake,
+				self.mass,
+				self.time,
+				self.speed_0
+			)
+			result = speed.rocket_speed()
+
+	# Тестирование на ошибочный 3 тип параметра функции
+	def test_rocket_speed_type_3_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.fake,
+				self.time,
+				self.speed_0
+			)
+			result = speed.rocket_speed()
+
+	# Тестирование на ошибочный 4 тип параметра функции
+	def test_rocket_speed_type_4_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.fake,
+				self.speed_0
+			)
+			result = speed.rocket_speed()
+
+	# Тестирование на ошибочный 5 тип параметра функции
+	def test_rocket_speed_type_5_args_error(self):
+		with pytest.raises(TypeError):
+			speed = Speed(
+				self.thrust_force,
+				self.gravitation_losses,
+				self.mass,
+				self.time,
+				self.fake
+			)
+			result = speed.rocket_speed()
+
+
+@pytest.mark.rfs
+class TestModelFlight:
+	"""Тест ModelFlight"""
+	mass =  650
+	speed_0 = 280
+	time = 240
+	fuel_flow = 12
+
+	# Тестирвание вычисления функции
+	def test_total_resistance(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		check = model._total_resistance()
+		speed = model._total_speed()
+		tf = thrust_force(self.fuel_flow)
+		resistance = Resistance(speed, tf, self.mass)
+		cont = resistance.control_losses()
+		gl = resistance.gravitation_losses()
+		ad = resistance.aerodynamic_drag()
+		result = cont + gl + ad
+		assert result == check
+
+	# Тестирование типа вывода функции
+	def test_total_resistance_type(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_resistance()
+		assert isinstance(result, (float, int))
+
+	# Тестирование на логическую операцию функции
+	def test_total_resistance_less(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_resistance()
+		check = result + 1
+		assert result < check
+
+	def test_total_resistance_more(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_resistance()
+		check = result - 1
+		assert result > check
+
+	def test_total_resistance_ist_none(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_resistance()
+		assert result != None
+
+	# Тестирвание вычисления функции
+	def test_total_speed(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		check = model._total_speed()
+		tf = thrust_force(self.fuel_flow)
+		resistance = Resistance(self.speed_0, tf, self.mass)
+		gl = resistance.gravitation_losses()
+		spd = Speed(tf, gl, self.mass, self.time, self.speed_0)
+		result = spd.rocket_speed()
+		assert result == check
+
+	# Тестирование типа вывода функции
+	def test_total_speed_type(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_speed()
+		assert isinstance(result, (float, int))
+
+	# Тестирование на логическую операцию функции
+	def test_total_speed_less(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_speed()
+		check = result + 1
+		assert result < check
+
+	def test_total_speed_more(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_speed()
+		check = result - 1
+		assert result > check
+
+	def test_total_speed_ist_none(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_speed()
+		assert result != None
+
+	# Тестирвание вычисления функции
+	def test_total_distance(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		check = model._total_distance()
+		speed = model._total_speed()
+		res = elliptical_range(speed)
+		assert result == check
+
+	# Тестирование типа вывода функции
+	def test_total_distance_type(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_distance()
+		assert isinstance(result, (float, int))
+
+	# Тестирование на логическую операцию функции
+	def test_total_distance_less(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_distance()
+		check = result + 1
+		assert result < check
+
+	def test_total_distance_more(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_distance()
+		check = result - 1
+		assert result > check
+
+	def test_total_distance_ist_none(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model._total_distance()
+		assert result != None
+
+	# Тестирвание вычисления функции
+	def test_model_stack(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		check = model.model_stack()
+		resistance = model._total_resistance()
+		speed = model._total_speed()
+		distance = model._total_distance()
+		Beta = tg_Beta(speed)
+		result = [resistance, speed, distance, Beta]
+		assert result == check
+
+	# Тестирование типа вывода функции
+	def test_model_stack_type(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model.model_stack()
+		assert isinstance(result, (float, int))
+
+	# Тестирование на логическую операцию функции
+	def test_model_stack_less(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model.model_stack()
+		check = result + 1
+		assert result < check
+
+	def test_model_stack_more(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model.model_stack()
+		check = result - 1
+		assert result > check
+
+	def test_model_stack_ist_none(self):
+		model = ModelFlight(
+			self.mass,
+			self.speed_0,
+			self.time,
+			self.fuel_flow
+		)
+		result = model.model_stack()
+		assert result != None
+
+
+@pytest.mark.rfs
+@pytest.mark.exception
+class TestModelFlightError:
+	"""Тест ModelFlight с ошибкой"""
+	mass =  650
+	speed_0 = 280
+	time = 240
+	fuel_flow = 12
+	fake = 'fake'
+
+	# Тестирование на ошибочный 1 тип параметра функции
+	def test_total_resistance_type_1_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.fake,
+				self.speed_0,
+				self.time,
+				self.fuel_flow
+			)
+			result = model._total_resistance()
+
+	# Тестирование на ошибочный 2 тип параметра функции
+	def test_total_resistance_type_2_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.fake,
+				self.time,
+				self.fuel_flow
+			)
+			result = model._total_resistance()
+
+	# Тестирование на ошибочный 3 тип параметра функции
+	def test_total_resistance_type_3_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.fake,
+				self.fuel_flow
+			)
+			result = model._total_resistance()
+
+	# Тестирование на ошибочный 4 тип параметра функции
+	def test_total_resistance_type_4_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.time,
+				self.fake
+			)
+			result = model._total_resistance()
+
+	# Тестирование на меньшое 1 кол-во аргументов
+	def test_total_resistance_less_to_1_args(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.speed_0,
+				self.time,
+				self.fuel_flow
+			)
+			result = model._total_resistance()
+
+	# Тестирование на меньшое 2 кол-во аргументов
+	def test_total_resistance_less_to_2_args(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.time,
+				self.fuel_flow
+			)
+			result = model._total_resistance()
+
+	# Тестирование на меньшое 3 кол-во аргументов
+	def test_total_resistance_less_to_3_args(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.fuel_flow
+			)
+			result = model._total_resistance()
+
+	# Тестирование на меньшое 4 кол-во аргументов
+	def test_total_resistance_less_to_4_args(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.time
+			)
+			result = model._total_resistance()
+
+	# Тестирование без аргументов аргументов
+	def test_total_resistance_without_args(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight()
+			result = model._total_resistance()
+
+	# Тестирование на большее кол-во аргументов
+	def test_total_resistance_more_args(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.time,
+				self.fuel_flow,
+				self.fake
+			)
+			result = model._total_resistance()
+
+	# Тестирование на ошибочный 1 тип параметра функции
+	def test_total_speed_type_1_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.fake,
+				self.speed_0,
+				self.time,
+				self.fuel_flow
+			)
+			result = model._total_speed()
+
+	# Тестирование на ошибочный 2 тип параметра функции
+	def test_total_speed_type_2_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.fake,
+				self.time,
+				self.fuel_flow
+			)
+			result = model._total_speed()
+
+	# Тестирование на ошибочный 3 тип параметра функции
+	def test_total_speed_type_3_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.fake,
+				self.fuel_flow
+			)
+			result = model._total_speed()
+
+	# Тестирование на ошибочный 4 тип параметра функции
+	def test_total_speed_type_4_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.time,
+				self.fake
+			)
+			result = model._total_speed()
+
+	# Тестирование на ошибочный 1 тип параметра функции
+	def test_total_distance_type_1_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.fake,
+				self.speed_0,
+				self.time,
+				self.fuel_flow
+			)
+			result = model._total_distance()
+
+	# Тестирование на ошибочный 2 тип параметра функции
+	def test_total_distance_type_2_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.fake,
+				self.time,
+				self.fuel_flow
+			)
+			result = model._total_distance()
+
+	# Тестирование на ошибочный 3 тип параметра функции
+	def test_total_distance_type_3_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.fake,
+				self.fuel_flow
+			)
+			result = model._total_distance()
+
+	# Тестирование на ошибочный 4 тип параметра функции
+	def test_total_distance_type_4_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.time,
+				self.fake
+			)
+			result = model._total_distance()
+
+	# Тестирование на ошибочный 1 тип параметра функции
+	def test_model_stack_type_1_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.fake,
+				self.speed_0,
+				self.time,
+				self.fuel_flow
+			)
+			result = model.model_stack()
+
+	# Тестирование на ошибочный 2 тип параметра функции
+	def test_model_stack_type_2_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.fake,
+				self.time,
+				self.fuel_flow
+			)
+			result = model.model_stack()
+
+	# Тестирование на ошибочный 3 тип параметра функции
+	def test_model_stack_type_3_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.fake,
+				self.fuel_flow
+			)
+			result = model.model_stack()
+
+	# Тестирование на ошибочный 4 тип параметра функции
+	def test_model_stack_type_4_args_error(self):
+		with pytest.raises(TypeError):
+			model = ModelFlight(
+				self.mass,
+				self.speed_0,
+				self.time,
+				self.fake
+			)
+			result = model.model_stack()
