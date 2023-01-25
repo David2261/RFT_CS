@@ -31,7 +31,7 @@ def invalid_index(text: str) -> str:
 
 # Keyboard interrupt error (KeyboardInterrupt)
 def invalid_kbi() -> str:
-	description = f"Процесс остановлен в ручную!"
+	description = "Процесс остановлен в ручную!"
 	return description
 
 
@@ -51,3 +51,10 @@ def invalid_type(text: str) -> str:
 def invalid_zero_division(text: str) -> str:
 	description = f"Ошибка деления на 0: {text}"
 	return description
+
+# General error (Exceptions)
+def invalid_general(text: str) -> str:
+	description = f"Ошибка в {text}"
+	return description
+
+

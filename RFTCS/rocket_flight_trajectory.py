@@ -10,7 +10,13 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import invalid_import
+from exceptions.exception import (
+	invalid_import,
+	invalid_kbi,
+	invalid_type,
+	invalid_zero_division,
+	invalid_general
+)
 from setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
@@ -22,7 +28,7 @@ try:
 	from setup.settings import FPV
 except ImportError as e:
 	logger.error(invalid_import(e))
-	sys.exit(1)
+	raise ImportError(invalid_import(e))
 
 
 class FlightBallistics:
@@ -32,16 +38,18 @@ class FlightBallistics:
 	def __init__(self, speed):
 		self.speed = speed
 
-	@classmethod
 	# Синус двойного угла
-	def _double_angle_sine(cls):
+	def _double_angle_sine(self):
 		try:
 			A = FPV
 			res = 2 * np.sin(A) * np.cos(A)
 			log_info.info("Запуск функции '_double_angle_sine'")
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	# Дальность полета
@@ -51,9 +59,15 @@ class FlightBallistics:
 			sine = self._double_angle_sine()
 			res = ((self.speed**2) * sine) / (2 * G)
 			log_info.info("Запуск функции 'flight_range'")
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except ZeroDivisionError as zde:
+			logger.error(invalid_zero_division(zde))
+			raise ZeroDivisionError(invalid_zero_division(zde))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	# Время полета ракеты
@@ -63,9 +77,15 @@ class FlightBallistics:
 			A = FPV
 			res = (2 * self.speed * np.sin(A)) / G
 			log_info.info("Запуск функции 'flight_time'")
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except ZeroDivisionError as zde:
+			logger.error(invalid_zero_division(zde))
+			raise ZeroDivisionError(invalid_zero_division(zde))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 
