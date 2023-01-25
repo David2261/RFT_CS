@@ -108,11 +108,19 @@ class TestFlightBallisticsError:
 	speed = 29000
 	fake = 'fake'
 
+	# Тестирование без аргументов
+	def test_double_angle_sine_without_args(self):
+		with pytest.raises(TypeError):
+			ballistic = FlightBallistics()
+			result = ballistic._double_angle_sine()
+			return result
+
 	# Тестирование на большее кол-во аргументов
 	def test_double_angle_sine_more_args(self):
 		with pytest.raises(TypeError):
-			res = FlightBallistics(self.speed, self.fake)
-			res._double_angle_sine(self.speed)
+			ballistic = FlightBallistics(self.speed, self.fake)
+			result = ballistic._double_angle_sine()
+			return result
 
 	# Тестирование на ошибочный тип параметра функции
 	def test_flight_range_type_error(self):
