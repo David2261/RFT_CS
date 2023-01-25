@@ -10,7 +10,13 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import invalid_import
+from exceptions.exception import (
+	invalid_import,
+	invalid_kbi,
+	invalid_type,
+	invalid_zero_division,
+	invalid_general
+)
 from setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
@@ -23,7 +29,7 @@ try:
 	log_info.info("Включение импортов 'rocket_fuel_calculation.py'")
 except ImportError as e:
 	logger.error(invalid_import(e))
-	sys.exit(1)
+	raise ImportError(invalid_import(e))
 
 
 class TotalOil:
@@ -41,9 +47,15 @@ class TotalOil:
 			num = self.Mf / self.Me
 			res = np.log(num)
 			log_info.info("Запуск функции '_natural_logarithm'")
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except ZeroDivisionError as zde:
+			logger.error(invalid_zero_division(zde))
+			raise ZeroDivisionError(invalid_zero_division(zde))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	# Функция расчет с помощью Эйлерова числа E
@@ -53,9 +65,15 @@ class TotalOil:
 			speed = self.total_speed()
 			res = np.exp(speed / (self.Isp * G))
 			log_info.info("Запуск функции '_euler'")
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except ZeroDivisionError as zde:
+			logger.error(invalid_zero_division(zde))
+			raise ZeroDivisionError(invalid_zero_division(zde))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	# Сумма всех скоростей
@@ -65,9 +83,12 @@ class TotalOil:
 			nl = self._natural_logarithm()
 			delta_V = self.Isp * G * nl
 			log_info.info("Запуск функции 'total_speed'")
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return delta_V
 
 	# Функция для расчета топлива
@@ -75,9 +96,12 @@ class TotalOil:
 		try:
 			res = self.Me * (self._euler() - 1)
 			log_info.info("Запуск функции 'total_oil'")
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 
