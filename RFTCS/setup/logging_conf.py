@@ -20,7 +20,7 @@ LOGGING_CONF = {
 			"filename": '__logs__/main.log',
 		},
 		"dev_file": {
-			"level": "NOTSET",
+			"level": "ERROR",
 			"class": "logging.FileHandler",
 			"formatter": "exception",
 			"filename": '__logs__/error.log',

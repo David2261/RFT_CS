@@ -11,7 +11,13 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import invalid_import
+from exceptions.exception import (
+	invalid_import,
+	invalid_kbi,
+	invalid_type,
+	invalid_zero_division,
+	invalid_general
+)
 from setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
@@ -38,7 +44,7 @@ try:
 	log_info.info("Включение импортов 'rocket_flight_simulation.py'")
 except ImportError as e:
 	logger.error(invalid_import(e))
-	sys.exit(1)
+	raise ImportError(invalid_import(e))
 
 
 """ Расстояние от горящей поверхности топлива до стенки камеры сгорания. """
@@ -47,9 +53,12 @@ def distance_N_step(fuelFlow: int, n: int) -> float:
 		r0 = INITIAL_DISTANCE
 		r_n = r0 - n * fuelFlow
 		log_info.info("Запуск функции 'distance_N_step'")
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
 	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return float(r_n)
 
 
@@ -59,9 +68,18 @@ def tg_Beta(spd: int):
 		start = BEGIN_RADIUS_ROCKET
 		v = (spd * start) / 398_621
 		corn = v / (2 * np.sqrt(abs(1 - v)))
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
+	except ZeroDivisionError as zde:
+		logger.error(invalid_zero_division(zde))
+		raise ZeroDivisionError(invalid_zero_division(zde))
+	except IOError as io:
+		logger.error(invalid_IO(io))
+		raise IOError(invalid_IO(io))
 	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return corn
 
 
@@ -72,9 +90,15 @@ def elliptical_range(speed: int) -> float:
 		R = EARTH_RADIUS
 		Tang = tg_Beta(speed)
 		L = 2 * R * np.arctan(Tang)
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
+	except IOError as io:
+		logger.error(invalid_IO(io))
+		raise IOError(invalid_IO(io))
 	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return L
 
 
@@ -83,9 +107,12 @@ def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
 	try:
 		log_info.info("Запуск функции 'mass_rocket'")
 		res = float(m_empty_rocket + m_fuel_rocket)
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
 	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return res
 
 
@@ -95,9 +122,18 @@ def amount_gas_released(mass: int) -> float:
 		log_info.info("Запуск функции 'amount_gas_released'")
 		amm = AVERAGE_MOLAR_MASS
 		res = float(mass / amm)
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
+	except ZeroDivisionError as zde:
+		logger.error(invalid_zero_division(zde))
+		raise ZeroDivisionError(invalid_zero_division(zde))
+	except IOError as io:
+		logger.error(invalid_IO(io))
+		raise IOError(invalid_IO(io))
 	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return res
 
 
@@ -110,9 +146,18 @@ def overpressure(U) -> float:
 		bt = BURNING_TEMPERATURE
 		h = amm * ugc * bt
 		res = float(h / U)
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
+	except ZeroDivisionError as zde:
+		logger.error(invalid_zero_division(zde))
+		raise ZeroDivisionError(invalid_zero_division(zde))
+	except IOError as io:
+		logger.error(invalid_IO(io))
+		raise IOError(invalid_IO(io))
 	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return res
 
 
@@ -121,9 +166,15 @@ def thrust_force(P_n: float):
 	try:
 		log_info.info("Запуск функции 'thrust_force'")
 		res = float(P_n) * float(CROSS_SECTION_AREA)
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
+	except IOError as io:
+		logger.error(invalid_IO(io))
+		raise IOError(invalid_IO(io))
 	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return res
 
 
@@ -133,9 +184,12 @@ def impuls(P_n, time):
 		log_info.info("Запуск функции 'impuls'")
 		tf = thrust_force(P_n)
 		res = tf * float(time)
-	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
+	except (IOError, Exception) as e:
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return res
 
 
@@ -144,9 +198,12 @@ def height_rocket(h_n, u, t):
 	try:
 		log_info.info("Запуск функции 'height_rocket'")
 		res = float(h_n) + float(u) * float(t)
+	except TypeError as te:
+		logger.error(invalid_type(te))
+		raise TypeError(invalid_type(te))
 	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
+		logger.error(invalid_general(e))
+		raise invalid_general(e)
 	return res
 
 
@@ -155,32 +212,38 @@ class CylindricalCavity:
 
 	log_info.info("Запуск класса 'CylindricalCavity'")
 
-	def __init__(self, speed_burning_fuel: int, step: int, Long: int):
+	def __init__(self, speed_burning_fuel: (float, int), step: int, Long: float):
 		self.U = speed_burning_fuel
 		self.n = step
 		self.L = Long
 
-	@classmethod
+	@staticmethod
 	# Радиус внутренней цилиндрической полости
-	def _cylindrical_cavity(cls) -> float:
+	def _cylindrical_cavity(n, U) -> float:
 		try:
 			log_info.info("Запуск функции '_cylindrical_cavity'")
 			R_0 = INITIAL_DISTANCE
-			R_n = R_0 + cls.n * cls.U
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+			R_n = R_0 + n * U
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return R_n
 
 	# Объем цилиндрической полости
 	def volume_cylindrical_cavity(self):
 		try:
 			log_info.info("Запуск функции 'volume_cylindrical_cavity'")
-			R_n = self._cylindrical_cavity()
-			V = np.pi * float((R_n**2) * self.L)
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+			R_n = self._cylindrical_cavity(self.n, self.U)
+			V = np.pi * float((pow(R_n, 2)) * self.L)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return V
 
 
@@ -200,9 +263,15 @@ class Resistance:
 			AD = ATMOSPHERIC_DENSITY
 			speed = self.V
 			res = (AD * (pow(speed, 2))) / 2
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except ZeroDivisionError as zde:
+			logger.error(invalid_zero_division(zde))
+			raise ZeroDivisionError(invalid_zero_division(zde))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	""" Аэродинамическое сопротивление """
@@ -213,9 +282,12 @@ class Resistance:
 			S = Cx
 			Q = self._aerodynamic_pressure()
 			res = Cx * S * Q
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	""" Гравитационные потери """
@@ -225,9 +297,12 @@ class Resistance:
 			G = ACCELERATION_FREE_FALL
 			angel = np.sin(FPV)
 			res = G * angel
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	""" Потеря скорости на управление """
@@ -236,9 +311,15 @@ class Resistance:
 			log_info.info("Запуск функции 'control_losses'")
 			angel = 1 - np.cos(TVV)
 			res = (self.thrust_force / self.mass) * angel
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except ZeroDivisionError as zde:
+			logger.error(invalid_zero_division(zde))
+			raise ZeroDivisionError(invalid_zero_division(zde))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 
@@ -259,9 +340,12 @@ class Speed:
 			log_info.info("Запуск функции '_resultant_force'")
 			G = ACCELERATION_FREE_FALL
 			res = thrust_force(self.speed_0) * self.gravitation_losses - self.mass * G
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	# Ускорение ракеты
@@ -270,9 +354,15 @@ class Speed:
 			log_info.info("Запуск функции 'rocket_acceleration'")
 			F = self._resultant_force()
 			res = F / self.mass
-		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
+		except ZeroDivisionError as zde:
+			logger.error(invalid_zero_division(zde))
+			raise ZeroDivisionError(invalid_zero_division(zde))
+		except (IOError, Exception) as e:
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	def rocket_speed(self):
@@ -280,9 +370,12 @@ class Speed:
 			log_info.info("Запуск функции 'rocket_speed'")
 			a = self.rocket_acceleration()
 			res = self.speed_0 + a * self.time
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
 		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 
@@ -307,9 +400,12 @@ class ModelFlight:
 			gl = resistance.gravitation_losses()
 			ad = resistance.aerodynamic_drag()
 			res = cont + gl + ad
+		except TypeError as te:
+			logger.error(invalid_type(te))
+			raise TypeError(invalid_type(te))
 		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	# Общая скорость
@@ -322,8 +418,8 @@ class ModelFlight:
 			spd = Speed(tf, gl, self.mass, self.time, self.speed_0)
 			speed = spd.rocket_speed()
 		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return speed
 
 	# Общее расстояние
@@ -333,8 +429,8 @@ class ModelFlight:
 			speed = self._total_speed()
 			res = elliptical_range(speed)
 		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return res
 
 	def model_stack(self) -> list:
@@ -345,8 +441,8 @@ class ModelFlight:
 			distance = self._total_distance()
 			Beta = tg_Beta(speed)
 		except Exception as e:
-			logger.error(e)
-			sys.exit(1)
+			logger.error(invalid_general(e))
+			raise invalid_general(e)
 		return [resistance, speed, distance, Beta]
 
 

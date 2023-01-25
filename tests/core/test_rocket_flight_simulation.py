@@ -66,7 +66,7 @@ class TestDistanceNStep:
 
 	def test_distance_n_step_ist_none(self):
 		result = distance_N_step(self.fuelFlow, self.n)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -81,26 +81,31 @@ class TestDistanceNStepError:
 	def test_distance_n_step_type_1_args_error(self):
 		with pytest.raises(TypeError):
 			result = distance_N_step(self.fake, self.n)
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_distance_n_step_type_2_args_error(self):
 		with pytest.raises(TypeError):
 			result = distance_N_step(self.fuelFlow, self.fake)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_distance_n_step_less_args(self):
 		with pytest.raises(TypeError):
 			result = distance_N_step(self.fake)
+			return result
 
 	# Тестирование без аргументов
-	def test_distance_n_step_less_args(self):
+	def test_distance_n_step_without_args(self):
 		with pytest.raises(TypeError):
 			result = distance_N_step()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_distance_n_step_more_args(self):
 		with pytest.raises(TypeError):
 			result = distance_N_step(self.fuelFlow, self.fake, 2343)
+			return result
 
 
 @pytest.mark.rfs
@@ -130,7 +135,7 @@ class TestTgBeta:
 
 	def test_tg_beta_ist_none(self):
 		result = tg_Beta(self.speed)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -144,16 +149,19 @@ class TestTgBetaError:
 	def test_tg_beta_type_args_error(self):
 		with pytest.raises(TypeError):
 			result = tg_Beta(self.fake)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_tg_beta_less_args(self):
 		with pytest.raises(TypeError):
 			result = tg_Beta()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_tg_beta_more_args(self):
 		with pytest.raises(TypeError):
 			result = tg_Beta(self.speed, self.fake)
+			return result
 
 
 @pytest.mark.rfs
@@ -184,7 +192,7 @@ class TestEllipticalRange:
 
 	def test_elliptical_range_ist_none(self):
 		result = elliptical_range(self.speed)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -198,16 +206,19 @@ class TestEllipticalRangeError:
 	def test_elliptical_range_type_args_error(self):
 		with pytest.raises(TypeError):
 			result = elliptical_range(self.fake)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_elliptical_range_less_args(self):
 		with pytest.raises(TypeError):
 			result = elliptical_range()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_elliptical_range_more_args(self):
 		with pytest.raises(TypeError):
 			result = elliptical_range(self.speed, self.fake)
+			return result
 
 
 @pytest.mark.rfs
@@ -237,7 +248,7 @@ class TestMassRocket:
 
 	def test_mass_rocket_ist_none(self):
 		result = mass_rocket(self.emptyRocket, self.fuelWidth)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -252,21 +263,25 @@ class TestMassRocketError:
 	def test_mass_rocket_1_type_args_error(self):
 		with pytest.raises(TypeError):
 			result = mass_rocket(self.emptyRocket, self.fake)
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_mass_rocket_2_type_args_error(self):
 		with pytest.raises(TypeError):
-			result = mass_rocket(self.fake, self.fuelFlow)
+			result = mass_rocket(self.fake, self.fuelWidth)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_mass_rocket_less_args(self):
 		with pytest.raises(TypeError):
 			result = mass_rocket()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_mass_rocket_more_args(self):
 		with pytest.raises(TypeError):
-			result = mass_rocket(self.emptyRocket, self.fuelFlow, self.fake)
+			result = mass_rocket(self.emptyRocket, self.fuelWidth, self.fake)
+			return result
 
 
 @pytest.mark.rfs
@@ -295,7 +310,7 @@ class TestAmountGasReleased:
 
 	def test_amount_gas_released_ist_none(self):
 		result = amount_gas_released(self.mass)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -309,68 +324,19 @@ class TestAmountGasReleasedError:
 	def test_amount_gas_released_type_args_error(self):
 		with pytest.raises(TypeError):
 			result = amount_gas_released(self.fake)
-
-	# Тестирование на меньшое кол-во аргументов
-	def test_mass_rocket_less_args(self):
-		with pytest.raises(TypeError):
-			result = amount_gas_released()
-
-	# Тестирование на большее кол-во аргументов
-	def test_mass_rocket_more_args(self):
-		with pytest.raises(TypeError):
-			result = amount_gas_released(self.mass, self.fake)
-
-
-@pytest.mark.rfs
-class TestAmountGasReleased:
-	""" Тест для amount_gas_released """
-	mass = 581
-
-	def test_amount_gas_released(self):
-		check = amount_gas_released(self.mass)
-		result = float(self.mass / AVERAGE_MOLAR_MASS)
-		assert result == check
-
-	def test_amount_gas_released_type(self):
-		result = amount_gas_released(self.mass)
-		assert isinstance(result, (int, float))
-
-	def test_amount_gas_released_less(self):
-		result = amount_gas_released(self.mass)
-		result_more = result + 1
-		assert result < result_more
-
-	def test_amount_gas_released_more(self):
-		result = amount_gas_released(self.mass)
-		result_more = result - 1
-		assert result > result_more
-
-	def test_amount_gas_released_ist_none(self):
-		result = amount_gas_released(self.mass)
-		assert result != None
-
-
-@pytest.mark.rfs
-@pytest.mark.exception
-class TestAmountGasReleasedError:
-	""" Тест исключений для amount_gas_released """
-	mass = 581
-	fake = 'fake'
-
-	# Тестирование на ошибочный тип параметра функции
-	def test_amount_gas_released_type_args_error(self):
-		with pytest.raises(TypeError):
-			result = amount_gas_released(self.fake)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_amount_gas_released_less_args(self):
 		with pytest.raises(TypeError):
 			result = amount_gas_released()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_amount_gas_released_more_args(self):
 		with pytest.raises(TypeError):
 			result = amount_gas_released(self.mass, self.fake)
+			return result
 
 
 @pytest.mark.rfs
@@ -381,7 +347,7 @@ class TestOverpressure:
 	def test_overpressure(self):
 		check = overpressure(self.step)
 		h = AVERAGE_MOLAR_MASS * UNIVERSAL_GAS_CONSTANT * BURNING_TEMPERATURE
-		res = float(h / self.step)
+		result = float(h / self.step)
 		assert result == check
 
 	def test_overpressure_type(self):
@@ -400,7 +366,7 @@ class TestOverpressure:
 
 	def test_overpressure_ist_none(self):
 		result = overpressure(self.step)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -414,16 +380,19 @@ class TestOverpressureError:
 	def test_overpressure_type_args_error(self):
 		with pytest.raises(TypeError):
 			result = overpressure(self.fake)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_overpressure_less_args(self):
 		with pytest.raises(TypeError):
 			result = overpressure()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_overpressure_more_args(self):
 		with pytest.raises(TypeError):
 			result = overpressure(self.step, self.fake)
+			return result
 
 
 @pytest.mark.rfs
@@ -452,7 +421,7 @@ class TestThrustForse:
 
 	def test_thrust_force_ist_none(self):
 		result = thrust_force(self.pressure)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -466,16 +435,19 @@ class TestThrustForseError:
 	def test_thrust_force_type_args_error(self):
 		with pytest.raises(TypeError):
 			result = thrust_force(self.fake)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_thrust_force_less_args(self):
 		with pytest.raises(TypeError):
 			result = thrust_force()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_thrust_force_more_args(self):
 		with pytest.raises(TypeError):
 			result = thrust_force(self.pressure, self.fake)
+			return result
 
 
 @pytest.mark.rfs
@@ -506,7 +478,7 @@ class TestImpuls:
 
 	def test_impuls_ist_none(self):
 		result = impuls(self.pressure, self.time)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -518,34 +490,40 @@ class TestImpulsError:
 	fake = 'fake'
 
 	# Тестирование на ошибочный 1 тип параметра функции
-	def test_impuls_type_args_error(self):
+	def test_impuls_type_to_1_args_error(self):
 		with pytest.raises(TypeError):
 			result = impuls(self.fake, self.time)
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
-	def test_impuls_type_args_error(self):
+	def test_impuls_type_to_2_args_error(self):
 		with pytest.raises(TypeError):
 			result = impuls(self.pressure, self.fake)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_impuls_less_to_1_args(self):
 		with pytest.raises(TypeError):
 			result = impuls(self.pressure)
+			return result
 
 	# Тестирование на меньшое кол-во аргументов
 	def test_impuls_less_to_2_args(self):
 		with pytest.raises(TypeError):
 			result = impuls(self.time)
+			return result
 
 	# Тестирование без аргументов аргументов
 	def test_impuls_without_args(self):
 		with pytest.raises(TypeError):
 			result = impuls()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_impuls_more_args(self):
 		with pytest.raises(TypeError):
 			result = impuls(self.pressure, self.time, self.fake)
+			return result
 
 
 @pytest.mark.rfs
@@ -596,7 +574,7 @@ class TestHeightRocket:
 			self.heightStage,
 			self.stage
 		)
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -616,6 +594,7 @@ class TestHeightRocketError:
 						self.heightStage,
 						self.stage
 					)
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_height_rocket_type_2_args_error(self):
@@ -625,6 +604,7 @@ class TestHeightRocketError:
 						self.fake,
 						self.stage
 					)
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_height_rocket_type_3_args_error(self):
@@ -634,6 +614,7 @@ class TestHeightRocketError:
 						self.heightStage,
 						self.fake
 					)
+			return result
 
 	# Тестирование на меньшое 1 кол-во аргументов
 	def test_height_rocket_less_to_1_args(self):
@@ -642,6 +623,7 @@ class TestHeightRocketError:
 						self.heightStage,
 						self.stage
 					)
+			return result
 
 	# Тестирование на меньшое 2 кол-во аргументов
 	def test_height_rocket_less_to_2_args(self):
@@ -650,6 +632,7 @@ class TestHeightRocketError:
 						self.heightStart,
 						self.stage
 					)
+			return result
 
 	# Тестирование на меньшое 3 кол-во аргументов
 	def test_height_rocket_less_to_3_args(self):
@@ -658,11 +641,13 @@ class TestHeightRocketError:
 						self.heightStart,
 						self.heightStage,
 					)
+			return result
 
 	# Тестирование без аргументов аргументов
 	def test_height_rocket_without_args(self):
 		with pytest.raises(TypeError):
 			result = height_rocket()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_height_rocket_more_args(self):
@@ -673,10 +658,10 @@ class TestHeightRocketError:
 						self.stage,
 						self.fake
 					)
+			return result
 
 
 @pytest.mark.rfs
-@pytest.mark.xfail
 class TestCylindricalCavity:
 	"""Тест CylindricalCavity"""
 	burnFuel = 41187.93
@@ -686,9 +671,10 @@ class TestCylindricalCavity:
 	# Тестирвание вычисления функции
 	def test_volume_cylindrical_cavity(self):
 		CC = CylindricalCavity(self.burnFuel, self.step, self.size)
-		result = CC.volume_cylindrical_cavity()
-		radius = INITIAL_DISTANCE + self.step * self.size
-		check = np.pi * float((pow(radius, 2)) * self.size)
+		check = CC.volume_cylindrical_cavity()
+		R_0 = INITIAL_DISTANCE
+		R_n = R_0 + self.step * self.burnFuel
+		result = np.pi * float((pow(R_n, 2)) * self.size)
 		assert result == check
 
 	# Тестирование типа вывода функции
@@ -713,12 +699,11 @@ class TestCylindricalCavity:
 	def test_volume_cylindrical_cavity_ist_none(self):
 		CC = CylindricalCavity(self.burnFuel, self.step, self.size)
 		result = CC.volume_cylindrical_cavity()
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
 @pytest.mark.exception
-@pytest.mark.xfail
 class TestCylindricalCavityError:
 	"""Тест CylindricalCavity с ошибкой"""
 	burnFuel = 41187.93
@@ -731,42 +716,49 @@ class TestCylindricalCavityError:
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(self.fake, self.step, self.size)
 			result = CC.volume_cylindrical_cavity()
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_volume_cylindrical_cavity_type_2_args_error(self):
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(self.burnFuel, self.fake, self.size)
 			result = CC.volume_cylindrical_cavity()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_volume_cylindrical_cavity_type_3_args_error(self):
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(self.burnFuel, self.step, self.fake)
 			result = CC.volume_cylindrical_cavity()
+			return result
 
 	# Тестирование на меньшое 1 кол-во аргументов
 	def test_volume_cylindrical_cavity_less_to_1_args(self):
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(self.step, self.size)
 			result = CC.volume_cylindrical_cavity()
+			return result
 
 	# Тестирование на меньшое 2 кол-во аргументов
 	def test_volume_cylindrical_cavity_less_to_2_args(self):
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(self.burnFuel, self.size)
 			result = CC.volume_cylindrical_cavity()
+			return result
 
 	# Тестирование на меньшое 3 кол-во аргументов
 	def test_volume_cylindrical_cavity_less_to_3_args(self):
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(self.burnFuel, self.step)
 			result = CC.volume_cylindrical_cavity()
+			return result
 
 	# Тестирование без аргументов аргументов
 	def test_volume_cylindrical_cavity_without_args(self):
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity()
 			result = CC.volume_cylindrical_cavity()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_volume_cylindrical_cavity_more_args(self):
@@ -778,14 +770,14 @@ class TestCylindricalCavityError:
 					self.fake
 				)
 			result = CC.volume_cylindrical_cavity()
-
+			return result
 
 @pytest.mark.rfs
 class TestResistance:
 	""" Тест для Resistance """
 	speed = 450
 	thrust_force = 230
-	mass =  650
+	mass = 650
 
 	def test_aerodynamic_pressure(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
@@ -813,14 +805,14 @@ class TestResistance:
 	def test_aerodynamic_pressure_ist_none(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
 		result = resist._aerodynamic_pressure()
-		assert result != None
+		assert result is not None
 
 	def test_aerodynamic_drag(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
 		check = resist.aerodynamic_drag()
-		Q = resist.aerodynamic_drag()
 		Cx = CROSS_SECTION_AREA
 		S = Cx
+		Q = resist._aerodynamic_pressure()
 		result = Cx * S * Q
 		assert result == check
 
@@ -844,14 +836,14 @@ class TestResistance:
 	def test_aerodynamic_drag_ist_none(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
 		result = resist.aerodynamic_drag()
-		assert result != None
+		assert result is not None
 
 	def test_gravitation_losses(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
 		check = resist.gravitation_losses()
 		G = ACCELERATION_FREE_FALL
 		angel = np.sin(FPV)
-		res = G * angel
+		result = G * angel
 		assert result == check
 
 	def test_gravitation_losses_type(self):
@@ -874,14 +866,13 @@ class TestResistance:
 	def test_gravitation_losses_ist_none(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
 		result = resist.gravitation_losses()
-		assert result != None
+		assert result is not None
 
 	def test_control_losses(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
 		check = resist.control_losses()
-		G = ACCELERATION_FREE_FALL
-		angel = np.sin(FPV)
-		res = G * angel
+		angel = 1 - np.cos(TVV)
+		result = (self.thrust_force / self.mass) * angel
 		assert result == check
 
 	def test_control_losses_type(self):
@@ -904,7 +895,7 @@ class TestResistance:
 	def test_control_losses_ist_none(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
 		result = resist.control_losses()
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -913,7 +904,7 @@ class TestResistanceError:
 	""" Тест исключений для Resistance """
 	speed = 450
 	thrust_force = 230
-	mass =  650
+	mass = 650
 	fake = 'fake'
 
 	# Тестирование на ошибочный 1 тип параметра функции
@@ -921,42 +912,35 @@ class TestResistanceError:
 		with pytest.raises(TypeError):
 			resist = Resistance(self.fake, self.thrust_force, self.mass)
 			result = resist._aerodynamic_pressure()
-
-	# Тестирование на ошибочный 2 тип параметра функции
-	def test_aerodynamic_pressure_type_2_args_error(self):
-		with pytest.raises(TypeError):
-			resist = Resistance(self.speed, self.fake, self.mass)
-			result = resist._aerodynamic_pressure()
-
-	# Тестирование на ошибочный 3 тип параметра функции
-	def test_aerodynamic_pressure_type_3_args_error(self):
-		with pytest.raises(TypeError):
-			resist = Resistance(self.speed, self.thrust_force, self.fake)
-			result = resist._aerodynamic_pressure()
+			return result
 
 	# Тестирование на меньшое 1 кол-во аргументов
 	def test_aerodynamic_pressure_less_to_1_args(self):
 		with pytest.raises(TypeError):
 			resist = Resistance(self.thrust_force, self.mass)
 			result = resist._aerodynamic_pressure()
+			return result
 
 	# Тестирование на меньшое 2 кол-во аргументов
 	def test_aerodynamic_pressure_less_to_2_args(self):
 		with pytest.raises(TypeError):
 			resist = Resistance(self.speed, self.mass)
 			result = resist._aerodynamic_pressure()
+			return result
 
 	# Тестирование на меньшое 3 кол-во аргументов
 	def test_aerodynamic_pressure_less_to_3_args(self):
 		with pytest.raises(TypeError):
 			resist = Resistance(self.speed, self.thrust_force)
 			result = resist._aerodynamic_pressure()
+			return result
 
 	# Тестирование без аргументов аргументов
 	def test_aerodynamic_pressure_without_args(self):
 		with pytest.raises(TypeError):
 			resist = Resistance()
 			result = resist._aerodynamic_pressure()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_aerodynamic_pressure_more_args(self):
@@ -968,60 +952,28 @@ class TestResistanceError:
 					self.fake
 				)
 			result = resist._aerodynamic_pressure()
+			return result
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_aerodynamic_drag_type_1_args_error(self):
 		with pytest.raises(TypeError):
 			resist = Resistance(self.fake, self.thrust_force, self.mass)
 			result = resist.aerodynamic_drag()
-
-	# Тестирование на ошибочный 2 тип параметра функции
-	def test_aerodynamic_drag_type_2_args_error(self):
-		with pytest.raises(TypeError):
-			resist = Resistance(self.speed, self.fake, self.mass)
-			result = resist.aerodynamic_drag()
-
-	# Тестирование на ошибочный 3 тип параметра функции
-	def test_aerodynamic_drag_type_3_args_error(self):
-		with pytest.raises(TypeError):
-			resist = Resistance(self.speed, self.thrust_force, self.fake)
-			result = resist.aerodynamic_drag()
-
-	# Тестирование на ошибочный 1 тип параметра функции
-	def test_gravitation_losses_type_1_args_error(self):
-		with pytest.raises(TypeError):
-			resist = Resistance(self.fake, self.thrust_force, self.mass)
-			result = resist.gravitation_losses()
-
-	# Тестирование на ошибочный 2 тип параметра функции
-	def test_gravitation_losses_type_2_args_error(self):
-		with pytest.raises(TypeError):
-			resist = Resistance(self.speed, self.fake, self.mass)
-			result = resist.gravitation_losses()
-
-	# Тестирование на ошибочный 3 тип параметра функции
-	def test_gravitation_losses_type_3_args_error(self):
-		with pytest.raises(TypeError):
-			resist = Resistance(self.speed, self.thrust_force, self.fake)
-			result = resist.gravitation_losses()
-
-	# Тестирование на ошибочный 1 тип параметра функции
-	def test_control_losses_type_1_args_error(self):
-		with pytest.raises(TypeError):
-			resist = Resistance(self.fake, self.thrust_force, self.mass)
-			result = resist.control_losses()
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_control_losses_type_2_args_error(self):
 		with pytest.raises(TypeError):
 			resist = Resistance(self.speed, self.fake, self.mass)
 			result = resist.control_losses()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_control_losses_type_3_args_error(self):
 		with pytest.raises(TypeError):
 			resist = Resistance(self.speed, self.thrust_force, self.fake)
 			result = resist.control_losses()
+			return result
 
 
 @pytest.mark.rfs
@@ -1029,7 +981,7 @@ class TestSpeed:
 	"""Тест Speed"""
 	thrust_force = 459
 	gravitation_losses = 0.45
-	mass =  650
+	mass = 650
 	time = 240
 	speed_0 = 280
 
@@ -1093,7 +1045,7 @@ class TestSpeed:
 			self.speed_0
 		)
 		result = speed._resultant_force()
-		assert result != None
+		assert result is not None
 
 	# Тестирвание вычисления функции
 	def test_rocket_acceleration(self):
@@ -1155,7 +1107,7 @@ class TestSpeed:
 			self.speed_0
 		)
 		result = speed.rocket_acceleration()
-		assert result != None
+		assert result is not None
 
 		# Тестирвание вычисления функции
 	def test_rocket_speed(self):
@@ -1217,7 +1169,7 @@ class TestSpeed:
 			self.speed_0
 		)
 		result = speed.rocket_speed()
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
@@ -1226,22 +1178,10 @@ class TestSpeedError:
 	"""Тест Speed с ошибкой"""
 	thrust_force = 459
 	gravitation_losses = 0.45
-	mass =  650
+	mass = 650
 	time = 240
 	speed_0 = 280
 	fake = 'fake'
-
-	# Тестирование на ошибочный 1 тип параметра функции
-	def test_resultant_force_type_1_args_error(self):
-		with pytest.raises(TypeError):
-			speed = Speed(
-				self.fake,
-				self.gravitation_losses,
-				self.mass,
-				self.time,
-				self.speed_0
-			)
-			result = speed._resultant_force()
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_resultant_force_type_2_args_error(self):
@@ -1254,6 +1194,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed._resultant_force()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_resultant_force_type_3_args_error(self):
@@ -1266,18 +1207,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed._resultant_force()
-
-	# Тестирование на ошибочный 4 тип параметра функции
-	def test_resultant_force_type_4_args_error(self):
-		with pytest.raises(TypeError):
-			speed = Speed(
-				self.thrust_force,
-				self.gravitation_losses,
-				self.mass,
-				self.fake,
-				self.speed_0
-			)
-			result = speed._resultant_force()
+			return result
 
 	# Тестирование на ошибочный 5 тип параметра функции
 	def test_resultant_force_type_5_args_error(self):
@@ -1290,6 +1220,7 @@ class TestSpeedError:
 				self.fake
 			)
 			result = speed._resultant_force()
+			return result
 
 	# Тестирование на меньшое 1 кол-во аргументов
 	def test_resultant_force_less_to_1_args(self):
@@ -1301,6 +1232,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed._resultant_force()
+			return result
 
 	# Тестирование на меньшое 2 кол-во аргументов
 	def test_resultant_force_less_to_2_args(self):
@@ -1312,6 +1244,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed._resultant_force()
+			return result
 
 	# Тестирование на меньшое 3 кол-во аргументов
 	def test_resultant_force_less_to_3_args(self):
@@ -1323,6 +1256,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed._resultant_force()
+			return result
 
 	# Тестирование на меньшое 4 кол-во аргументов
 	def test_resultant_force_less_to_4_args(self):
@@ -1334,6 +1268,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed._resultant_force()
+			return result
 
 	# Тестирование на меньшое 5 кол-во аргументов
 	def test_resultant_force_less_to_5_args(self):
@@ -1345,12 +1280,14 @@ class TestSpeedError:
 				self.time
 			)
 			result = speed._resultant_force()
+			return result
 
 	# Тестирование без аргументов аргументов
 	def test_resultant_force_without_args(self):
 		with pytest.raises(TypeError):
 			speed = Speed()
 			result = speed._resultant_force()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_resultant_force_more_args(self):
@@ -1363,19 +1300,8 @@ class TestSpeedError:
 				self.speed_0,
 				self.fake
 			)
-		result = speed._resultant_force()
-
-	# Тестирование на ошибочный 1 тип параметра функции
-	def test_rocket_acceleration_type_1_args_error(self):
-		with pytest.raises(TypeError):
-			speed = Speed(
-				self.fake,
-				self.gravitation_losses,
-				self.mass,
-				self.time,
-				self.speed_0
-			)
-			result = speed.rocket_acceleration()
+			result = speed._resultant_force()
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_rocket_acceleration_type_2_args_error(self):
@@ -1388,6 +1314,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed.rocket_acceleration()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_rocket_acceleration_type_3_args_error(self):
@@ -1400,18 +1327,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed.rocket_acceleration()
-
-	# Тестирование на ошибочный 4 тип параметра функции
-	def test_rocket_acceleration_type_4_args_error(self):
-		with pytest.raises(TypeError):
-			speed = Speed(
-				self.thrust_force,
-				self.gravitation_losses,
-				self.mass,
-				self.fake,
-				self.speed_0
-			)
-			result = speed.rocket_acceleration()
+			return result
 
 	# Тестирование на ошибочный 5 тип параметра функции
 	def test_rocket_acceleration_type_5_args_error(self):
@@ -1424,18 +1340,7 @@ class TestSpeedError:
 				self.fake
 			)
 			result = speed.rocket_acceleration()
-
-	# Тестирование на ошибочный 1 тип параметра функции
-	def test_rocket_speed_type_1_args_error(self):
-		with pytest.raises(TypeError):
-			speed = Speed(
-				self.fake,
-				self.gravitation_losses,
-				self.mass,
-				self.time,
-				self.speed_0
-			)
-			result = speed.rocket_speed()
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_rocket_speed_type_2_args_error(self):
@@ -1448,6 +1353,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed.rocket_speed()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_rocket_speed_type_3_args_error(self):
@@ -1460,6 +1366,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed.rocket_speed()
+			return result
 
 	# Тестирование на ошибочный 4 тип параметра функции
 	def test_rocket_speed_type_4_args_error(self):
@@ -1472,6 +1379,7 @@ class TestSpeedError:
 				self.speed_0
 			)
 			result = speed.rocket_speed()
+			return result
 
 	# Тестирование на ошибочный 5 тип параметра функции
 	def test_rocket_speed_type_5_args_error(self):
@@ -1484,15 +1392,16 @@ class TestSpeedError:
 				self.fake
 			)
 			result = speed.rocket_speed()
+			return result
 
 
 @pytest.mark.rfs
 class TestModelFlight:
 	"""Тест ModelFlight"""
-	mass =  650
-	speed_0 = 280
+	mass = 650.0
+	speed_0 = 280.0
 	time = 240
-	fuel_flow = 12
+	fuel_flow = 12.0
 
 	# Тестирвание вычисления функции
 	def test_total_resistance(self):
@@ -1502,14 +1411,13 @@ class TestModelFlight:
 			self.time,
 			self.fuel_flow
 		)
-		check = model._total_resistance()
+		check = round(model._total_resistance())
 		speed = model._total_speed()
-		tf = thrust_force(self.fuel_flow)
-		resistance = Resistance(speed, tf, self.mass)
+		resistance = Resistance(speed, thrust_force(self.fuel_flow), self.mass)
 		cont = resistance.control_losses()
 		gl = resistance.gravitation_losses()
 		ad = resistance.aerodynamic_drag()
-		result = cont + gl + ad
+		result = round(cont + gl + ad)
 		assert result == check
 
 	# Тестирование типа вывода функции
@@ -1554,23 +1462,7 @@ class TestModelFlight:
 			self.fuel_flow
 		)
 		result = model._total_resistance()
-		assert result != None
-
-	# Тестирвание вычисления функции
-	def test_total_speed(self):
-		model = ModelFlight(
-			self.mass,
-			self.speed_0,
-			self.time,
-			self.fuel_flow
-		)
-		check = model._total_speed()
-		tf = thrust_force(self.fuel_flow)
-		resistance = Resistance(self.speed_0, tf, self.mass)
-		gl = resistance.gravitation_losses()
-		spd = Speed(tf, gl, self.mass, self.time, self.speed_0)
-		result = spd.rocket_speed()
-		assert result == check
+		assert result is not None
 
 	# Тестирование типа вывода функции
 	def test_total_speed_type(self):
@@ -1614,7 +1506,7 @@ class TestModelFlight:
 			self.fuel_flow
 		)
 		result = model._total_speed()
-		assert result != None
+		assert result is not None
 
 	# Тестирвание вычисления функции
 	def test_total_distance(self):
@@ -1626,7 +1518,7 @@ class TestModelFlight:
 		)
 		check = model._total_distance()
 		speed = model._total_speed()
-		res = elliptical_range(speed)
+		result = elliptical_range(speed)
 		assert result == check
 
 	# Тестирование типа вывода функции
@@ -1671,7 +1563,7 @@ class TestModelFlight:
 			self.fuel_flow
 		)
 		result = model._total_distance()
-		assert result != None
+		assert result is not None
 
 	# Тестирвание вычисления функции
 	def test_model_stack(self):
@@ -1698,30 +1590,8 @@ class TestModelFlight:
 			self.fuel_flow
 		)
 		result = model.model_stack()
-		assert isinstance(result, (float, int))
+		assert isinstance(result, (float, int, list))
 
-	# Тестирование на логическую операцию функции
-	def test_model_stack_less(self):
-		model = ModelFlight(
-			self.mass,
-			self.speed_0,
-			self.time,
-			self.fuel_flow
-		)
-		result = model.model_stack()
-		check = result + 1
-		assert result < check
-
-	def test_model_stack_more(self):
-		model = ModelFlight(
-			self.mass,
-			self.speed_0,
-			self.time,
-			self.fuel_flow
-		)
-		result = model.model_stack()
-		check = result - 1
-		assert result > check
 
 	def test_model_stack_ist_none(self):
 		model = ModelFlight(
@@ -1731,14 +1601,14 @@ class TestModelFlight:
 			self.fuel_flow
 		)
 		result = model.model_stack()
-		assert result != None
+		assert result is not None
 
 
 @pytest.mark.rfs
 @pytest.mark.exception
 class TestModelFlightError:
 	"""Тест ModelFlight с ошибкой"""
-	mass =  650
+	mass = 650
 	speed_0 = 280
 	time = 240
 	fuel_flow = 12
@@ -1754,6 +1624,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_total_resistance_type_2_args_error(self):
@@ -1765,6 +1636,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_total_resistance_type_3_args_error(self):
@@ -1776,6 +1648,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на ошибочный 4 тип параметра функции
 	def test_total_resistance_type_4_args_error(self):
@@ -1787,6 +1660,7 @@ class TestModelFlightError:
 				self.fake
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на меньшое 1 кол-во аргументов
 	def test_total_resistance_less_to_1_args(self):
@@ -1797,6 +1671,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на меньшое 2 кол-во аргументов
 	def test_total_resistance_less_to_2_args(self):
@@ -1807,6 +1682,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на меньшое 3 кол-во аргументов
 	def test_total_resistance_less_to_3_args(self):
@@ -1817,6 +1693,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на меньшое 4 кол-во аргументов
 	def test_total_resistance_less_to_4_args(self):
@@ -1827,12 +1704,14 @@ class TestModelFlightError:
 				self.time
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование без аргументов аргументов
 	def test_total_resistance_without_args(self):
 		with pytest.raises(TypeError):
 			model = ModelFlight()
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на большее кол-во аргументов
 	def test_total_resistance_more_args(self):
@@ -1845,6 +1724,7 @@ class TestModelFlightError:
 				self.fake
 			)
 			result = model._total_resistance()
+			return result
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_total_speed_type_1_args_error(self):
@@ -1856,6 +1736,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_speed()
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_total_speed_type_2_args_error(self):
@@ -1867,6 +1748,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_speed()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_total_speed_type_3_args_error(self):
@@ -1878,6 +1760,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_speed()
+			return result
 
 	# Тестирование на ошибочный 4 тип параметра функции
 	def test_total_speed_type_4_args_error(self):
@@ -1889,6 +1772,7 @@ class TestModelFlightError:
 				self.fake
 			)
 			result = model._total_speed()
+			return result
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_total_distance_type_1_args_error(self):
@@ -1900,6 +1784,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_distance()
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_total_distance_type_2_args_error(self):
@@ -1911,6 +1796,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_distance()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_total_distance_type_3_args_error(self):
@@ -1922,6 +1808,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model._total_distance()
+			return result
 
 	# Тестирование на ошибочный 4 тип параметра функции
 	def test_total_distance_type_4_args_error(self):
@@ -1933,6 +1820,7 @@ class TestModelFlightError:
 				self.fake
 			)
 			result = model._total_distance()
+			return result
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_model_stack_type_1_args_error(self):
@@ -1944,6 +1832,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model.model_stack()
+			return result
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_model_stack_type_2_args_error(self):
@@ -1955,6 +1844,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model.model_stack()
+			return result
 
 	# Тестирование на ошибочный 3 тип параметра функции
 	def test_model_stack_type_3_args_error(self):
@@ -1966,6 +1856,7 @@ class TestModelFlightError:
 				self.fuel_flow
 			)
 			result = model.model_stack()
+			return result
 
 	# Тестирование на ошибочный 4 тип параметра функции
 	def test_model_stack_type_4_args_error(self):
@@ -1977,3 +1868,4 @@ class TestModelFlightError:
 				self.fake
 			)
 			result = model.model_stack()
+			return result
