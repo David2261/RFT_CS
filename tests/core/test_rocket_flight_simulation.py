@@ -772,6 +772,7 @@ class TestCylindricalCavityError:
 			result = CC.volume_cylindrical_cavity()
 			return result
 
+
 @pytest.mark.rfs
 class TestResistance:
 	""" Тест для Resistance """
@@ -996,7 +997,8 @@ class TestSpeed:
 		)
 		check = speed._resultant_force()
 		G = ACCELERATION_FREE_FALL
-		result = thrust_force(self.speed_0) * self.gravitation_losses - self.mass * G
+		result = thrust_force(self.speed_0) \
+			* self.gravitation_losses - self.mass * G
 		assert result == check
 
 	# Тестирование типа вывода функции
@@ -1591,7 +1593,6 @@ class TestModelFlight:
 		)
 		result = model.model_stack()
 		assert isinstance(result, (float, int, list))
-
 
 	def test_model_stack_ist_none(self):
 		model = ModelFlight(

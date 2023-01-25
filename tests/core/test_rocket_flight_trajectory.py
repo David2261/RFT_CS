@@ -4,7 +4,7 @@
 import os
 import sys
 
-path = os.path.join(os.getcwd(), '../../RFTCS/')
+path = os.path.join(os.getcwd(), '../RFTCS/')
 sys.path.append(path)
 
 import pytest
@@ -20,19 +20,42 @@ class TestFlightBallistics:
 	""" Тестирование функций расчета баллистики """
 	speed = 29000
 
-	@classmethod
-	# Синус двойного угола
-	def _double_angle_sine(cls):
+	# Тестирвание вычисления функции
+	def test_double_angle_sine(self):
+		FB = FlightBallistics(self.speed)
+		check = FB._double_angle_sine()
 		A = FPV
-		return 2 * np.sin(A) * np.cos(A)
+		result = 2 * np.sin(A) * np.cos(A)
+		assert result == check
+
+	# Тестирование типа вывода функции
+	def test_double_angle_sine_type(self):
+		result = FlightBallistics(self.speed)
+		res = result._double_angle_sine()
+		assert isinstance(res, (float, int))
+
+	# Тестирование на логическую операцию функции
+	def test_double_angle_sine_less(self):
+		FB = FlightBallistics(self.speed)
+		result = FB._double_angle_sine()
+		check = result + 1
+		assert result < check
+
+	# Тестирование на логическую операцию функции
+	def test_double_angle_sine_more(self):
+		FB = FlightBallistics(self.speed)
+		result = FB._double_angle_sine()
+		check = result - 1
+		assert result > check
 
 	# Тестирвание вычисления функции
 	def test_flight_range(self):
 		G = ACCELERATION_FREE_FALL
-		sine = self._double_angle_sine()
+		FB = FlightBallistics(self.speed)
+		result = FB.flight_range()
+		sine = FB._double_angle_sine()
 		answer = ((self.speed ** 2) * sine) / (2 * G)
-		result = FlightBallistics(self.speed)
-		assert result.flight_range() == answer
+		assert result == answer
 
 	# Тестирование типа вывода функции
 	def test_flight_range_type(self):
@@ -42,11 +65,10 @@ class TestFlightBallistics:
 
 	# Тестирование на логическую операцию функции
 	def test_flight_range_less(self):
-		G = ACCELERATION_FREE_FALL
-		sine = self._double_angle_sine()
-		answer = ((self.speed ** 2) * sine) / (2 * G)
-		result = FlightBallistics(self.speed)
-		assert result.flight_range() < (answer + 1)
+		FB = FlightBallistics(self.speed)
+		result = FB.flight_range()
+		check = result + 1
+		assert result < check
 
 	# Тестирвание вычисления функции
 	def test_flight_time(self):
@@ -70,17 +92,32 @@ class TestFlightBallistics:
 		result = FlightBallistics(self.speed)
 		assert result.flight_time() < (answer + 1)
 
+	# Тестирование на логическую операцию функции
+	def test_flight_time_more(self):
+		G = ACCELERATION_FREE_FALL
+		A = FPV
+		answer = ((2 * self.speed * np.sin(A)) / G)
+		result = FlightBallistics(self.speed)
+		assert result.flight_time() > (answer - 1)
+
 
 @pytest.mark.rft
 @pytest.mark.exception
 class TestFlightBallisticsError:
 	""" Тестирование исключений функций расчета баллистики """
-	speed = 'false'
+	speed = 29000
+	fake = 'fake'
+
+	# Тестирование на большее кол-во аргументов
+	def test_double_angle_sine_more_args(self):
+		with pytest.raises(TypeError):
+			res = FlightBallistics(self.speed, self.fake)
+			res._double_angle_sine(self.speed)
 
 	# Тестирование на ошибочный тип параметра функции
 	def test_flight_range_type_error(self):
 		with pytest.raises(TypeError):
-			res = FlightBallistics(self.speed)
+			res = FlightBallistics(self.fake)
 			res.flight_range()
 
 	# Тестирование на меньшое кол-во аргументов
@@ -92,13 +129,13 @@ class TestFlightBallisticsError:
 	# Тестирование на большее кол-во аргументов
 	def test_flight_range_more_args(self):
 		with pytest.raises(TypeError):
-			res = FlightBallistics(2323, self.speed)
+			res = FlightBallistics(self.speed, self.fake)
 			res.flight_range()
 
 	# Тестирование на ошибочный тип параметра функции
 	def test_flight_time_type_error(self):
 		with pytest.raises(TypeError):
-			res = FlightBallistics(self.speed)
+			res = FlightBallistics(self.fake)
 			res.flight_time()
 
 	# Тестирование на меньшое кол-во аргументов
@@ -110,5 +147,5 @@ class TestFlightBallisticsError:
 	# Тестирование на большее кол-во аргументов
 	def test_flight_time_more_args(self):
 		with pytest.raises(TypeError):
-			res = FlightBallistics(self.speed, 2323)
+			res = FlightBallistics(self.speed, self.fake)
 			res.flight_time()

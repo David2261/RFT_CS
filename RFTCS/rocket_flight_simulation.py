@@ -74,10 +74,7 @@ def tg_Beta(spd: int):
 	except ZeroDivisionError as zde:
 		logger.error(invalid_zero_division(zde))
 		raise ZeroDivisionError(invalid_zero_division(zde))
-	except IOError as io:
-		logger.error(invalid_IO(io))
-		raise IOError(invalid_IO(io))
-	except Exception as e:
+	except (IOError, Exception) as e:
 		logger.error(invalid_general(e))
 		raise invalid_general(e)
 	return corn
