@@ -5,17 +5,14 @@
 	- Сумма всех скоростей [V = l_(sp) * g_(o) * ln(Mf/Me)]
 	- Масса конструкции ракеты [Mk = Mp/k]
 """
-import sys
 import numpy as np
 import logging
 import logging.config
 
 from exceptions.exception import (
 	invalid_import,
-	invalid_kbi,
 	invalid_type,
 	invalid_zero_division,
-	invalid_general
 )
 from setup.logging_conf import LOGGING_CONF
 
@@ -53,9 +50,6 @@ class TotalOil:
 		except ZeroDivisionError as zde:
 			logger.error(invalid_zero_division(zde))
 			raise ZeroDivisionError(invalid_zero_division(zde))
-		except (IOError, Exception) as e:
-			logger.error(invalid_general(e))
-			raise invalid_general(e)
 		return res
 
 	# Функция расчет с помощью Эйлерова числа E
@@ -71,9 +65,6 @@ class TotalOil:
 		except ZeroDivisionError as zde:
 			logger.error(invalid_zero_division(zde))
 			raise ZeroDivisionError(invalid_zero_division(zde))
-		except (IOError, Exception) as e:
-			logger.error(invalid_general(e))
-			raise invalid_general(e)
 		return res
 
 	# Сумма всех скоростей
@@ -86,9 +77,6 @@ class TotalOil:
 		except TypeError as te:
 			logger.error(invalid_type(te))
 			raise TypeError(invalid_type(te))
-		except (IOError, Exception) as e:
-			logger.error(invalid_general(e))
-			raise invalid_general(e)
 		return delta_V
 
 	# Функция для расчета топлива
@@ -99,9 +87,6 @@ class TotalOil:
 		except TypeError as te:
 			logger.error(invalid_type(te))
 			raise TypeError(invalid_type(te))
-		except (IOError, Exception) as e:
-			logger.error(invalid_general(e))
-			raise invalid_general(e)
 		return res
 
 

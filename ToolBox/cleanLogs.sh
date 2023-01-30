@@ -10,8 +10,7 @@ declare -a files=(
 # Check size, if more than 1 byte > clean
 for i in "${files[@]}"
 do 
-	if [wc -c "${files[@]}"]
-	then
+	if [[ wc -c ${files[@]} ]] then;
 		echo -n "" > "${files[@]}"
 	fi
 done

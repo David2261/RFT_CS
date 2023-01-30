@@ -1,4 +1,5 @@
 
+
 # Value error (ValueError)
 def invalid_entire(text: str) -> str:
 	description = f"Вы ввели некоректные данные: {text}"

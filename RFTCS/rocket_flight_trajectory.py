@@ -5,17 +5,14 @@
 	- Полет баллистической ракеты
 	- Полет космического аппарата
 """
-import sys
 import numpy as np
 import logging
 import logging.config
 
 from exceptions.exception import (
 	invalid_import,
-	invalid_kbi,
 	invalid_type,
-	invalid_zero_division,
-	invalid_general
+	invalid_zero_division
 )
 from setup.logging_conf import LOGGING_CONF
 
@@ -47,9 +44,6 @@ class FlightBallistics:
 		except TypeError as te:
 			logger.error(invalid_type(te))
 			raise TypeError(invalid_type(te))
-		except (IOError, Exception) as e:
-			logger.error(invalid_general(e))
-			raise invalid_general(e)
 		return res
 
 	# Дальность полета
@@ -65,9 +59,6 @@ class FlightBallistics:
 		except ZeroDivisionError as zde:
 			logger.error(invalid_zero_division(zde))
 			raise ZeroDivisionError(invalid_zero_division(zde))
-		except (IOError, Exception) as e:
-			logger.error(invalid_general(e))
-			raise invalid_general(e)
 		return res
 
 	# Время полета ракеты
@@ -83,14 +74,11 @@ class FlightBallistics:
 		except ZeroDivisionError as zde:
 			logger.error(invalid_zero_division(zde))
 			raise ZeroDivisionError(invalid_zero_division(zde))
-		except (IOError, Exception) as e:
-			logger.error(invalid_general(e))
-			raise invalid_general(e)
 		return res
 
 
 if __name__ == "__main__":
-	speed = 234
+	speed = 'fake'
 	b = FlightBallistics(speed)
 	print(b.flight_range())
 	print(b.flight_time())

@@ -1,11 +1,11 @@
-import sys
 import logging
 import logging.config
 
 from exceptions.exception import (
 	invalid_entire,
-	invalid_IO,
-	invalid_type
+	invalid_type,
+	invalid_general,
+	invalid_import
 )
 from setup.logging_conf import LOGGING_CONF
 
@@ -40,11 +40,8 @@ try:
 
 	log_info.info("Импортирование файлов в main.py")
 except ImportError as e:
-	logger.error(invalid_IO(e))
-	sys.exit(1)
-except Exception as e:
-	logger.error(invalid_entire(e))
-	sys.exit(1)
+	logger.error(invalid_import(e))
+	raise ImportError(invalid_import(e))
 
 
 # Вывод первой подсказки
@@ -58,13 +55,13 @@ def output_info() -> list:
 		num = int(input())
 	except ValueError as e:
 		logger.error(invalid_entire(e))
-		sys.exit(1)
+		raise ValueError(invalid_entire(e))
 	display_info()
 	try:
 		selection = int(input())
 	except ValueError as e:
 		logger.error(invalid_entire(e))
-		sys.exit(1)
+		raise ValueError(invalid_entire(e))
 	return [num, selection]
 
 
@@ -79,20 +76,41 @@ def fuel_input(stage: int) -> list:
 	n = 0
 	while n < stage:
 		try:
-			Isp = float(input(f"Напишите удельный импульс для {n + 1} ступени: "))
+			try:
+				Isp = float(input(f"Напишите удельный импульс для {n + 1} ступени: "))
+			except ValueError as e:
+				logger.error(invalid_entire(e))
+				raise ValueError(invalid_entire(e))
+			except TypeError as e:
+				logger.error(invalid_type(e))
+				raise TypeError(invalid_type(e))
 			Isp_total += Isp
-			Mass_full = float(
-				input(f"Напишите масса полного топлива для {n + 1} ступени: ")
-			)
+			try:
+				Mass_full = float(
+					input(f"Напишите масса полного топлива для {n + 1} ступени: ")
+				)
+			except ValueError as e:
+				logger.error(invalid_entire(e))
+				raise ValueError(invalid_entire(e))
+			except TypeError as e:
+				logger.error(invalid_type(e))
+				raise TypeError(invalid_type(e))
 			Mass_full_total += Mass_full
-			Mass_empty = float(
-				input(f"Напишите масса без топлива для {n + 1} ступени: ")
-			)
+			try:
+				Mass_empty = float(
+					input(f"Напишите масса без топлива для {n + 1} ступени: ")
+				)
+			except ValueError as e:
+				logger.error(invalid_entire(e))
+				raise ValueError(invalid_entire(e))
+			except TypeError as e:
+				logger.error(invalid_type(e))
+				raise TypeError(invalid_type(e))
 			Mass_empty_total += Mass_empty
 			log_info.info(f"Пройден цикл = {n+1}")
 		except ValueError as e:
 			logger.error(invalid_entire(e))
-			sys.exit(1)
+			raise TypeError(invalid_type(e))
 		fuel = TotalOil(Mass_empty, Mass_full_total, Isp)
 		Mass_fuel_total += fuel.total_oil()
 		print("\n")
@@ -120,7 +138,10 @@ def flight_model_input(stage: int) -> list:
 			time = float(input("Время работы двигателя: "))
 		except ValueError as e:
 			logger.error(invalid_entire(e))
-			sys.exit(1)
+			raise ValueError(invalid_entire(e))
+		except TypeError as e:
+			logger.error(invalid_type(e))
+			raise TypeError(invalid_type(e))
 		resistance = Resistance(speed, fuel_flow, mass)
 
 		res_env = resistance.resistance_force()
@@ -147,14 +168,20 @@ def landing_model_input(stage: int) -> list:
 		speed_0 = float(input("Напишите начальную скорость ракеты: "))
 	except ValueError as e:
 		logger.error(invalid_entire(e))
-		sys.exit(1)
+		raise ValueError(invalid_entire(e))
+	except TypeError as e:
+		logger.error(invalid_type(e))
+		raise TypeError(invalid_type(e))
 	while n < stage:
 		try:
 			mass = float(input(f"Напишите массу ступени ({stage}): "))
 			fuel_flow = float(input("Напишите расход ступени: "))
 		except ValueError as e:
 			logger.error(invalid_entire(e))
-			sys.exit(1)
+			raise ValueError(invalid_entire(e))
+		except TypeError as e:
+			logger.error(invalid_type(e))
+			raise TypeError(invalid_type(e))
 		model = ModelFlight(fuel_flow, mass, speed_0, time)
 		model_stack = model.model_stack()
 		ballistic = FlightBallistics(model_stack[1])
@@ -222,14 +249,9 @@ def main() -> None:
 		stage = int(stage)
 		screen = output_info()
 		function_output(screen, stage)
-	except TypeError:
-		text = invalid_type(stage)
-		logger.error(text)
-		sys.exit(1)
-	except ValueError:
-		text = invalid_entire(stage)
-		logger.error(text)
-		sys.exit(1)
+	except Exception as e:
+		logger.error(invalid_general(e))
+		raise Exception(invalid_general(e))
 
 
 if __name__ == "__main__":
