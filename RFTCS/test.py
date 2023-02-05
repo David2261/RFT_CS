@@ -1,10 +1,11 @@
 from ctypes import *
 
-trajectory = CDLL('./core/bin/Trajectory.so')
+trajectory = CDLL('./core/Trajectory.so')
 
 speed = 29000
-sine = trajectory.double_angle_sine()
-fr = trajectory.flight_range(sine, speed)
-ft = trajectory.flight_time(speed)
+sine = trajectory.api_double_angle_sine()
+# fr = trajectory.api_flight_range(sine, speed)
+# ft = trajectory.api_flight_time(speed)
 
-print(f'Дальность полета = {fr}\nВремя полета = {ft}')
+print(sine.main())
+# print(f'Дальность полета = {fr}\nВремя полета = {ft}')
