@@ -1,7 +1,11 @@
 #include "fuel.h"
+#include <time.h>
 
 int main()
 {
+	double time_spent = 0.0;
+	clock_t begin = clock();
+
 	float Me = 524.0, Mf = 579.0, Isp = 4200.0, speed = 450.0;
 	float freeFall = 9.8;
 	float natLog = api_natural_logarithm(Mf, Me);
@@ -9,10 +13,15 @@ int main()
 	float totalSpeed = api_total_speed(freeFall, Isp, natLog);
 	float totalOil = api_total_oil(Me, euler);
 	printf("Total Speed: %.2f\nTotal Oil: %.2f\n", totalSpeed, totalOil);
+	
+	clock_t end = clock();
+	time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+	printf("%f\n", time_spent);
 	return 0;
 	/*
 	Total Speed: 45480.23
 	Total Oil: 5.76
+	time: 0.000267
 	*/
 }
 

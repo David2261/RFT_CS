@@ -1,5 +1,6 @@
 #include "trajectory.h"
 
+
 int main()
 {
 	int speed = 29000;
@@ -17,7 +18,8 @@ int main()
 	return 0;
 }
 
-float api_double_angle_sine()
+
+float double_angle_sine()
 {
 	/* Синус двойного угла */
 	float num = FPV;
@@ -26,17 +28,28 @@ float api_double_angle_sine()
 	return x;
 }
 
-float api_flight_range(float sine, int speed)
+
+float flight_range(float sine, int speed)
 {
 	/* Дальность полета */
 	float G = ACCELERATION_FREE_FALL;
 	return (pow(speed, 2.0) * sine) / (2 * G);
 }
 
-float api_flight_time(int speed)
+
+float flight_time(int speed)
 {
 	float G = ACCELERATION_FREE_FALL;
 	float A = FPV;
 
 	return ((2 * speed * sin(A)) / G);
+}
+
+
+PyObject* api_double_angle_sine(PyObject* self, PyObject* args)
+{
+	float num;
+	PyArg_ParseTuple(args, "i", &num);
+	num = double_angle_sine();
+	return PyLong_FromLong(num);
 }
