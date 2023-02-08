@@ -19,7 +19,7 @@ int main()
 }
 
 
-float double_angle_sine()
+float api_double_angle_sine()
 {
 	/* Синус двойного угла */
 	float num = FPV;
@@ -29,7 +29,7 @@ float double_angle_sine()
 }
 
 
-float flight_range(float sine, int speed)
+float api_flight_range(float sine, int speed)
 {
 	/* Дальность полета */
 	float G = ACCELERATION_FREE_FALL;
@@ -37,7 +37,7 @@ float flight_range(float sine, int speed)
 }
 
 
-float flight_time(int speed)
+float api_flight_time(int speed)
 {
 	float G = ACCELERATION_FREE_FALL;
 	float A = FPV;
@@ -46,10 +46,10 @@ float flight_time(int speed)
 }
 
 
-PyObject* api_double_angle_sine(PyObject* self, PyObject* args)
-{
-	float num;
-	PyArg_ParseTuple(args, "i", &num);
-	num = double_angle_sine();
-	return PyLong_FromLong(num);
-}
+// PyObject* api_double_angle_sine(PyObject* self, PyObject* args)
+// {
+// 	float num;
+// 	PyArg_ParseTuple(args, "i", &num);
+// 	num = double_angle_sine();
+// 	return PyLong_FromLong(num);
+// }
