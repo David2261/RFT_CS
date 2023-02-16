@@ -1,9 +1,5 @@
 from distutils.core import setup, Extension
 
-some_module = Extension(
-	"api_distance_N_step",
-	source="core/flight_simulation.c"
-)
 
 setup(
 	name="RFTCS_Core",
@@ -11,6 +7,6 @@ setup(
 	description="Extend core on the C code",
 	author="Bulat",
 	ext_modules=[
-		Extension()
+		Extension("core_api", ["core/bind.c", "core/api.c"])
 	]
 )
