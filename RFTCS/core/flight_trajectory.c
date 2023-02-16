@@ -44,12 +44,3 @@ float api_flight_time(int speed)
 
 	return ((2 * speed * sin(A)) / G);
 }
-
-
-// PyObject* api_double_angle_sine(PyObject* self, PyObject* args)
-// {
-// 	float num;
-// 	PyArg_ParseTuple(args, "i", &num);
-// 	num = double_angle_sine();
-// 	return PyLong_FromLong(num);
-// }
