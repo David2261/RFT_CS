@@ -7,6 +7,6 @@ setup(
 	description="Extend core on the C code",
 	author="Bulat",
 	ext_modules=[
-		Extension("core_api", ["core/bind.c", "core/api.c"])
+		Extension("core_api", ["bind.c", "api.c"])
 	]
 )
