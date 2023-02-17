@@ -7,9 +7,9 @@
 #if PY_MAJOR_VERSION >= 3
 
 // Core functions
-#include "simulation.h"
-#include "fuel.h"
-#include "trajectory.h"
+#include "core/simulation.h"
+#include "core/fuel.h"
+#include "core/trajectory.h"
 
 // Extentions
 static PyObject * ext_double_angle_sine(PyObject *);
