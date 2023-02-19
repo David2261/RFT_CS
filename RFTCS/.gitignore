@@ -1,0 +1,10 @@
+# binary files
+build
+dist
+
+*.so
+a.out
+*.o
+*.out
+
+
