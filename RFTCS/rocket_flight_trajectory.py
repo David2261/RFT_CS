@@ -23,6 +23,7 @@ log_info = logging.getLogger("root")
 try:
 	from setup.constant import ACCELERATION_FREE_FALL
 	from setup.settings import FPV
+	import core_api as CA # CPython API
 except ImportError as e:
 	logger.error(invalid_import(e))
 	raise ImportError(invalid_import(e))
@@ -38,8 +39,7 @@ class FlightBallistics:
 	# Синус двойного угла
 	def _double_angle_sine(self):
 		try:
-			A = FPV
-			res = 2 * np.sin(A) * np.cos(A)
+			res = CA.double_angle_sine()
 			log_info.info("Запуск функции '_double_angle_sine'")
 		except TypeError as te:
 			logger.error(invalid_type(te))
