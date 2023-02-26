@@ -1,10 +1,12 @@
 # binary files
 build
 dist
+*.egg-info
 
 *.so
 a.out
 *.o
 *.out
 
-
+# Python cache
+__pycache__
