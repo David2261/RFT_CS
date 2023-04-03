@@ -144,11 +144,11 @@ def flight_model_input(stage: int) -> list:
 			raise TypeError(invalid_type(e))
 		resistance = Resistance(speed, fuel_flow, mass)
 
-		res_env = resistance.resistance_force()
-		gl = resistance.gravity_losses()
-		al = resistance.aerodynamic_losses()
-		lsc = resistance.loss_speed_on_control()
-		sum_resistance = gl + al + lsc + res_env
+		# res_env = resistance.resistance_force() - Этого нет (т.е. функция была удалена)
+		gl = resistance.gravitation_losses()
+		al = resistance.aerodynamic_drag()
+		lsc = resistance.control_losses()
+		sum_resistance = gl + al + lsc
 
 		total_resistance += sum_resistance
 		total_speed += speed
