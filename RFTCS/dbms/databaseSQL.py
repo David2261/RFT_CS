@@ -1,10 +1,10 @@
 import sqlite3
 import datetime
 
-from config import path
+from .config import path
 
 
-class DataBase:
+class DataBaseSQL:
 	def __init__(self, table, arg_1, arg_2, arg_3=None):
 		self.table = table
 		self.arg_1 = arg_1
@@ -17,16 +17,16 @@ class DataBase:
 	except Exception as e:
 		print(f"Bad request...\n{e}")
 
-	def check_table_db(self):
+	def check_db_table(self):
 		count_calculations = self.cursor.execute(
-			"""SELECT name FROM sqlite_master WHERE type='table' AND name='%s' """ % self.table)
+			"""SELECT name FROM sqlite_master WHERE type='table' AND name='%s';""" % self.table)
 		if count_calculations.fetchone() is not None:
 			res = True
 		else:
 			res = False
 		return res
 
-	def create_table_db(self):
+	def create_db_table(self):
 		if self.table == "ModelFlight":
 			create_table = """
 				CREATE TABLE IF NOT EXISTS ModelFlight (
@@ -80,11 +80,11 @@ class DataBase:
 			values = [(self.arg_1, self.arg_2)]
 		self.cursor.executemany(query, values)
 
-	def main(self):
-		if self.check_table_db():
+	def record_data(self):
+		if self.check_db_table():
 			self.insert_db()
 		else:
-			self.create_table_db()
+			self.create_db_table()
 			self.insert_db()
 		self.sqlConnect.commit()
 		self.cursor.close()
@@ -94,8 +94,8 @@ if __name__ == "__main__":
 	arg_1 = 473
 	arg_2 = 14
 	arg_3 = 450
-	data = DataBase(table, arg_1, arg_2, arg_3)
-	data.main()
+	data = DataBaseSQL(table, arg_1, arg_2, arg_3)
+	data.record_data()
 
 
 

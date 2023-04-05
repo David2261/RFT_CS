@@ -37,6 +37,7 @@ try:
 		flight_simulation_display,
 		landing_display,
 	)
+	from dbms.databaseSQL import DataBaseSQL
 
 	log_info.info("Импортирование файлов в main.py")
 except ImportError as e:
@@ -198,24 +199,24 @@ def function_output(enter: list, stage: int) -> None:
 	function = enter[1]
 	log_info.info("Включение function_output")
 	if function == 1:
+		fuel_data = fuel_input(stage)
 		if display == 1:
-			fuel_data = fuel_input(stage)
 			main_rocket_format(round(fuel_data[0], 2), 1)
 			main_rocket_format(round(fuel_data[1], 2), 4)
 		elif display == 2:
-			fuel_data = fuel_input(stage)
 			stack = [round(fuel_data[0], 2), round(fuel_data[1], 2)]
 			fuel_display(stack)
 		else:
 			invalid_entire(f"Не тот вывод информации {display}")
+		db = DataBaseSQL("TotalOil", fuel_data[0], fuel_data[1])
+		db.record_data()
 	elif function == 2:
+		land_data = landing_model_input(stage)
 		if display == 1:
-			land_data = landing_model_input(stage)
 			main_rocket_format(round(land_data[0], 2), 8)
 			main_rocket_format(round(land_data[1], 2), 10)
 			main_rocket_format(round(land_data[2], 2), 11)
 		elif display == 2:
-			land_data = landing_model_input(stage)
 			stack = [
 				round(land_data[0], 2),
 				round(land_data[1], 2),
@@ -224,14 +225,15 @@ def function_output(enter: list, stage: int) -> None:
 			landing_display(stack)
 		else:
 			invalid_entire(f"Не тот вывод информации {display}")
+		db = DataBaseSQL("FlightBallistics", land_data[0], land_data[1])
+		db.record_data()
 	elif function == 3:
+		flight_data = flight_model_input(stage)
 		if display == 1:
-			flight_data = flight_model_input(stage)
 			main_rocket_format(round(flight_data[0], 2), 5)
 			main_rocket_format(round(flight_data[1], 2), 6)
 			main_rocket_format(round(flight_data[2], 2), 7)
 		elif display == 2:
-			flight_data = flight_model_input(stage)
 			stack = [
 				round(flight_data[0], 2),
 				round(flight_data[1], 2),
@@ -240,6 +242,9 @@ def function_output(enter: list, stage: int) -> None:
 			flight_simulation_display(stack)
 		else:
 			invalid_entire(f"Не тот вывод информации {display}")
+		db = DataBaseSQL("ModelFlight",
+			flight_data[0], flight_data[1], flight_data[2])
+		db.record_data()
 
 
 def main() -> None:
