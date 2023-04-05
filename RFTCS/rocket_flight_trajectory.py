@@ -23,7 +23,7 @@ log_info = logging.getLogger("root")
 try:
 	from setup.constant import ACCELERATION_FREE_FALL
 	from setup.settings import FPV
-	import core_api as CA # CPython API
+	# import core_api as CA # CPython API
 except ImportError as e:
 	logger.error(invalid_import(e))
 	raise ImportError(invalid_import(e))
