@@ -121,23 +121,26 @@ class ReadSQL:
 
 	def read_item_data(self):
 		if self.table == "TotalOil":
-			query = """SELECT * FROM TotalOil;"""
+			query = """SELECT * FROM TotalOil WHERE id = ?;"""
 		elif self.table == "FlightBallistics":
-			query = """SELECT * FROM FlightBallistics;"""
+			query = """SELECT * FROM FlightBallistics WHERE id = ?;"""
 		elif self.table == "ModelFlight":
-			query = """SELECT * FROM ModelFlight;"""
+			query = """SELECT * FROM ModelFlight WHERE id = ?;"""
+		res = self.cursor.execute(query, (self.item, ))
+		print(res.fetchone())
+		self.cursor.close()
 
 if __name__ == "__main__":
 	table = "ModelFlight"
 	size = 2
 	item = 2
 	data = ReadSQL(table, size, item)
-	data.read_all_data()
+	data.read_item_data()
 
 
 
 """
-Для примера (Из консоли):
+Для примера (Из консоли - get all datas):
 
 
 Напишите количество ступеней: 2
@@ -167,4 +170,13 @@ if __name__ == "__main__":
 SELECT COUNT(*) FROM sqlite_master; 4
 SELECT COUNT(*) FROM ModelFlight; 1
 SELECT COUNT(*) FROM TotalOil; 2
+"""
+
+
+"""
+Для примера (Из консоли - get item data):
+
+(1, 13.034366290892303, 7686.965633709107, 49, '2023-04-05 22:01:12')
+(2, 12.930333693036495, 5426.569666306964, 15, '2023-04-05 22:05:21')
+
 """
