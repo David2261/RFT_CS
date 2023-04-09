@@ -130,12 +130,23 @@ class ReadSQL:
 		print(res.fetchone())
 		self.cursor.close()
 
+	def read_many_data(self):
+		if self.table == "TotalOil":
+			query = """SELECT * FROM TotalOil;"""
+		elif self.table == "FlightBallistics":
+			query = """SELECT * FROM FlightBallistics;"""
+		elif self.table == "ModelFlight":
+			query = """SELECT * FROM ModelFlight;"""
+		res = self.cursor.execute(query)
+		print(res.fetchmany(self.size))
+		self.cursor.close()
+
 if __name__ == "__main__":
 	table = "ModelFlight"
 	size = 2
 	item = 2
 	data = ReadSQL(table, size, item)
-	data.read_item_data()
+	data.read_many_data()
 
 
 
@@ -178,5 +189,16 @@ SELECT COUNT(*) FROM TotalOil; 2
 
 (1, 13.034366290892303, 7686.965633709107, 49, '2023-04-05 22:01:12')
 (2, 12.930333693036495, 5426.569666306964, 15, '2023-04-05 22:05:21')
+
+"""
+
+
+"""
+Для примера (Из консоли - get many datas):
+
+[
+(1, 13.034366290892303, 7686.965633709107, 49, '2023-04-05 22:01:12'),
+(2, 12.930333693036495, 5426.569666306964, 15, '2023-04-05 22:05:21')
+]
 
 """
