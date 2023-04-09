@@ -2,8 +2,11 @@
 import sqlite3
 import datetime
 
-from .config import path
-
+# Bad request!!!
+try:
+	from config import path
+except:
+	from .config import path
 
 class DataBaseSQL:
 	""" Создание и добавление данных в БД """
@@ -113,8 +116,16 @@ class ReadSQL:
 		elif self.table == "ModelFlight":
 			query = """SELECT * FROM ModelFlight;"""
 		res = self.cursor.execute(query)
-		print(res.fetchone())
+		print(res.fetchall())
 		self.cursor.close()
+
+	def read_item_data(self):
+		if self.table == "TotalOil":
+			query = """SELECT * FROM TotalOil;"""
+		elif self.table == "FlightBallistics":
+			query = """SELECT * FROM FlightBallistics;"""
+		elif self.table == "ModelFlight":
+			query = """SELECT * FROM ModelFlight;"""
 
 if __name__ == "__main__":
 	table = "ModelFlight"
