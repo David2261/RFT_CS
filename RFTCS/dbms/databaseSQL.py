@@ -155,14 +155,34 @@ class PopSQL:
 		print(f"Bad request...\n{e}")
 
 	def pop_data(self):
-		if self.table == "TotalOil":
-			query = """DELETE FROM TotalOil WHERE id = ?;"""
-		elif self.table == "FlightBallistics":
-			query = """DELETE FROM FlightBallistics WHERE id = ?;"""
-		elif self.table == "ModelFlight":
-			query = """DELETE FROM ModelFlight WHERE id = ?;"""
-		self.cursor.execute(query, (self.item, ))
+		try:
+			if self.table == "TotalOil":
+				query = """DELETE FROM TotalOil WHERE id = ?;"""
+			elif self.table == "FlightBallistics":
+				query = """DELETE FROM FlightBallistics WHERE id = ?;"""
+			elif self.table == "ModelFlight":
+				query = """DELETE FROM ModelFlight WHERE id = ?;"""
+			self.cursor.execute(query, (self.item, ))
+		except Exception as ex:
+			print(f"Не получилось удалить запись...\n{ex}")
 		self.cursor.close()
+
+	def pop_last_data(self):
+		try:
+			if self.table == "TotalOil":
+				query = """DELETE FROM TotalOil
+					WHERE id = (SELECT MAX(id) FROM TotalOil);"""
+			elif self.table == "FlightBallistics":
+				query = """DELETE FROM FlightBallistics
+					WHERE id = (SELECT MAX(id) FROM FlightBallistics);"""
+			elif self.table == "ModelFlight":
+				query = """DELETE FROM ModelFlight
+					WHERE id = (SELECT MAX(id) FROM ModelFlight);"""
+			self.cursor.execute(query)
+		except Exception as ex:
+			print(f"Не получилось удалить запись...\n{ex}")
+		self.cursor.close()
+
 
 
 if __name__ == "__main__":
