@@ -141,13 +141,36 @@ class ReadSQL:
 		print(res.fetchmany(self.size))
 		self.cursor.close()
 
+
+class PopSQL:
+	""" Чтение данных из БД """
+	def __init__(self, table, size=None, item=None):
+		self.table = table
+		self.item = item
+
+	try:
+		sqlConnect = sqlite3.connect(path)
+		cursor = sqlConnect.cursor()
+	except Exception as e:
+		print(f"Bad request...\n{e}")
+
+	def pop_data(self):
+		if self.table == "TotalOil":
+			query = """DELETE FROM TotalOil WHERE id = ?;"""
+		elif self.table == "FlightBallistics":
+			query = """DELETE FROM FlightBallistics WHERE id = ?;"""
+		elif self.table == "ModelFlight":
+			query = """DELETE FROM ModelFlight WHERE id = ?;"""
+		self.cursor.execute(query, (self.item, ))
+		self.cursor.close()
+
+
 if __name__ == "__main__":
 	table = "ModelFlight"
 	size = 2
 	item = 2
 	data = ReadSQL(table, size, item)
 	data.read_many_data()
-
 
 
 """
