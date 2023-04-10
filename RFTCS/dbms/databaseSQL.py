@@ -1,10 +1,15 @@
+#!/usr/bin/env python3
 import sqlite3
 import datetime
 
-from .config import path
-
+# Bad request!!!
+try:
+	from config import path
+except:
+	from .config import path
 
 class DataBaseSQL:
+	""" Создание и добавление данных в БД """
 	def __init__(self, table, arg_1, arg_2, arg_3=None):
 		self.table = table
 		self.arg_1 = arg_1
@@ -89,18 +94,87 @@ class DataBaseSQL:
 		self.sqlConnect.commit()
 		self.cursor.close()
 
-if __name__ == "__main__":
-	table = "TotalOil"
-	arg_1 = 473
-	arg_2 = 14
-	arg_3 = 450
-	data = DataBaseSQL(table, arg_1, arg_2, arg_3)
-	data.record_data()
 
+class ReadSQL:
+	""" Чтение данных из БД """
+	def __init__(self, table, size=None, item=None):
+		self.table = table
+		self.size = size
+		self.item = item
+
+	try:
+		sqlConnect = sqlite3.connect(path)
+		cursor = sqlConnect.cursor()
+	except Exception as e:
+		print(f"Bad request...\n{e}")
+
+	def read_all_data(self):
+		if self.table == "TotalOil":
+			query = """SELECT * FROM TotalOil;"""
+		elif self.table == "FlightBallistics":
+			query = """SELECT * FROM FlightBallistics;"""
+		elif self.table == "ModelFlight":
+			query = """SELECT * FROM ModelFlight;"""
+		res = self.cursor.execute(query)
+		print(res.fetchall())
+		self.cursor.close()
+
+	def read_item_data(self):
+		if self.table == "TotalOil":
+			query = """SELECT * FROM TotalOil WHERE id = ?;"""
+		elif self.table == "FlightBallistics":
+			query = """SELECT * FROM FlightBallistics WHERE id = ?;"""
+		elif self.table == "ModelFlight":
+			query = """SELECT * FROM ModelFlight WHERE id = ?;"""
+		res = self.cursor.execute(query, (self.item, ))
+		print(res.fetchone())
+		self.cursor.close()
+
+	def read_many_data(self):
+		if self.table == "TotalOil":
+			query = """SELECT * FROM TotalOil;"""
+		elif self.table == "FlightBallistics":
+			query = """SELECT * FROM FlightBallistics;"""
+		elif self.table == "ModelFlight":
+			query = """SELECT * FROM ModelFlight;"""
+		res = self.cursor.execute(query)
+		print(res.fetchmany(self.size))
+		self.cursor.close()
+
+
+class PopSQL:
+	""" Чтение данных из БД """
+	def __init__(self, table, size=None, item=None):
+		self.table = table
+		self.item = item
+
+	try:
+		sqlConnect = sqlite3.connect(path)
+		cursor = sqlConnect.cursor()
+	except Exception as e:
+		print(f"Bad request...\n{e}")
+
+	def pop_data(self):
+		if self.table == "TotalOil":
+			query = """DELETE FROM TotalOil WHERE id = ?;"""
+		elif self.table == "FlightBallistics":
+			query = """DELETE FROM FlightBallistics WHERE id = ?;"""
+		elif self.table == "ModelFlight":
+			query = """DELETE FROM ModelFlight WHERE id = ?;"""
+		self.cursor.execute(query, (self.item, ))
+		self.cursor.close()
+
+
+if __name__ == "__main__":
+	table = "ModelFlight"
+	size = 2
+	item = 2
+	data = ReadSQL(table, size, item)
+	data.read_many_data()
 
 
 """
-Для примера (Из консоли):
+Для примера (Из консоли - get all datas):
 
 
 Напишите количество ступеней: 2
@@ -130,4 +204,24 @@ if __name__ == "__main__":
 SELECT COUNT(*) FROM sqlite_master; 4
 SELECT COUNT(*) FROM ModelFlight; 1
 SELECT COUNT(*) FROM TotalOil; 2
+"""
+
+
+"""
+Для примера (Из консоли - get item data):
+
+(1, 13.034366290892303, 7686.965633709107, 49, '2023-04-05 22:01:12')
+(2, 12.930333693036495, 5426.569666306964, 15, '2023-04-05 22:05:21')
+
+"""
+
+
+"""
+Для примера (Из консоли - get many datas):
+
+[
+(1, 13.034366290892303, 7686.965633709107, 49, '2023-04-05 22:01:12'),
+(2, 12.930333693036495, 5426.569666306964, 15, '2023-04-05 22:05:21')
+]
+
 """
