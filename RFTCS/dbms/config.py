@@ -1,1 +1,1 @@
-path="calculationDB.db"
+path = "calculationDB.db"

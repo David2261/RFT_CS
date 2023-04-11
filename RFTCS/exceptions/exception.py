@@ -24,6 +24,12 @@ def invalid_import(text: str) -> str:
 	return description
 
 
+# Import error (FileNotFoundError)
+def invalid_file(text: str) -> str:
+	description = f"Не получилось найти файл: {text}"
+	return description
+
+
 # Index error (IndexError)
 def invalid_index(text: str) -> str:
 	description = f"Не найден индекс: {text}"
@@ -53,9 +59,8 @@ def invalid_zero_division(text: str) -> str:
 	description = f"Ошибка деления на 0: {text}"
 	return description
 
+
 # General error (Exceptions)
 def invalid_general(text: str) -> str:
 	description = f"Ошибка в {text}"
 	return description
-
-

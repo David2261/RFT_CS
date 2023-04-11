@@ -38,6 +38,7 @@ try:
 		landing_display,
 	)
 	from dbms.databaseSQL import DataBaseSQL
+	# , ReadSQL, PopSQL
 
 	log_info.info("Импортирование файлов в main.py")
 except ImportError as e:
@@ -145,7 +146,8 @@ def flight_model_input(stage: int) -> list:
 			raise TypeError(invalid_type(e))
 		resistance = Resistance(speed, fuel_flow, mass)
 
-		# res_env = resistance.resistance_force() - Этого нет (т.е. функция была удалена)
+		# res_env = resistance.resistance_force()
+		# - Этого нет (т.е. функция была удалена)
 		gl = resistance.gravitation_losses()
 		al = resistance.aerodynamic_drag()
 		lsc = resistance.control_losses()
@@ -229,21 +231,23 @@ def function_output(enter: list, stage: int) -> None:
 		db.record_data()
 	elif function == 3:
 		flight_data = flight_model_input(stage)
-		if display == 1:
-			main_rocket_format(round(flight_data[0], 2), 5)
-			main_rocket_format(round(flight_data[1], 2), 6)
-			main_rocket_format(round(flight_data[2], 2), 7)
-		elif display == 2:
-			stack = [
-				round(flight_data[0], 2),
-				round(flight_data[1], 2),
-				round(flight_data[2], 2),
-			]
-			flight_simulation_display(stack)
-		else:
-			invalid_entire(f"Не тот вывод информации {display}")
-		db = DataBaseSQL("ModelFlight",
-			flight_data[0], flight_data[1], flight_data[2])
+		try:
+			if display == 1:
+				main_rocket_format(round(flight_data[0], 2), 5)
+				main_rocket_format(round(flight_data[1], 2), 6)
+				main_rocket_format(round(flight_data[2], 2), 7)
+			elif display == 2:
+				stack = [
+					round(flight_data[0], 2),
+					round(flight_data[1], 2),
+					round(flight_data[2], 2),
+				]
+				flight_simulation_display(stack)
+		except Exception as ex:
+			logger.error(invalid_entire(ex))
+			raise ValueError(invalid_entire(ex))
+		db = DataBaseSQL(
+			"ModelFlight", flight_data[0], flight_data[1], flight_data[2])
 		db.record_data()
 
 
