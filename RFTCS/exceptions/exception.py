@@ -64,5 +64,3 @@ def invalid_zero_division(text: str) -> str:
 def invalid_general(text: str) -> str:
 	description = f"Ошибка в {text}"
 	return description
-
-

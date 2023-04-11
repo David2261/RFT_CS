@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sqlite3
-import datetime
+# import datetime
 
 import logging
 import logging.config
@@ -13,10 +13,9 @@ log_info = logging.getLogger("root")
 
 try:
 	from exceptions.exception import (
-		invalid_entire,
-		invalid_type,
 		invalid_general,
-		invalid_import
+		invalid_import,
+		invalid_file
 	)
 except Exception as ex:
 	logger.error(f"Ошибка с импортированием функкций исключений... {ex}")
@@ -44,10 +43,10 @@ class DataBaseSQL:
 		sqlConnect = sqlite3.connect(path)
 		cursor = sqlConnect.cursor()
 		log_info.info("Подключение DataBaseSQL к БД SQL")
-	except FileNotFoundError:
+	except FileNotFoundError as ex:
 		logger.error(invalid_file(ex))
 		raise FileNotFoundError(invalid_file(ex))
-	except Exception as e:
+	except Exception as ex:
 		logger.error(invalid_general(ex))
 		raise invalid_general(ex)
 
@@ -133,7 +132,7 @@ class DataBaseSQL:
 			else:
 				self.create_db_table()
 				self.insert_db()
-		log_info.info("Основная функция записи данных в БД SQL")
+			log_info.info("Основная функция записи данных в БД SQL")
 		except Exception as ex:
 			logger.error(invalid_general(ex))
 			raise invalid_general(ex)
@@ -152,10 +151,10 @@ class ReadSQL:
 		sqlConnect = sqlite3.connect(path)
 		cursor = sqlConnect.cursor()
 		log_info.info("Подключение ReadSQL к БД SQL")
-	except FileNotFoundError:
+	except FileNotFoundError as ex:
 		logger.error(invalid_file(ex))
 		raise FileNotFoundError(invalid_file(ex))
-	except Exception as e:
+	except Exception as ex:
 		logger.error(invalid_general(ex))
 		raise invalid_general(ex)
 
@@ -185,7 +184,7 @@ class ReadSQL:
 				query = """SELECT * FROM ModelFlight WHERE id = ?;"""
 			res = self.cursor.execute(query, (self.item, ))
 			print(res.fetchone())
-		log_info.info(f"Чтение одной записи из {self.table} в БД SQL")
+			log_info.info(f"Чтение одной записи из {self.table} в БД SQL")
 		except Exception as ex:
 			logger.error(invalid_general(ex))
 			raise invalid_general(ex)
@@ -219,10 +218,10 @@ class PopSQL:
 		sqlConnect = sqlite3.connect(path)
 		cursor = sqlConnect.cursor()
 		log_info.info("Подключение PopSQL к БД SQL")
-	except FileNotFoundError:
+	except FileNotFoundError as ex:
 		logger.error(invalid_file(ex))
 		raise FileNotFoundError(invalid_file(ex))
-	except Exception as e:
+	except Exception as ex:
 		logger.error(invalid_general(ex))
 		raise invalid_general(ex)
 
@@ -259,66 +258,3 @@ class PopSQL:
 			logger.error(invalid_general(ex))
 			raise invalid_general(ex)
 		self.cursor.close()
-
-
-
-if __name__ == "__main__":
-	table = "ModelFlight"
-	size = 2
-	item = 2
-	data = ReadSQL(table, size, item)
-	data.read_many_data()
-
-
-"""
-Для примера (Из консоли - get all datas):
-
-
-Напишите количество ступеней: 2
-Какой формат вывода информации хотите?
-В виде текста (1) или ввиде таблицы (2): 
-2
-+------+---------+--------+
-| Fuel | Landing | Flight |
-+------+---------+--------+
-|  1   |    2    |   3    |
-+------+---------+--------+
-3
-Напишите скорость ракеты: 450
-Напишите расход ступени: 12
-Напишите массу ракеты: 45
-Время работы двигателя: 60
-Напишите скорость ракеты: 23
-Напишите расход ступени: 2
-Напишите массу ракеты: 15
-Время работы двигателя: 11.5
-+------------------+----------+------+
-| Amount of losses | Distance | Mass |
-+------------------+----------+------+
-|      12.93       | 5426.57  | 15.0 |
-+------------------+----------+------+
-
-SELECT COUNT(*) FROM sqlite_master; 4
-SELECT COUNT(*) FROM ModelFlight; 1
-SELECT COUNT(*) FROM TotalOil; 2
-"""
-
-
-"""
-Для примера (Из консоли - get item data):
-
-(1, 13.034366290892303, 7686.965633709107, 49, '2023-04-05 22:01:12')
-(2, 12.930333693036495, 5426.569666306964, 15, '2023-04-05 22:05:21')
-
-"""
-
-
-"""
-Для примера (Из консоли - get many datas):
-
-[
-(1, 13.034366290892303, 7686.965633709107, 49, '2023-04-05 22:01:12'),
-(2, 12.930333693036495, 5426.569666306964, 15, '2023-04-05 22:05:21')
-]
-
-"""

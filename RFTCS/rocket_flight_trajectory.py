@@ -39,7 +39,8 @@ class FlightBallistics:
 	# Синус двойного угла
 	def _double_angle_sine(self):
 		try:
-			res = CA.double_angle_sine()
+			# res = CA.double_angle_sine()
+			res = 2 * np.sin(self.speed) * np.cos(self.speed)
 			log_info.info("Запуск функции '_double_angle_sine'")
 		except TypeError as te:
 			logger.error(invalid_type(te))

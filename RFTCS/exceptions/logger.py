@@ -8,7 +8,7 @@ logging.basicConfig(
 )
 
 _log_format = f"%(asctime)s - [%(levelname)s] - \
-	%(name)s - (%(filename)s).%(funcName)s((%lineno)d) - %(message)s"
+	%(name)s {'-'} (%(filename)s).%(funcName)s((%lineno)d) - %(message)s"
 
 
 def get_file_handler():
