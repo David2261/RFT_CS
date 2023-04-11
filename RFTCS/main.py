@@ -37,7 +37,7 @@ try:
 		flight_simulation_display,
 		landing_display,
 	)
-	from dbms.databaseSQL import DataBaseSQL
+	from dbms.databaseSQL import DataBaseSQL, ReadSQL, PopSQL
 
 	log_info.info("Импортирование файлов в main.py")
 except ImportError as e:

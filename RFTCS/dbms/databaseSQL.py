@@ -2,11 +2,35 @@
 import sqlite3
 import datetime
 
+import logging
+import logging.config
+
+from setup.logging_conf import LOGGING_CONF
+
+logging.config.dictConfig(LOGGING_CONF)
+logger = logging.getLogger("dev")
+log_info = logging.getLogger("root")
+
+try:
+	from exceptions.exception import (
+		invalid_entire,
+		invalid_type,
+		invalid_general,
+		invalid_import
+	)
+except Exception as ex:
+	logger.error(f"Ошибка с импортированием функкций исключений... {ex}")
+
 # Bad request!!!
 try:
 	from config import path
-except:
+	log_info.info("Импортирование файлов в databaseSQL.py")
+except ImportError:
 	from .config import path
+except Exception as ex:
+	logger.error(invalid_import(ex))
+	raise invalid_import(ex)
+
 
 class DataBaseSQL:
 	""" Создание и добавление данных в БД """
@@ -19,78 +43,100 @@ class DataBaseSQL:
 	try:
 		sqlConnect = sqlite3.connect(path)
 		cursor = sqlConnect.cursor()
+		log_info.info("Подключение к БД SQL")
+	except FileNotFoundError:
+		logger.error(invalid_file(ex))
+		raise FileNotFoundError(invalid_file(ex))
 	except Exception as e:
-		print(f"Bad request...\n{e}")
+		logger.error(invalid_general(ex))
+		raise invalid_general(ex)
 
 	def check_db_table(self):
-		count_calculations = self.cursor.execute(
-			"""SELECT name FROM sqlite_master WHERE type='table' AND name='%s';""" % self.table)
-		if count_calculations.fetchone() is not None:
-			res = True
-		else:
-			res = False
+		try:
+			count_calculations = self.cursor.execute(
+				"""SELECT name FROM sqlite_master
+				WHERE type='table' AND name='%s';""" % self.table)
+			res = True if count_calculations.fetchone() \
+				is not None else False
+			log_info.info("Проверка данных в БД SQL")
+		except Exception as ex:
+			logger.error(invalid_general(ex))
+			raise invalid_general(ex)
 		return res
 
 	def create_db_table(self):
-		if self.table == "ModelFlight":
-			create_table = """
-				CREATE TABLE IF NOT EXISTS ModelFlight (
-				id INTEGER PRIMARY KEY AUTOINCREMENT,
-				flow INTEGER,
-				mass INTEGER,
-				speed_0 INTEGER,
-				Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);
-			"""
-		elif self.table == "FlightBallistics":
-			create_table = """
-				CREATE TABLE IF NOT EXISTS FlightBallistics (
-				id INTEGER PRIMARY KEY AUTOINCREMENT,
-				flight_range INTEGER,
-				flight_time INTEGER,
-				Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);
-			"""
-		elif self.table == "TotalOil":
-			create_table = """
-				CREATE TABLE IF NOT EXISTS TotalOil (
-				id INTEGER PRIMARY KEY AUTOINCREMENT,
-				speed INTEGER,
-				oil INTEGER,
-				Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);
-			"""
-		else:
-			print("Error")
+		try:
+			if self.table == "ModelFlight":
+				create_table = """
+					CREATE TABLE IF NOT EXISTS ModelFlight (
+					id INTEGER PRIMARY KEY AUTOINCREMENT,
+					flow INTEGER,
+					mass INTEGER,
+					speed_0 INTEGER,
+					Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);
+				"""
+			elif self.table == "FlightBallistics":
+				create_table = """
+					CREATE TABLE IF NOT EXISTS FlightBallistics (
+					id INTEGER PRIMARY KEY AUTOINCREMENT,
+					flight_range INTEGER,
+					flight_time INTEGER,
+					Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);
+				"""
+			elif self.table == "TotalOil":
+				create_table = """
+					CREATE TABLE IF NOT EXISTS TotalOil (
+					id INTEGER PRIMARY KEY AUTOINCREMENT,
+					speed INTEGER,
+					oil INTEGER,
+					Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);
+				"""
+			log_info.info("Создание таблиц в БД SQL")
+		except Exception as ex:
+			logger.error(invalid_general(ex))
+			raise invalid_general(ex)
 		self.cursor.execute(create_table)
 
 	def insert_db(self):
-		if self.table == "ModelFlight":
-			query = """
-			INSERT INTO ModelFlight
-			(flow, mass, speed_0)
-			VALUES (?, ?, ? );
-			"""
-			values = [(self.arg_1, self.arg_2, self.arg_3)]
-		elif self.table == "FlightBallistics":
-			query = """
-			INSERT INTO FlightBallistics
-			(flight_time, flight_range)
-			VALUES (?, ? );
-			"""
-			values = [(self.arg_1, self.arg_2)]
-		elif self.table == "TotalOil":
-			query = """
-			INSERT INTO TotalOil
-			(speed, oil)
-			VALUES (?, ? );
-			"""
-			values = [(self.arg_1, self.arg_2)]
+		try:
+			if self.table == "ModelFlight":
+				query = """
+				INSERT INTO ModelFlight
+				(flow, mass, speed_0)
+				VALUES (?, ?, ? );
+				"""
+				values = [(self.arg_1, self.arg_2, self.arg_3)]
+			elif self.table == "FlightBallistics":
+				query = """
+				INSERT INTO FlightBallistics
+				(flight_time, flight_range)
+				VALUES (?, ? );
+				"""
+				values = [(self.arg_1, self.arg_2)]
+			elif self.table == "TotalOil":
+				query = """
+				INSERT INTO TotalOil
+				(speed, oil)
+				VALUES (?, ? );
+				"""
+				values = [(self.arg_1, self.arg_2)]
+			log_info.info("Ввод данных в БД SQL")
+		except Exception as ex:
+			logger.error(invalid_general(ex))
+			raise invalid_general(ex)
 		self.cursor.executemany(query, values)
 
 	def record_data(self):
-		if self.check_db_table():
-			self.insert_db()
-		else:
-			self.create_db_table()
-			self.insert_db()
+		try:
+			if self.check_db_table():
+				self.insert_db()
+			else:
+				self.create_db_table()
+				self.insert_db()
+		log_info.info("Основная функция записи данных в БД SQL")
+		except Exception as ex:
+			logger.error(invalid_general(ex))
+			raise invalid_general(ex)
 		self.sqlConnect.commit()
 		self.cursor.close()
 
@@ -143,7 +189,7 @@ class ReadSQL:
 
 
 class PopSQL:
-	""" Чтение данных из БД """
+	""" Удаление данных из БД """
 	def __init__(self, table, size=None, item=None):
 		self.table = table
 		self.item = item
