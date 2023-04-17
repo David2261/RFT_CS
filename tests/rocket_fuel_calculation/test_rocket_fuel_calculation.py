@@ -4,22 +4,23 @@
 import os
 import sys
 
-path = os.path.join(os.getcwd(), '../RFTCS/')
+path = os.path.join(os.getcwd(), '../../RFTCS/')
 sys.path.append(path)
 
 import numpy as np
 import pytest
 
-from rocket_fuel_calculation import TotalOil
+from RFTCS.rocket_fuel_calculation import TotalOil
 from setup.constant import ACCELERATION_FREE_FALL
+from data import *
 
 
 @pytest.mark.rfc
 class TestTotalOil:
 	""" Тестирование функций расчета топлива """
-	Me = 524
-	Mf = 579
-	Isp = 4200
+	Me = mass_empty
+	Mf = mass_full
+	Isp = Isp_rocket
 
 	# Функция нахождения натурального логарифма
 	def test_natural_logarithm(self) -> float:
@@ -148,10 +149,11 @@ class TestTotalOil:
 @pytest.mark.exception
 class TestTotalOilError:
 	""" Тестирование исключений функций расчета топлива """
-	Me = 524
-	Mf = 579
-	Isp = 4200
-	fake = 'fake'
+	def __init__(mass_empty=mass_empty, mass_full=mass_full, Isp_rocket=Isp_rocket, fake=fake):
+		Me = mass_empty
+		Mf = mass_full
+		Isp = Isp_rocket
+		fake = fake
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_natural_logarithm_type_1_args_error(self):
