@@ -1,20 +1,14 @@
-import os
-import sys
-
-path = os.path.join(os.getcwd(), '../RFTCS/')
-sys.path.append(path)
-
 import pytest
 import numpy as np
 
-from setup.constant import (
+from RFTCS.setup.constant import (
 	ATMOSPHERIC_DENSITY,
 	ACCELERATION_FREE_FALL,
 	CROSS_SECTION_AREA,
 	UNIVERSAL_GAS_CONSTANT,
 	EARTH_RADIUS
 )
-from setup.settings import (
+from RFTCS.setup.settings import (
 	INITIAL_DISTANCE,
 	AVERAGE_MOLAR_MASS,
 	BURNING_TEMPERATURE,
@@ -22,7 +16,7 @@ from setup.settings import (
 	TVV,
 	BEGIN_RADIUS_ROCKET
 )
-from rocket_flight_simulation import (
+from RFTCS.rocket_flight_simulation import (
 	distance_N_step,
 	tg_Beta,
 	elliptical_range,
@@ -37,35 +31,57 @@ from rocket_flight_simulation import (
 	Speed,
 	ModelFlight
 )
+from data import (
+	fuelFlow,
+	size,
+	fake,
+	engine,
+	weight_empty_rocket,
+	weight_fuel_rocket,
+	quantity,
+	container_pressure,
+	time_timer,
+	height_begin_place,
+	height_stage_place,
+	stage_rocket,
+	burn_fuel_rocket,
+	burn_step_rocket,
+	burn_size_rocket,
+	thrust_force_rocket,
+	mass_rocket,
+	gravitation_losses_space,
+	start_speed
+)
 
 
 @pytest.mark.rfs
 class TestDistanceNStep:
 	""" Тест для distance_N_step """
-	fuelFlow = 581
-	n = 3
+	def __init__(fuelFlow=fuelFlow, size=size):
+		fuelFlow = fuelFlow
+		size = size
 
 	def test_distance_n_step(self):
-		check = distance_N_step(self.fuelFlow, self.n)
-		result = INITIAL_DISTANCE - self.n * self.fuelFlow
-		assert check == result
+		test = distance_N_step(self.fuelFlow, self.size)
+		result = INITIAL_DISTANCE - self.size * self.fuelFlow
+		assert test == result
 
 	def test_distance_n_step_type(self):
-		result = distance_N_step(self.fuelFlow, self.n)
+		result = distance_N_step(self.fuelFlow, self.size)
 		assert isinstance(result, (int, float))
 
 	def test_distance_n_step_less(self):
-		result = distance_N_step(self.fuelFlow, self.n)
+		result = distance_N_step(self.fuelFlow, self.size)
 		result_more = result + 1
 		assert result < result_more
 
 	def test_distance_n_step_more(self):
-		result = distance_N_step(self.fuelFlow, self.n)
+		result = distance_N_step(self.fuelFlow, self.size)
 		result_more = result - 1
 		assert result > result_more
 
 	def test_distance_n_step_ist_none(self):
-		result = distance_N_step(self.fuelFlow, self.n)
+		result = distance_N_step(self.fuelFlow, self.size)
 		assert result is not None
 
 
@@ -73,9 +89,10 @@ class TestDistanceNStep:
 @pytest.mark.exception
 class TestDistanceNStepError:
 	""" Тест исключений для distance_N_step """
-	fuelFlow = 581
-	n = 3
-	fake = 'fake'
+	def __init__(fuelFlow=fuelFlow, size=size, fake=fake):
+		fuelFlow = fuelFlow
+		n = size
+		fake = fake
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_distance_n_step_type_1_args_error(self):
@@ -111,7 +128,8 @@ class TestDistanceNStepError:
 @pytest.mark.rfs
 class TestTgBeta:
 	""" Тест для tg_Beta """
-	speed = 581
+	def __init__(engine=engine, fake=fake):
+		speed = engine
 
 	def test_tg_beta(self):
 		check = tg_Beta(self.speed)
@@ -142,8 +160,9 @@ class TestTgBeta:
 @pytest.mark.exception
 class TestTgBetaError:
 	""" Тест исключений для tg_Beta """
-	speed = 581
-	fake = 'fake'
+	def __init__(engine=engine, fake=fake):
+		speed = engine
+		fake = fake
 
 	# Тестирование на ошибочный тип параметра функции
 	def test_tg_beta_type_args_error(self):
@@ -167,7 +186,8 @@ class TestTgBetaError:
 @pytest.mark.rfs
 class TestEllipticalRange:
 	""" Тест для elliptical_range """
-	speed = 581
+	def __init__(engine=engine):
+		speed = engine
 
 	def test_elliptical_range(self):
 		check = elliptical_range(self.speed)
@@ -199,8 +219,9 @@ class TestEllipticalRange:
 @pytest.mark.exception
 class TestEllipticalRangeError:
 	""" Тест исключений для elliptical_range """
-	speed = 581
-	fake = 'fake'
+	def __init__(engine=engine, fake=fake):
+		speed = engine
+		fake = fake
 
 	# Тестирование на ошибочный тип параметра функции
 	def test_elliptical_range_type_args_error(self):
@@ -224,8 +245,9 @@ class TestEllipticalRangeError:
 @pytest.mark.rfs
 class TestMassRocket:
 	""" Тест для mass_rocket """
-	emptyRocket = 581
-	fuelWidth = 400
+	def __init__(weight_empty_rocket=weight_empty_rocket, weight_fuel_rocket=weight_fuel_rocket):
+		emptyRocket = weight_empty_rocket
+		fuelWidth = weight_fuel_rocket
 
 	def test_mass_rocket(self):
 		check = mass_rocket(self.emptyRocket, self.fuelWidth)
@@ -255,9 +277,13 @@ class TestMassRocket:
 @pytest.mark.exception
 class TestMassRocketError:
 	""" Тест исключений для mass_rocket """
-	emptyRocket = 581
-	fuelWidth = 400
-	fake = 'fake'
+	def __init__(
+		weight_empty_rocket=weight_empty_rocket,
+		weight_fuel_rocket=weight_fuel_rocket,
+		fake=fake):
+		emptyRocket = weight_empty_rocket
+		fuelWidth = weight_fuel_rocket
+		fake = fake
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_mass_rocket_1_type_args_error(self):
@@ -287,7 +313,8 @@ class TestMassRocketError:
 @pytest.mark.rfs
 class TestAmountGasReleased:
 	""" Тест для amount_gas_released """
-	mass = 581
+	def __init__(weight_empty_rocket=weight_empty_rocket):
+		mass = weight_empty_rocket
 
 	def test_amount_gas_released(self):
 		check = amount_gas_released(self.mass)
@@ -317,8 +344,9 @@ class TestAmountGasReleased:
 @pytest.mark.exception
 class TestAmountGasReleasedError:
 	""" Тест исключений для amount_gas_released """
-	mass = 581
-	fake = 'fake'
+	def __init__(weight_empty_rocket=weight_empty_rocket, fake=fake):
+		mass = weight_empty_rocket
+		fake = fake
 
 	# Тестирование на ошибочный тип параметра функции
 	def test_amount_gas_released_type_args_error(self):
@@ -342,7 +370,8 @@ class TestAmountGasReleasedError:
 @pytest.mark.rfs
 class TestOverpressure:
 	""" Тест для overpressure """
-	step = 3
+	def __init__(quantity=quantity):
+		step = quantity
 
 	def test_overpressure(self):
 		check = overpressure(self.step)
@@ -373,8 +402,9 @@ class TestOverpressure:
 @pytest.mark.exception
 class TestOverpressureError:
 	""" Тест исключений для overpressure """
-	step = 3
-	fake = 'fake'
+	def __init__(quantity=quantity, fake=fake):
+		step = quantity
+		fake = fake
 
 	# Тестирование на ошибочный тип параметра функции
 	def test_overpressure_type_args_error(self):
@@ -398,7 +428,8 @@ class TestOverpressureError:
 @pytest.mark.rfs
 class TestThrustForse:
 	""" Тест для thrust_force """
-	pressure = 1400
+	def __init__(container_pressure=container_pressure):
+		pressure = container_pressure
 
 	def test_thrust_force(self):
 		check = thrust_force(self.pressure)
@@ -428,8 +459,9 @@ class TestThrustForse:
 @pytest.mark.exception
 class TestThrustForseError:
 	""" Тест исключений для thrust_force """
-	pressure = 1400
-	fake = 'fake'
+	def __init__(container_pressure=container_pressure, fake=fake):
+		pressure = container_pressure
+		fake = fake
 
 	# Тестирование на ошибочный тип параметра функции
 	def test_thrust_force_type_args_error(self):
@@ -453,8 +485,9 @@ class TestThrustForseError:
 @pytest.mark.rfs
 class TestImpuls:
 	""" Тест для impuls """
-	pressure = 1400
-	time = 300
+	def __init__(container_pressure=container_pressure, time_timer=time_timer):
+		pressure = container_pressure
+		time = time_timer
 
 	def test_impuls(self):
 		check = impuls(self.pressure, self.time)
@@ -485,9 +518,13 @@ class TestImpuls:
 @pytest.mark.exception
 class TestImpulsError:
 	""" Тест исключений для impuls """
-	pressure = 1400
-	time = 300
-	fake = 'fake'
+	def __init__(
+		container_pressure=container_pressure,
+		time_timer=time_timer,
+		fake=fake):
+		pressure = container_pressure
+		time = time_timer
+		fake = fake
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_impuls_type_to_1_args_error(self):
@@ -529,9 +566,13 @@ class TestImpulsError:
 @pytest.mark.rfs
 class TestHeightRocket:
 	""" Тест для height_rocket """
-	heightStart = 120
-	heightStage = 280
-	stage = 3
+	def __init__(
+		height_begin_place=height_begin_place,
+		height_stage_place=height_stage_place,
+		stage_rocket=stage_rocket):
+		heightStart = height_begin_place
+		heightStage = height_stage_place
+		stage = stage_rocket
 
 	def test_height_rocket(self):
 		check = height_rocket(
@@ -581,10 +622,15 @@ class TestHeightRocket:
 @pytest.mark.exception
 class TestHeightRocketError:
 	""" Тест исключений для height_rocket """
-	heightStart = 120
-	heightStage = 280
-	stage = 3
-	fake = 'fake'
+	def __init__(
+		height_begin_place=height_begin_place,
+		height_stage_place=height_stage_place,
+		stage_rocket=stage_rocket,
+		fake=fake):
+		heightStart = height_begin_place
+		heightStage = height_stage_place
+		stage = stage_rocket
+		fake = fake
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_height_rocket_type_1_args_error(self):
@@ -664,9 +710,13 @@ class TestHeightRocketError:
 @pytest.mark.rfs
 class TestCylindricalCavity:
 	"""Тест CylindricalCavity"""
-	burnFuel = 41187.93
-	step = 4
-	size = 0.45
+	def __init__(
+		burn_fuel_rocket=burn_fuel_rocket,
+		burn_step_rocket=burn_step_rocket,
+		burn_size_rocket=burn_size_rocket):
+		burnFuel = burn_fuel_rocket
+		step = burn_step_rocket
+		size = burn_size_rocket
 
 	# Тестирвание вычисления функции
 	def test_volume_cylindrical_cavity(self):
@@ -706,10 +756,15 @@ class TestCylindricalCavity:
 @pytest.mark.exception
 class TestCylindricalCavityError:
 	"""Тест CylindricalCavity с ошибкой"""
-	burnFuel = 41187.93
-	step = 4
-	size = 0.45
-	fake = 'fake'
+	def __init__(
+		burn_fuel_rocket=burn_fuel_rocket,
+		burn_step_rocket=burn_step_rocket,
+		burn_size_rocket=burn_size_rocket,
+		fake=fake):
+		burnFuel = burn_fuel_rocket
+		step = burn_step_rocket
+		size = burn_size_rocket
+		fake = fake
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_volume_cylindrical_cavity_type_1_args_error(self):
@@ -776,9 +831,13 @@ class TestCylindricalCavityError:
 @pytest.mark.rfs
 class TestResistance:
 	""" Тест для Resistance """
-	speed = 450
-	thrust_force = 230
-	mass = 650
+	def __init__(
+		engine=engine,
+		thrust_force_rocket=thrust_force_rocket,
+		mass_rocket=mass_rocket):
+		speed = engine
+		thrust_force = thrust_force_rocket
+		mass = mass_rocket
 
 	def test_aerodynamic_pressure(self):
 		resist = Resistance(self.speed, self.thrust_force, self.mass)
@@ -903,10 +962,15 @@ class TestResistance:
 @pytest.mark.exception
 class TestResistanceError:
 	""" Тест исключений для Resistance """
-	speed = 450
-	thrust_force = 230
-	mass = 650
-	fake = 'fake'
+	def __init__(
+		engine=engine,
+		thrust_force_rocket=thrust_force_rocket,
+		mass_rocket=mass_rocket,
+		fake=fake):
+		speed = engine
+		thrust_force = thrust_force_rocket
+		mass = mass_rocket
+		fake = fake
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_aerodynamic_pressure_type_1_args_error(self):
@@ -980,11 +1044,17 @@ class TestResistanceError:
 @pytest.mark.rfs
 class TestSpeed:
 	"""Тест Speed"""
-	thrust_force = 459
-	gravitation_losses = 0.45
-	mass = 650
-	time = 240
-	speed_0 = 280
+	def __init__(
+		thrust_force_rocket=thrust_force_rocket,
+		gravitation_losses_space=gravitation_losses_space,
+		mass_rocket=mass_rocket,
+		time_timer=time_timer,
+		start_speed=start_speed):
+		thrust_force = thrust_force_rocket
+		gravitation_losses = gravitation_losses_space
+		mass = mass_rocket
+		time = time_timer
+		speed_0 = start_speed
 
 	# Тестирвание вычисления функции
 	def test_resultant_force(self):
@@ -1178,12 +1248,19 @@ class TestSpeed:
 @pytest.mark.exception
 class TestSpeedError:
 	"""Тест Speed с ошибкой"""
-	thrust_force = 459
-	gravitation_losses = 0.45
-	mass = 650
-	time = 240
-	speed_0 = 280
-	fake = 'fake'
+	def __init__(
+		thrust_force_rocket=thrust_force_rocket,
+		gravitation_losses_space=gravitation_losses_space,
+		mass_rocket=mass_rocket,
+		time_timer=time_timer,
+		start_speed=start_speed,
+		fake=fake):
+		thrust_force = thrust_force_rocket
+		gravitation_losses = gravitation_losses_space
+		mass = mass_rocket
+		time = time_timer
+		speed_0 = start_speed
+		fake = fake
 
 	# Тестирование на ошибочный 2 тип параметра функции
 	def test_resultant_force_type_2_args_error(self):
@@ -1400,10 +1477,15 @@ class TestSpeedError:
 @pytest.mark.rfs
 class TestModelFlight:
 	"""Тест ModelFlight"""
-	mass = 650.0
-	speed_0 = 280.0
-	time = 240
-	fuel_flow = 12.0
+	def __init__(
+		mass_rocket=mass_rocket,
+		start_speed=start_speed,
+		time_timer=time_timer,
+		fuelFlow=fuelFlow):
+		mass = mass_rocket
+		speed_0 = start_speed
+		time = time_timer
+		fuel_flow = fuelFlow
 
 	# Тестирвание вычисления функции
 	def test_total_resistance(self):
@@ -1609,11 +1691,17 @@ class TestModelFlight:
 @pytest.mark.exception
 class TestModelFlightError:
 	"""Тест ModelFlight с ошибкой"""
-	mass = 650
-	speed_0 = 280
-	time = 240
-	fuel_flow = 12
-	fake = 'fake'
+	def __init__(
+		mass_rocket=mass_rocket,
+		start_speed=start_speed,
+		time_timer=time_timer,
+		fuelFlow=fuelFlow,
+		fake=fake):
+		mass = mass_rocket
+		speed_0 = start_speed
+		time = time_timer
+		fuel_flow = fuelFlow
+		fake = fake
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_total_resistance_type_1_args_error(self):
