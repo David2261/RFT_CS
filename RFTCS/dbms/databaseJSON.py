@@ -1,6 +1,8 @@
 import json
 from datetime import datetime
+import random
 import numpy as np
+from numpyencoder import NumpyEncoder
 
 
 class JsonLoad:
@@ -53,13 +55,13 @@ class JsonLoad:
         data_file = json.load(open('record.json'))
         json_data = self.generate_data()
         data_file.append(json_data)
-        with open('record.json', 'w') as file:
-            json.dump(data_file, file, indent=2, encoding='utf-8')
-    
+        with open('record.json', 'w', encoding='utf-8') as file:
+            json.dump(data_file, file, indent=2, separators=(', ', ': '), cls=NumpyEncoder)
+
     def json_generate(self):
         json_data = self.generate_data()
         with open('record.json', 'w', encoding='utf-8') as file:
-            json.dump(json_data, file, indent=2)
+            json.dump(json_data, file, indent=2, separators=(', ', ': '), cls=NumpyEncoder)
 
     def json_main(self):
         try:

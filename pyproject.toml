@@ -16,6 +16,7 @@ pytest = "^7.1.3"
 pytest-cov = "^3.0.0"
 prettytable = "^3.4.1"
 colorama = "^0.4.6"
+numpyencoder = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 
