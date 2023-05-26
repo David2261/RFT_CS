@@ -45,5 +45,7 @@ jobs:
           pip install -r requirements.txt
       - name: Run Tests
         run: |
+          mkdir /home/runner/work/RFT_CS/RFTCS/__logs__
+          touch /home/runner/work/RFT_CS/RFTCS/__logs__/error.log
           cd tests
           pytest .
