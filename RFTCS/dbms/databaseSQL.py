@@ -210,7 +210,7 @@ class ReadSQL:
 
 class PopSQL:
 	""" Удаление данных из БД """
-	def __init__(self, table, size=None, item=None):
+	def __init__(self, table, item=None):
 		self.table = table
 		self.item = item
 

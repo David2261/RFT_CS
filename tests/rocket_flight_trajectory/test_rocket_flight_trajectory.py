@@ -24,8 +24,7 @@ class TestFlightBallistics:
 	def test_double_angle_sine(self):
 		FB = FlightBallistics(self.speed)
 		check = FB._double_angle_sine()
-		A = FPV
-		result = 2 * np.sin(A) * np.cos(A)
+		result = 2 * np.sin(self.speed) * np.cos(self.speed)
 		assert result == check
 
 	# Тестирование типа вывода функции
