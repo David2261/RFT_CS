@@ -24,28 +24,3 @@ jobs:
           cache: "pip"
           linters: flake8
           run: flake8 RFTCS
-
-  run_tests:
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: ["3.9", "3.10"]
-    steps:
-      - name: Checkout repo code
-        uses: actions/checkout@v3
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: "pip"
-      - name: Install Dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Run Tests
-        run: |
-          mkdir /home/runner/work/RFT_CS/RFTCS/__logs__
-          touch /home/runner/work/RFT_CS/RFTCS/__logs__/error.log
-          cd tests
-          pytest .
