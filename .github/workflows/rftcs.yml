@@ -1,0 +1,49 @@
+name: RFT_CS CI/CD
+run-name: ${{ github.actor }} is testing out Github CI/CD
+
+on: [pull_request]
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: ["3.9", "3.10"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+      - run: |
+          python3 -m pip install --upgrade pip
+          python -m pip install flake8
+      - name: flake8
+        uses: liskin/gh-problem-matcher-wrap@d8afa2cfb66dd3f982b1950429e652bc14d0d7d2
+        with:
+          cache: "pip"
+          linters: flake8
+          run: flake8 RFTCS
+
+  run_tests:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: ["3.9", "3.10"]
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Install Dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Tests
+        run: |
+          cd tests
+          pytest .

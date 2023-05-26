@@ -18,9 +18,9 @@ from data import *
 @pytest.mark.rfc
 class TestTotalOil:
 	""" Тестирование функций расчета топлива """
-	Me = mass_empty
-	Mf = mass_full
-	Isp = Isp_rocket
+	Me = 230
+	Mf = 430
+	Isp = 4200
 
 	# Функция нахождения натурального логарифма
 	def test_natural_logarithm(self) -> float:
@@ -149,11 +149,10 @@ class TestTotalOil:
 @pytest.mark.exception
 class TestTotalOilError:
 	""" Тестирование исключений функций расчета топлива """
-	def __init__(mass_empty=mass_empty, mass_full=mass_full, Isp_rocket=Isp_rocket, fake=fake):
-		Me = mass_empty
-		Mf = mass_full
-		Isp = Isp_rocket
-		fake = fake
+	Me = 230
+	Mf = 430
+	Isp = 4200
+	fake = 'ake'
 
 	# Тестирование на ошибочный 1 тип параметра функции
 	def test_natural_logarithm_type_1_args_error(self):
