@@ -7,7 +7,7 @@
 
 // #if PY_MAJOR_VERSION >= 3
 
-float api_double_angle_sine();
+float api_double_angle_sine(float);
 float api_flight_range(float, int);
 float api_flight_time(int);
 

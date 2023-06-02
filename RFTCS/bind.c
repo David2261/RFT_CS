@@ -8,18 +8,18 @@ static PyMethodDef core_funcs[] = {
 		METH_NOARGS,
 		"double_angle_sine"
 	},
-	{
-		"flight_range",
-		(PyCFunction)ext_flight_range,
-		METH_VARARGS,
-		"flight_range"
-	},
-	{
-		"flight_time",
-		(PyCFunction)ext_flight_time,
-		METH_VARARGS,
-		"flight_time"
-	},
+	// {
+	// 	"flight_range",
+	// 	(PyCFunction)ext_flight_range,
+	// 	METH_VARARGS,
+	// 	"flight_range"
+	// },
+	// {
+	// 	"flight_time",
+	// 	(PyCFunction)ext_flight_time,
+	// 	METH_VARARGS,
+	// 	"flight_time"
+	// },
 	{NULL, NULL, 0, NULL},
 };
 
