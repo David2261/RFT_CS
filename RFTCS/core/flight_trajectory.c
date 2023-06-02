@@ -19,11 +19,10 @@ int main()
 }
 
 
-float api_double_angle_sine()
+float api_double_angle_sine(float speed)
 {
 	/* Синус двойного угла */
-	float num = FPV;
-	float x = 2 * sin(num) * cos(num);
+	float x = 2 * sin(speed) * cos(speed);
 	x = (x < 0) ? -x : x;
 	return x;
 }

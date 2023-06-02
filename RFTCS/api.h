@@ -12,9 +12,9 @@
 #include "core/trajectory.h"
 
 // Extentions
-static PyObject * ext_double_angle_sine(PyObject *);
-static PyObject * ext_flight_range(PyObject *, PyObject *);
-static PyObject * ext_flight_time(PyObject *, PyObject *);
+static PyObject * ext_double_angle_sine(PyObject *, PyObject *);
+// static PyObject * ext_flight_range(PyObject *, PyObject *);
+// static PyObject * ext_flight_time(PyObject *, PyObject *);
 
 #endif
 
