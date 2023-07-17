@@ -7,8 +7,13 @@
 	- Общая скорость
 """
 import numpy as np
+import numpy.typing as npt
 import logging
 import logging.config
+from typing import (
+	Any,
+	Union
+)
 
 from exceptions.exception import (
 	invalid_import,
@@ -47,7 +52,7 @@ except ImportError as e:
 
 
 # Расстояние от горящей поверхности топлива до стенки камеры сгорания.
-def distance_N_step(fuelFlow: int, n: int) -> float:
+def distance_N_step(fuelFlow: Union[int, float], n: Union[int, float]) -> Union[int, float]:
 	try:
 		r0 = INITIAL_DISTANCE
 		r_n = r0 - n * fuelFlow
@@ -58,7 +63,7 @@ def distance_N_step(fuelFlow: int, n: int) -> float:
 	return float(r_n)
 
 
-def tg_Beta(spd: int):
+def tg_Beta(spd: Union[int, float]):
 	try:
 		log_info.info("Запуск функции 'tg_Beta'")
 		start = BEGIN_RADIUS_ROCKET
@@ -74,7 +79,7 @@ def tg_Beta(spd: int):
 
 
 # Эллиптическая дальность полета
-def elliptical_range(speed: int) -> float:
+def elliptical_range(speed: Union[int, float]) -> np.dtype:
 	try:
 		log_info.info("Запуск функции 'elliptical_range'")
 		R = EARTH_RADIUS
@@ -172,7 +177,7 @@ class CylindricalCavity:
 
 	log_info.info("Запуск класса 'CylindricalCavity'")
 
-	def __init__(self, speed_burning_fuel: (float, int), step: int, Long: float):
+	def __init__(self, speed_burning_fuel: Union[float, int], step: int, Long: float):
 		self.U = speed_burning_fuel
 		self.n = step
 		self.L = Long
