@@ -177,7 +177,7 @@ def landing_model_input(stage: int) -> list:
 		raise TypeError(invalid_type(e))
 	while n < stage:
 		try:
-			mass = float(input(f"Напишите массу ступени ({stage}): "))
+			mass = float(input(f"Напишите массу ступени ({n+1}): "))
 			fuel_flow = float(input("Напишите расход ступени: "))
 		except ValueError as e:
 			logger.error(invalid_entire(e))
