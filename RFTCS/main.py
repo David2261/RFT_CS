@@ -1,3 +1,6 @@
+from __future__ import annotations
+from typing import Union
+
 import logging
 import logging.config
 
@@ -8,16 +11,6 @@ from exceptions.exception import (
 	invalid_import
 )
 from setup.logging_conf import LOGGING_CONF
-
-# Логгирование
-# logging.config.fileConfig('log.conf')
-# logger = logging.getLogger('dev')
-# logging.basicConfig(
-# 	filename='__logs__/main.log',
-# 	encoding='utf-8',
-# 	level=logging.NOTSET,
-# 	format='%(asctime)s - [%(levelname)s] - %(name)s -
-# 	(%(filename)s).%(funcName)s((%lineno)d) - %(message)s')
 
 DEBUG = True
 
@@ -38,7 +31,6 @@ try:
 		landing_display,
 	)
 	from dbms.databaseSQL import DataBaseSQL
-	# , ReadSQL, PopSQL
 
 	log_info.info("Импортирование файлов в main.py")
 except ImportError as e:
@@ -69,9 +61,9 @@ def output_info() -> list:
 
 def fuel_input(stage: int) -> list:
 	speed = 0
-	Isp_total = 0
-	Mass_full_total = 0
-	Mass_empty_total = 0
+	Isp_total: float = 0
+	Mass_full_total: float = 0
+	Mass_empty_total: float = 0
 	Mass_fuel_total = 0
 	log_info.info("Включение функции 'fuel_input'")
 
@@ -127,9 +119,9 @@ def fuel_input(stage: int) -> list:
 def flight_model_input(stage: int) -> list:
 	n = 0
 	sum_resistance = 0
-	total_speed = 0
-	total_time = 0
-	total_resistance = 0
+	total_speed: Union[int, float] = 0
+	total_time: Union[int, float] = 0
+	total_resistance: Union[int, float] = 0
 	log_info.info("Включение flight_model_input")
 
 	while n < stage:
@@ -253,9 +245,8 @@ def function_output(enter: list, stage: int) -> None:
 
 def main() -> None:
 	log_info.info("Начало функции main")
-	stage = input("Напишите количество ступеней: ")
+	stage = int(input("Напишите количество ступеней: "))
 	try:
-		stage = int(stage)
 		screen = output_info()
 		function_output(screen, stage)
 	except Exception as e:
