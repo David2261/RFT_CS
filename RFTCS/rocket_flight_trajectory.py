@@ -6,6 +6,8 @@
 	- Полет космического аппарата
 """
 from __future__ import annotations
+from dataclasses import dataclass
+from typing import Union
 
 import numpy as np
 import logging
@@ -31,7 +33,12 @@ except ImportError as e:
 	raise ImportError(invalid_import(e))
 
 
-class FlightBallistics:
+@dataclass(frozen=True)
+class TypeFB:
+	speed: Union[int, float]
+
+
+class FlightBallistics(TypeFB):
 	log_info.info("Запуск класса 'FlightBallistics'")
 	""" Балистический полет ракеты, внутри Земли """
 
