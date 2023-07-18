@@ -5,6 +5,10 @@
 	- Сумма всех скоростей [V = l_(sp) * g_(o) * ln(Mf/Me)]
 	- Масса конструкции ракеты [Mk = Mp/k]
 """
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Any, Union
+
 import numpy as np
 import logging
 import logging.config
@@ -29,7 +33,14 @@ except ImportError as e:
 	raise ImportError(invalid_import(e))
 
 
-class TotalOil:
+@dataclass
+class TypeTO:
+	m_empty_rocket: Union[int, float]
+	mass_rocket: Union[int, float]
+	Isp: Union[int, float]
+
+
+class TotalOil(TypeTO):
 	log_info.info("Запуск класса 'TotalOil'")
 	""" Расчет общей скорости """
 
@@ -39,7 +50,7 @@ class TotalOil:
 		self.Isp = Isp
 
 	# Функция нахождения натурального логарифма
-	def _natural_logarithm(self) -> float:
+	def _natural_logarithm(self) -> Any:
 		try:
 			num = self.Mf / self.Me
 			res = np.log(num)
@@ -53,7 +64,7 @@ class TotalOil:
 		return res
 
 	# Функция расчет с помощью Эйлерова числа E
-	def _euler(self) -> float:
+	def _euler(self) -> Any:
 		try:
 			G = ACCELERATION_FREE_FALL
 			speed = self.total_speed()
@@ -68,7 +79,7 @@ class TotalOil:
 		return res
 
 	# Сумма всех скоростей
-	def total_speed(self):
+	def total_speed(self) -> Any:
 		try:
 			G = ACCELERATION_FREE_FALL
 			nl = self._natural_logarithm()
@@ -80,7 +91,7 @@ class TotalOil:
 		return delta_V
 
 	# Функция для расчета топлива
-	def total_oil(self) -> float:
+	def total_oil(self) -> Any:
 		try:
 			res = self.Me * (self._euler() - 1)
 			log_info.info("Запуск функции 'total_oil'")
