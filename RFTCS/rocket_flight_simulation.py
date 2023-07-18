@@ -6,8 +6,10 @@
 	- Общее сопротивление
 	- Общая скорость
 """
+from __future__ import annotations
+
 import numpy as np
-import numpy.typing as npt
+# import numpy.typing as npt
 import logging
 import logging.config
 from typing import (
@@ -52,7 +54,9 @@ except ImportError as e:
 
 
 # Расстояние от горящей поверхности топлива до стенки камеры сгорания.
-def distance_N_step(fuelFlow: Union[int, float], n: Union[int, float]) -> Union[int, float]:
+def distance_N_step(
+			fuelFlow: Union[int, float],
+			n: Union[int, float]) -> Union[int, float]:
 	try:
 		r0 = INITIAL_DISTANCE
 		r_n = r0 - n * fuelFlow
@@ -63,7 +67,7 @@ def distance_N_step(fuelFlow: Union[int, float], n: Union[int, float]) -> Union[
 	return float(r_n)
 
 
-def tg_Beta(spd: Union[int, float]):
+def tg_Beta(spd: Union[int, float]) -> Any:
 	try:
 		log_info.info("Запуск функции 'tg_Beta'")
 		start = BEGIN_RADIUS_ROCKET
@@ -79,7 +83,7 @@ def tg_Beta(spd: Union[int, float]):
 
 
 # Эллиптическая дальность полета
-def elliptical_range(speed: Union[int, float]) -> np.dtype:
+def elliptical_range(speed: Union[int, float]) -> Any:
 	try:
 		log_info.info("Запуск функции 'elliptical_range'")
 		R = EARTH_RADIUS
@@ -95,7 +99,9 @@ def elliptical_range(speed: Union[int, float]) -> np.dtype:
 
 
 # Масса всей ракеты
-def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
+def mass_rocket(
+			m_empty_rocket: Union[int, float],
+			m_fuel_rocket: Union[int, float]) -> Union[int, float]:
 	try:
 		log_info.info("Запуск функции 'mass_rocket'")
 		res = float(m_empty_rocket + m_fuel_rocket)
@@ -106,7 +112,7 @@ def mass_rocket(m_empty_rocket: int, m_fuel_rocket: int) -> float:
 
 
 # Количество выделяемого газа за 1 моль
-def amount_gas_released(mass: int) -> float:
+def amount_gas_released(mass: Union[int, float]) -> Union[int, float]:
 	try:
 		log_info.info("Запуск функции 'amount_gas_released'")
 		amm = AVERAGE_MOLAR_MASS
@@ -121,7 +127,7 @@ def amount_gas_released(mass: int) -> float:
 
 
 # Избыточное давление в камере сгорания на n-шаге
-def overpressure(U) -> float:
+def overpressure(U: Union[int, float]) -> Union[int, float]:
 	try:
 		log_info.info("Запуск функции 'overpressure'")
 		amm = AVERAGE_MOLAR_MASS
@@ -139,7 +145,7 @@ def overpressure(U) -> float:
 
 
 # Сила выталкивания (тяги) газов через сопло
-def thrust_force(P_n: float):
+def thrust_force(P_n: Union[int, float]) -> Union[int, float]:
 	try:
 		log_info.info("Запуск функции 'thrust_force'")
 		res = float(P_n) * float(CROSS_SECTION_AREA)
@@ -150,7 +156,9 @@ def thrust_force(P_n: float):
 
 
 # Импульс, сообщаемого ракете на n-шаге
-def impuls(P_n, time):
+def impuls(
+			P_n: Union[int, float],
+			time: Union[int, float]) -> Union[int, float]:
 	try:
 		log_info.info("Запуск функции 'impuls'")
 		tf = thrust_force(P_n)
@@ -162,7 +170,10 @@ def impuls(P_n, time):
 
 
 # Высота ракеты над стартовой площадкой
-def height_rocket(h_n, u, t):
+def height_rocket(
+			h_n: Union[int, float],
+			u: Union[int, float],
+			t: Union[int, float]) -> Union[int, float]:
 	try:
 		log_info.info("Запуск функции 'height_rocket'")
 		res = float(h_n) + float(u) * float(t)
@@ -177,7 +188,11 @@ class CylindricalCavity:
 
 	log_info.info("Запуск класса 'CylindricalCavity'")
 
-	def __init__(self, speed_burning_fuel: Union[float, int], step: int, Long: float):
+	def __init__(
+				self,
+				speed_burning_fuel: Union[float, int],
+				step: int,
+				Long: float):
 		self.U = speed_burning_fuel
 		self.n = step
 		self.L = Long
@@ -192,7 +207,7 @@ class CylindricalCavity:
 		except TypeError as te:
 			logger.error(invalid_type(te))
 			raise TypeError(invalid_type(te))
-		return R_n
+		return float(R_n)
 
 	# Объем цилиндрической полости
 	def volume_cylindrical_cavity(self):
@@ -366,7 +381,7 @@ class ModelFlight:
 		except Exception as e:
 			logger.error(invalid_general(e))
 			raise invalid_general(e)
-		return res
+		return float(res)
 
 	def model_stack(self) -> list:
 		try:
