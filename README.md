@@ -18,13 +18,13 @@ The project is based on the use of formulas:
 ## The theoretical part
 
 - Links
-  _All formulas and calculations can be found in the folder_ [Source](.idea/theory/source.md)
+  _All formulas and calculations can be found in the folder_ [Source](docs/idea/theory/source.md)
 
 - Calculations
-  _You can find all computation in the folder:_ [Theory](.idea/theory/img/)
+  _You can find all computation in the folder:_ [Theory](docs/idea/theory/img/)
 
 - Documentation
-  _Project documentation:_ [Docs](.docs/)
+  _Project documentation:_ [Docs](docs/)
 
 ## Tools
 
