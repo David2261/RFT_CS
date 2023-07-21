@@ -31,7 +31,7 @@ from RFTCS.rocket_flight_simulation import (
 	Speed,
 	ModelFlight
 )
-from data import (
+from .data import (
 	fuelFlow,
 	size,
 	fake,

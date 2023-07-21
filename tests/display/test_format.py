@@ -1,12 +1,6 @@
-import os
-import sys
-
-path = os.path.join(os.getcwd(), '../../RFTCS/display/')
-sys.path.append(path)
-
 import pytest
 
-from display.format import main_rocket_format
+from RFTCS.display.format import main_rocket_format
 
 
 @pytest.mark.format

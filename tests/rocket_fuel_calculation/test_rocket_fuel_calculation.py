@@ -1,18 +1,12 @@
 """
 Файл для тестирования расчетов топлива ракеты
 """
-import os
-import sys
-
-path = os.path.join(os.getcwd(), '../../RFTCS/')
-sys.path.append(path)
-
 import numpy as np
 import pytest
 
 from RFTCS.rocket_fuel_calculation import TotalOil
-from setup.constant import ACCELERATION_FREE_FALL
-from data import *
+from RFTCS.setup.constant import ACCELERATION_FREE_FALL
+from .data import *
 
 
 @pytest.mark.rfc

@@ -1,9 +1,3 @@
-import os
-import sys
-
-path = os.path.join(os.getcwd(), '../../RFTCS/')
-sys.path.append(path)
-
 import pytest
 import numpy as np
 

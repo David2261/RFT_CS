@@ -1,18 +1,12 @@
 """
 Файл для тестирования математического моделирования движения тел
 """
-import os
-import sys
-
-path = os.path.join(os.getcwd(), '../RFTCS/')
-sys.path.append(path)
-
 import pytest
 import numpy as np
 
-from rocket_flight_trajectory import FlightBallistics
-from setup.constant import ACCELERATION_FREE_FALL
-from setup.settings import FPV
+from RFTCS.rocket_flight_trajectory import FlightBallistics
+from RFTCS.setup.constant import ACCELERATION_FREE_FALL
+from RFTCS.setup.settings import FPV
 
 
 @pytest.mark.rft
