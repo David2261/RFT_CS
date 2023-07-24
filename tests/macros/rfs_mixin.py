@@ -1,17 +1,4 @@
 import pytest
-import numpy as np
-
-from rocket_flight_simulation import (
-	_body_area,
-	resistance_force,
-	frontal_area,
-	environmental_resistance,
-	resistance_force_env,
-	gravity_losses,
-	aerodynamic_losses,
-	loss_speed_on_control
-)
-from rocket_fuel_calculation import total_speed
 
 
 def data_rfs():
@@ -31,7 +18,7 @@ class TestMixinRFS:
 	def test_isinstance(function, self):
 		result = function(self.height, self.width)
 		assert isinstance(result, (int, float))
-	
+
 	def test_type_error(function, height, width):
 		with pytest.raises(TypeError):
 			function('(17,', width)
@@ -43,7 +30,3 @@ class TestMixinRFS:
 	def test_less_args_error(function, height, width):
 		with pytest.raises(TypeError):
 			function(height)
-
- 
-
-

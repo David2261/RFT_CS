@@ -61,4 +61,3 @@ class TestFlightFormat:
 		test_result = main_rocket_format(43.6, 5)
 		result = "Сила сопротивления = 43.6 H"
 		assert test_result == result
-

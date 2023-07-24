@@ -17,28 +17,28 @@ from typing import (
 	Union
 )
 
-from exceptions.exception import (
+from .exceptions.exception import (
 	invalid_import,
 	invalid_type,
 	invalid_zero_division,
 	invalid_general,
 	invalid_IO
 )
-from setup.logging_conf import LOGGING_CONF
+from .setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
 log_info = logging.getLogger("root")
 
 try:
-	from setup.constant import (
+	from .setup.constant import (
 		ATMOSPHERIC_DENSITY,
 		ACCELERATION_FREE_FALL,
 		CROSS_SECTION_AREA,
 		UNIVERSAL_GAS_CONSTANT,
 		EARTH_RADIUS,
 	)
-	from setup.settings import (
+	from .setup.settings import (
 		INITIAL_DISTANCE,
 		AVERAGE_MOLAR_MASS,
 		BURNING_TEMPERATURE,
@@ -192,14 +192,14 @@ class CylindricalCavity:
 				self,
 				speed_burning_fuel: Union[float, int],
 				step: int,
-				Long: float):
+				Long: float) -> None:
 		self.U = speed_burning_fuel
 		self.n = step
 		self.L = Long
 
 	@staticmethod
 	# Радиус внутренней цилиндрической полости
-	def _cylindrical_cavity(n, U) -> float:
+	def _cylindrical_cavity(n: int, U: Union[float, int]) -> float:
 		try:
 			log_info.info("Запуск функции '_cylindrical_cavity'")
 			R_0 = INITIAL_DISTANCE
@@ -225,7 +225,7 @@ class Resistance:
 	log_info.info("Запуск класса 'Resistance'")
 	""" Сопротивление """
 
-	def __init__(self, speed: int, tf: int, mass: int):
+	def __init__(self, speed: int, tf: int, mass: int) -> None:
 		self.V = speed
 		self.thrust_force = tf
 		self.mass = mass
@@ -289,7 +289,13 @@ class Speed:
 	log_info.info("Запуск класса 'Speed'")
 	""" Скорость """
 
-	def __init__(self, tf, gl, m, time, speed_0):
+	def __init__(
+				self,
+				tf: Union[int, float],
+				gl: Union[int, float],
+				m: Union[int, float],
+				time: Union[int, float],
+				speed_0: Union[int, float]) -> None:
 		self.thrust_force = tf
 		self.gravitation_losses = gl
 		self.mass = m
@@ -336,7 +342,12 @@ class ModelFlight:
 	log_info.info("Запуск класса 'ModelFlight'")
 	""" Моделирование полета """
 
-	def __init__(self, fuel_flow: float, mass: float, speed_0: float, time: int):
+	def __init__(
+				self,
+				fuel_flow: float,
+				mass: float,
+				speed_0: float,
+				time: int) -> None:
 		self.mass = mass
 		self.speed_0 = speed_0
 		self.time = time
@@ -380,7 +391,7 @@ class ModelFlight:
 			res = elliptical_range(speed)
 		except Exception as e:
 			logger.error(invalid_general(e))
-			raise invalid_general(e)
+			raise invalid_general(e)  # type: ignore[misc]
 		return float(res)
 
 	def model_stack(self) -> list:
@@ -392,7 +403,7 @@ class ModelFlight:
 			Beta = tg_Beta(speed)
 		except Exception as e:
 			logger.error(invalid_general(e))
-			raise invalid_general(e)
+			raise invalid_general(e)  # type: ignore[misc]
 		return [resistance, speed, distance, Beta]
 
 

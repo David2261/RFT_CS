@@ -15,5 +15,3 @@ def simulation_data():
 			"distance": 11679.656463692852
 		}
 	]
-
-

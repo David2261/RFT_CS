@@ -1,16 +1,11 @@
-import os
-import sys
 from prettytable import PrettyTable
 
 pt = PrettyTable()
 
-path = os.path.join(os.getcwd(), '../RFTCS/')
-sys.path.append(path)
-
 import logging
 import logging.config
 
-from setup.logging_conf import LOGGING_CONF
+from RFTCS.setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")

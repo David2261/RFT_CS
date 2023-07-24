@@ -13,13 +13,13 @@ def invalid_attribute(text: str) -> str:
 
 
 # IO error (IOError)
-def invalid_IO(text: str) -> str:
+def invalid_IO(text: OSError) -> str:
 	description = f"Не найден файл или диск заполнен: {text}"
 	return description
 
 
 # Import error (ImportError)
-def invalid_import(text: str) -> str:
+def invalid_import(text: ImportError) -> str:
 	description = f"Не получилось вызвать импорт: {text}"
 	return description
 
@@ -49,18 +49,18 @@ def invalid_var(text: str) -> str:
 
 
 # Type error (TypeError)
-def invalid_type(text: str) -> str:
+def invalid_type(text: TypeError) -> str:
 	description = f"Неправильный тип данных: {text}"
 	return description
 
 
 # Zero division (ZeroDivisionError)
-def invalid_zero_division(text: str) -> str:
+def invalid_zero_division(text: ZeroDivisionError) -> str:
 	description = f"Ошибка деления на 0: {text}"
 	return description
 
 
 # General error (Exceptions)
-def invalid_general(text: str) -> str:
+def invalid_general(text: Exception) -> str:
 	description = f"Ошибка в {text}"
 	return description

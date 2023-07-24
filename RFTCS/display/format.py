@@ -5,16 +5,10 @@ from colorama import init
 init()
 from colorama import Fore
 
-import os
-import sys
-
-path = os.path.join(os.getcwd(), '../RFTCS/')
-sys.path.append(path)
-
 import logging
 import logging.config
 
-from setup.logging_conf import LOGGING_CONF
+from RFTCS.setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
@@ -105,7 +99,7 @@ class LandingFormat:
 # Функция для вывода результатов, той или иной функции
 def main_rocket_format(num: float, idea: int) -> str:
 	log_info.info("Запуск функции 'main_rocket_format'")
-	num = str(num)
+	num = str(num)  # type: ignore[assignment]
 	if idea == 1:
 		rf = RocketFormat(num)
 		a = rf.rocket_total_speed()
@@ -140,7 +134,9 @@ def main_rocket_format(num: float, idea: int) -> str:
 	elif idea == 11:
 		lf = LandingFormat(num)
 		return lf._rocket_flight_x()
+	else:
+		return "Incorrectly selected item in the format file"
 
 
 if __name__ == '__main__':
-	text = main_rocket_format('sdasd', 1)
+	text = main_rocket_format('sdasd', 1)  # type: ignore[arg-type]

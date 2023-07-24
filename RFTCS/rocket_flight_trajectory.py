@@ -13,27 +13,27 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import (
+from .exceptions.exception import (
 	invalid_import,
 	invalid_type,
 	invalid_zero_division
 )
-from setup.logging_conf import LOGGING_CONF
+from .setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
 log_info = logging.getLogger("root")
 
 try:
-	from setup.constant import ACCELERATION_FREE_FALL
-	from setup.settings import FPV
+	from .setup.constant import ACCELERATION_FREE_FALL
+	from .setup.settings import FPV
 	# import core_api as CA # CPython API
 except ImportError as e:
 	logger.error(invalid_import(e))
 	raise ImportError(invalid_import(e))
 
 
-@dataclass(frozen=True)
+@dataclass
 class TypeFB:
 	speed: Union[int, float]
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.11
 """
 В данном файле будут производиться расчеты топлива ракеты.
 Основные формулы:
@@ -13,19 +13,19 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import (
+from .exceptions.exception import (
 	invalid_import,
 	invalid_type,
 	invalid_zero_division,
 )
-from setup.logging_conf import LOGGING_CONF
+from .setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
 log_info = logging.getLogger("root")
 
 try:
-	from setup.constant import ACCELERATION_FREE_FALL
+	from .setup.constant import ACCELERATION_FREE_FALL
 
 	log_info.info("Включение импортов 'rocket_fuel_calculation.py'")
 except ImportError as e:
