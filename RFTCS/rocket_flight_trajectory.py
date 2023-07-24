@@ -45,8 +45,8 @@ class FlightBallistics(TypeFB):
 	def __init__(self, speed):
 		self.speed = speed
 
-	# Синус двойного угла
 	def _double_angle_sine(self):
+		""" Синус двойного угла """
 		try:
 			# res = CA.double_angle_sine()
 			res = 2 * np.sin(self.speed) * np.cos(self.speed)
@@ -56,8 +56,8 @@ class FlightBallistics(TypeFB):
 			raise TypeError(invalid_type(te))
 		return res
 
-	# Дальность полета
 	def flight_range(self):
+		""" Дальность полета """
 		try:
 			G = ACCELERATION_FREE_FALL
 			sine = self._double_angle_sine()
@@ -71,8 +71,8 @@ class FlightBallistics(TypeFB):
 			raise ZeroDivisionError(invalid_zero_division(zde))
 		return res
 
-	# Время полета ракеты
 	def flight_time(self):
+		""" Время полета ракеты """
 		try:
 			G = ACCELERATION_FREE_FALL
 			A = FPV

@@ -108,36 +108,36 @@ class TestDistanceNStepError:
 	size = 2
 	fake = 'fake'
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_distance_n_step_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			result = distance_N_step(
 					self.fake,  # type: ignore[arg-type]
 					self.size)
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_distance_n_step_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			result = distance_N_step(
 					self.fuelFlow,
 					self.fake)  # type: ignore[call-arg, arg-type]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_distance_n_step_less_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = distance_N_step(self.fuelFlow)  # type: ignore[call-arg]
 			return result
 
-	# Тестирование без аргументов
 	def test_distance_n_step_without_args(self) -> Any:
+		""" Тестирование без аргументов """
 		with pytest.raises(TypeError):
 			result = distance_N_step()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_distance_n_step_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = distance_N_step(
 				self.fuelFlow,
@@ -183,20 +183,20 @@ class TestTgBetaError:
 	speed = 587
 	fake = 'fake'
 
-	# Тестирование на ошибочный тип параметра функции
 	def test_tg_beta_type_args_error(self) -> Any:
+		""" Тестирование на ошибочный тип параметра функции """
 		with pytest.raises(TypeError):
 			result = tg_Beta(self.fake)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_tg_beta_less_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = tg_Beta()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_tg_beta_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = tg_Beta(self.speed, self.fake)  # type: ignore[call-arg]
 			return result
@@ -240,20 +240,20 @@ class TestEllipticalRangeError:
 	speed = 587
 	fake = 'fake'
 
-	# Тестирование на ошибочный тип параметра функции
 	def test_elliptical_range_type_args_error(self) -> Any:
+		""" Тестирование на ошибочный тип параметра функции """
 		with pytest.raises(TypeError):
 			result = elliptical_range(self.fake)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_elliptical_range_less_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = elliptical_range()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_elliptical_range_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = elliptical_range(self.speed, self.fake)  # type: ignore[call-arg]
 			return result
@@ -297,26 +297,26 @@ class TestMassRocketError:
 	fuelWidth = 400
 	fake = 'fake'
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_mass_rocket_1_type_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			result = mass_rocket(self.emptyRocket, self.fake)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_mass_rocket_2_type_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			result = mass_rocket(self.fake, self.fuelWidth)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_mass_rocket_less_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = mass_rocket()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_mass_rocket_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = mass_rocket(
 					self.emptyRocket,
@@ -361,20 +361,20 @@ class TestAmountGasReleasedError:
 	mass = 581
 	fake = 'fake'
 
-	# Тестирование на ошибочный тип параметра функции
 	def test_amount_gas_released_type_args_error(self) -> Any:
+		""" Тестирование на ошибочный тип параметра функции """
 		with pytest.raises(TypeError):
 			result = amount_gas_released(self.fake)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_amount_gas_released_less_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = amount_gas_released()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_amount_gas_released_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = amount_gas_released(
 					self.mass,
@@ -419,20 +419,20 @@ class TestOverpressureError:
 	step = 3
 	fake = 'fake'
 
-	# Тестирование на ошибочный тип параметра функции
 	def test_overpressure_type_args_error(self) -> Any:
+		""" Тестирование на ошибочный тип параметра функции """
 		with pytest.raises(TypeError):
 			result = overpressure(self.fake)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_overpressure_less_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = overpressure()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_overpressure_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = overpressure(self.step, self.fake)  # type: ignore[call-arg]
 			return result
@@ -474,20 +474,20 @@ class TestThrustForseError:
 	pressure = 1400
 	fake = 'fake'
 
-	# Тестирование на ошибочный тип параметра функции
 	def test_thrust_force_type_args_error(self) -> Any:
+		""" Тестирование на ошибочный тип параметра функции """
 		with pytest.raises(ValueError):
 			result = thrust_force(self.fake)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_thrust_force_less_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = thrust_force()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_thrust_force_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = thrust_force(self.pressure, self.fake)  # type: ignore[call-arg]
 			return result
@@ -532,38 +532,38 @@ class TestImpulsError:
 	time = 300
 	fake = 'fake'
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_impuls_type_to_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(ValueError):
 			result = impuls(self.fake, self.time)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_impuls_type_to_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(ValueError):
 			result = impuls(self.pressure, self.fake)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_impuls_less_to_1_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = impuls(self.pressure)  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на меньшое кол-во аргументов
 	def test_impuls_less_to_2_args(self) -> Any:
+		""" Тестирование на меньшое кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = impuls(self.time)  # type: ignore[call-arg]
 			return result
 
-	# Тестирование без аргументов аргументов
 	def test_impuls_without_args(self) -> Any:
+		""" Тестирование без аргументов аргументов """
 		with pytest.raises(TypeError):
 			result = impuls()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_impuls_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = impuls(
 					self.pressure,
@@ -627,8 +627,8 @@ class TestHeightRocketError:
 	stage = 3
 	fake = 'fake'
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_height_rocket_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(ValueError):
 			result = height_rocket(
 					self.fake,  # type: ignore[arg-type]
@@ -636,8 +636,8 @@ class TestHeightRocketError:
 					self.stage)
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_height_rocket_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(ValueError):
 			result = height_rocket(
 					self.heightStart,
@@ -645,8 +645,8 @@ class TestHeightRocketError:
 					self.stage)
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_height_rocket_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(ValueError):
 			result = height_rocket(
 					self.heightStart,
@@ -654,38 +654,38 @@ class TestHeightRocketError:
 					self.fake)  # type: ignore[arg-type]
 			return result
 
-	# Тестирование на меньшое 1 кол-во аргументов
 	def test_height_rocket_less_to_1_args(self) -> Any:
+		""" Тестирование на меньшое 1 кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = height_rocket(
 					self.heightStage,
 					self.stage)  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на меньшое 2 кол-во аргументов
 	def test_height_rocket_less_to_2_args(self) -> Any:
+		""" Тестирование на меньшое 2 кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = height_rocket(
 					self.heightStart,
 					self.stage)  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на меньшое 3 кол-во аргументов
 	def test_height_rocket_less_to_3_args(self) -> Any:
+		""" Тестирование на меньшое 3 кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = height_rocket(
 					self.heightStart,
 					self.heightStage)  # type: ignore[call-arg]
 			return result
 
-	# Тестирование без аргументов аргументов
 	def test_height_rocket_without_args(self) -> Any:
+		""" Тестирование без аргументов аргументов """
 		with pytest.raises(TypeError):
 			result = height_rocket()  # type: ignore[call-arg]
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_height_rocket_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			result = height_rocket(
 					self.heightStart,
@@ -702,8 +702,8 @@ class TestCylindricalCavity:
 	step = 3
 	size = 0.45
 
-	# Тестирвание вычисления функции
 	def test_volume_cylindrical_cavity(self) -> bool:  # type: ignore[return]
+		""" Тестирвание вычисления функции """
 		CC = CylindricalCavity(self.burnFuel, self.step, self.size)
 		check = CC.volume_cylindrical_cavity()
 		R_0 = INITIAL_DISTANCE
@@ -711,16 +711,16 @@ class TestCylindricalCavity:
 		result = np.pi * float((pow(R_n, 2)) * self.size)
 		assert result == check
 
-	# Тестирование типа вывода функции
 	def test_volume_cylindrical_cavity_type(  # type: ignore[return]
 				self) -> bool:
+		""" Тестирование типа вывода функции """
 		CC = CylindricalCavity(self.burnFuel, self.step, self.size)
 		result = CC.volume_cylindrical_cavity()
 		assert isinstance(result, (float, int))
 
-	# Тестирование на логическую операцию функции
 	def test_volume_cylindrical_cavity_less(  # type: ignore[return]
 				self) -> bool:
+		""" Тестирование на логическую операцию функции """
 		CC = CylindricalCavity(self.burnFuel, self.step, self.size)
 		result = CC.volume_cylindrical_cavity()
 		check = result + 1
@@ -749,8 +749,8 @@ class TestCylindricalCavityError:
 	size = 0.45
 	fake = 'fake'
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_volume_cylindrical_cavity_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(
 					self.fake,  # type: ignore[arg-type]
@@ -759,8 +759,8 @@ class TestCylindricalCavityError:
 			result = CC.volume_cylindrical_cavity()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_volume_cylindrical_cavity_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(
 					self.burnFuel,
@@ -769,8 +769,8 @@ class TestCylindricalCavityError:
 			result = CC.volume_cylindrical_cavity()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_volume_cylindrical_cavity_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(
 					self.burnFuel,
@@ -779,8 +779,8 @@ class TestCylindricalCavityError:
 			result = CC.volume_cylindrical_cavity()
 			return result
 
-	# Тестирование на меньшое 1 кол-во аргументов
 	def test_volume_cylindrical_cavity_less_to_1_args(self) -> Any:
+		""" Тестирование на меньшое 1 кол-во аргументов """
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(
 					self.step,
@@ -788,8 +788,8 @@ class TestCylindricalCavityError:
 			result = CC.volume_cylindrical_cavity()
 			return result
 
-	# Тестирование на меньшое 2 кол-во аргументов
 	def test_volume_cylindrical_cavity_less_to_2_args(self) -> Any:
+		""" Тестирование на меньшое 2 кол-во аргументов """
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(
 					self.burnFuel,
@@ -797,8 +797,8 @@ class TestCylindricalCavityError:
 			result = CC.volume_cylindrical_cavity()
 			return result
 
-	# Тестирование на меньшое 3 кол-во аргументов
 	def test_volume_cylindrical_cavity_less_to_3_args(self) -> Any:
+		""" Тестирование на меньшое 3 кол-во аргументов """
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(
 					self.burnFuel,
@@ -806,15 +806,15 @@ class TestCylindricalCavityError:
 			result = CC.volume_cylindrical_cavity()
 			return result
 
-	# Тестирование без аргументов аргументов
 	def test_volume_cylindrical_cavity_without_args(self) -> Any:
+		""" Тестирование без аргументов аргументов """
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity()  # type: ignore[call-arg]
 			result = CC.volume_cylindrical_cavity()
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_volume_cylindrical_cavity_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			CC = CylindricalCavity(
 					self.burnFuel,
@@ -963,8 +963,8 @@ class TestResistanceError:
 	mass = 700
 	fake = 'fake'
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_aerodynamic_pressure_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			resist = Resistance(
 					self.fake,  # type: ignore[arg-type]
@@ -973,8 +973,8 @@ class TestResistanceError:
 			result = resist._aerodynamic_pressure()
 			return result
 
-	# Тестирование на меньшое 1 кол-во аргументов
 	def test_aerodynamic_pressure_less_to_1_args(self) -> Any:
+		""" Тестирование на меньшое 1 кол-во аргументов """
 		with pytest.raises(TypeError):
 			resist = Resistance(  # type: ignore[call-arg]
 					self.thrust_force,
@@ -982,8 +982,8 @@ class TestResistanceError:
 			result = resist._aerodynamic_pressure()
 			return result
 
-	# Тестирование на меньшое 2 кол-во аргументов
 	def test_aerodynamic_pressure_less_to_2_args(self) -> Any:
+		""" Тестирование на меньшое 2 кол-во аргументов """
 		with pytest.raises(TypeError):
 			resist = Resistance(  # type: ignore[call-arg]
 					self.speed,
@@ -991,8 +991,8 @@ class TestResistanceError:
 			result = resist._aerodynamic_pressure()
 			return result
 
-	# Тестирование на меньшое 3 кол-во аргументов
 	def test_aerodynamic_pressure_less_to_3_args(self) -> Any:
+		""" Тестирование на меньшое 3 кол-во аргументов """
 		with pytest.raises(TypeError):
 			resist = Resistance(
 					self.speed,
@@ -1000,15 +1000,15 @@ class TestResistanceError:
 			result = resist._aerodynamic_pressure()
 			return result
 
-	# Тестирование без аргументов аргументов
 	def test_aerodynamic_pressure_without_args(self) -> Any:
+		""" Тестирование без аргументов аргументов """
 		with pytest.raises(TypeError):
 			resist = Resistance()  # type: ignore[call-arg]
 			result = resist._aerodynamic_pressure()
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_aerodynamic_pressure_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			resist = Resistance(  # type: ignore[call-arg]
 					self.speed,
@@ -1018,8 +1018,8 @@ class TestResistanceError:
 			result = resist._aerodynamic_pressure()
 			return result
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_aerodynamic_drag_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			resist = Resistance(
 					self.fake,  # type: ignore[arg-type]
@@ -1028,8 +1028,8 @@ class TestResistanceError:
 			result = resist.aerodynamic_drag()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_control_losses_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			resist = Resistance(
 					self.speed,
@@ -1038,8 +1038,8 @@ class TestResistanceError:
 			result = resist.control_losses()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_control_losses_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			resist = Resistance(
 					self.speed,
@@ -1058,8 +1058,8 @@ class TestSpeed:
 	time = 300,
 	speed_0 = 280
 
-	# Тестирвание вычисления функции
 	def test_resultant_force(self) -> bool:  # type: ignore[return]
+		""" Тестирвание вычисления функции """
 		speed = Speed(
 				self.thrust_force,
 				self.gravitation_losses,
@@ -1072,8 +1072,8 @@ class TestSpeed:
 			* self.gravitation_losses - self.mass * G
 		assert result == check
 
-	# Тестирование типа вывода функции
 	def test_resultant_force_type(self) -> bool:  # type: ignore[return]
+		""" Тестирование типа вывода функции """
 		speed = Speed(
 				self.thrust_force,
 				self.gravitation_losses,
@@ -1083,8 +1083,8 @@ class TestSpeed:
 		result = speed._resultant_force()
 		assert isinstance(result, (float, int))
 
-	# Тестирование на логическую операцию функции
 	def test_resultant_force_less(self) -> bool:  # type: ignore[return]
+		""" Тестирование на логическую операцию функции """
 		speed = Speed(
 				self.thrust_force,
 				self.gravitation_losses,
@@ -1185,8 +1185,8 @@ class TestSpeedError:
 	speed_0 = 280
 	fake = 'fake'
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_resultant_force_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
@@ -1197,8 +1197,8 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_resultant_force_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			speed = Speed(
 					self.thrust_force,
@@ -1209,8 +1209,8 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на ошибочный 5 тип параметра функции
 	def test_resultant_force_type_5_args_error(self) -> Any:
+		""" Тестирование на ошибочный 5 тип параметра функции """
 		with pytest.raises(ValueError):
 			speed = Speed(
 					self.thrust_force,
@@ -1221,8 +1221,8 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на меньшое 1 кол-во аргументов
 	def test_resultant_force_less_to_1_args(self) -> Any:
+		""" Тестирование на меньшое 1 кол-во аргументов """
 		with pytest.raises(TypeError):
 			speed = Speed(  # type: ignore[call-arg]
 					self.gravitation_losses,
@@ -1232,8 +1232,8 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на меньшое 2 кол-во аргументов
 	def test_resultant_force_less_to_2_args(self) -> Any:
+		""" Тестирование на меньшое 2 кол-во аргументов """
 		with pytest.raises(TypeError):
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
@@ -1243,8 +1243,8 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на меньшое 3 кол-во аргументов
 	def test_resultant_force_less_to_3_args(self) -> Any:
+		""" Тестирование на меньшое 3 кол-во аргументов """
 		with pytest.raises(TypeError):
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
@@ -1254,8 +1254,8 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на меньшое 4 кол-во аргументов
 	def test_resultant_force_less_to_4_args(self) -> Any:
+		""" Тестирование на меньшое 4 кол-во аргументов """
 		with pytest.raises(TypeError):
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
@@ -1265,8 +1265,8 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на меньшое 5 кол-во аргументов
 	def test_resultant_force_less_to_5_args(self) -> Any:
+		""" Тестирование на меньшое 5 кол-во аргументов """
 		with pytest.raises(TypeError):
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
@@ -1276,15 +1276,15 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование без аргументов аргументов
 	def test_resultant_force_without_args(self) -> Any:
+		""" Тестирование без аргументов аргументов """
 		with pytest.raises(TypeError):
 			speed = Speed()  # type: ignore[call-arg]
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_resultant_force_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
@@ -1296,8 +1296,8 @@ class TestSpeedError:
 			result = speed._resultant_force()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_rocket_acceleration_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			speed = Speed(
 					self.thrust_force,
@@ -1308,8 +1308,8 @@ class TestSpeedError:
 			result = speed.rocket_acceleration()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_rocket_acceleration_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			speed = Speed(
 					self.thrust_force,
@@ -1320,8 +1320,8 @@ class TestSpeedError:
 			result = speed.rocket_acceleration()
 			return result
 
-	# Тестирование на ошибочный 5 тип параметра функции
 	def test_rocket_acceleration_type_5_args_error(self) -> Any:
+		""" Тестирование на ошибочный 5 тип параметра функции """
 		with pytest.raises(ValueError):
 			speed = Speed(
 					self.thrust_force,
@@ -1332,8 +1332,8 @@ class TestSpeedError:
 			result = speed.rocket_acceleration()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_rocket_speed_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			speed = Speed(
 					self.thrust_force,
@@ -1344,8 +1344,8 @@ class TestSpeedError:
 			result = speed.rocket_speed()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_rocket_speed_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			speed = Speed(
 					self.thrust_force,
@@ -1356,8 +1356,8 @@ class TestSpeedError:
 			result = speed.rocket_speed()
 			return result
 
-	# Тестирование на ошибочный 4 тип параметра функции
 	def test_rocket_speed_type_4_args_error(self) -> Any:
+		""" Тестирование на ошибочный 4 тип параметра функции """
 		with pytest.raises(TypeError):
 			speed = Speed(
 					self.thrust_force,
@@ -1368,8 +1368,8 @@ class TestSpeedError:
 			result = speed.rocket_speed()
 			return result
 
-	# Тестирование на ошибочный 5 тип параметра функции
 	def test_rocket_speed_type_5_args_error(self) -> Any:
+		""" Тестирование на ошибочный 5 тип параметра функции """
 		with pytest.raises(ValueError):
 			speed = Speed(
 					self.thrust_force,
@@ -1389,8 +1389,8 @@ class TestModelFlight:
 	time = 300
 	fuel_flow = 670
 
-	# Тестирвание вычисления функции
 	def test_total_resistance(self) -> bool:  # type: ignore[return]
+		""" Тестирвание вычисления функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1405,8 +1405,8 @@ class TestModelFlight:
 		result = round(cont + gl + ad)
 		assert result == check
 
-	# Тестирование типа вывода функции
 	def test_total_resistance_type(self) -> bool:  # type: ignore[return]
+		""" Тестирование типа вывода функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1415,8 +1415,8 @@ class TestModelFlight:
 		result = model._total_resistance()
 		assert isinstance(result, (float, int))
 
-	# Тестирование на логическую операцию функции
 	def test_total_resistance_less(self) -> bool:  # type: ignore[return]
+		""" Тестирование на логическую операцию функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1445,8 +1445,8 @@ class TestModelFlight:
 		result = model._total_resistance()
 		assert result is not None
 
-	# Тестирование типа вывода функции
 	def test_total_speed_type(self) -> bool:  # type: ignore[return]
+		""" Тестирование типа вывода функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1455,8 +1455,8 @@ class TestModelFlight:
 		result = model._total_speed()
 		assert isinstance(result, (float, int))
 
-	# Тестирование на логическую операцию функции
 	def test_total_speed_less(self) -> bool:  # type: ignore[return]
+		""" Тестирование на логическую операцию функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1485,8 +1485,8 @@ class TestModelFlight:
 		result = model._total_speed()
 		assert result is not None
 
-	# Тестирвание вычисления функции
 	def test_total_distance(self) -> bool:  # type: ignore[return]
+		""" Тестирвание вычисления функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1497,8 +1497,8 @@ class TestModelFlight:
 		result = elliptical_range(speed)
 		assert result == check
 
-	# Тестирование типа вывода функции
 	def test_total_distance_type(self) -> bool:  # type: ignore[return]
+		""" Тестирование типа вывода функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1507,8 +1507,8 @@ class TestModelFlight:
 		result = model._total_distance()
 		assert isinstance(result, (float, int))
 
-	# Тестирование на логическую операцию функции
 	def test_total_distance_less(self) -> bool:  # type: ignore[return]
+		""" Тестирование на логическую операцию функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1537,8 +1537,8 @@ class TestModelFlight:
 		result = model._total_distance()
 		assert result is not None
 
-	# Тестирвание вычисления функции
 	def test_model_stack(self) -> bool:  # type: ignore[return]
+		""" Тестирвание вычисления функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1552,8 +1552,8 @@ class TestModelFlight:
 		result = [resistance, speed, distance, Beta]
 		assert result == check
 
-	# Тестирование типа вывода функции
 	def test_model_stack_type(self) -> bool:  # type: ignore[return]
+		""" Тестирование типа вывода функции """
 		model = ModelFlight(
 				self.mass,
 				self.speed_0,
@@ -1582,8 +1582,8 @@ class TestModelFlightError:
 	fuel_flow = 670
 	fake = 'fake'
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_total_resistance_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.fake,  # type: ignore[arg-type]
@@ -1593,8 +1593,8 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_total_resistance_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1604,8 +1604,8 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_total_resistance_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1615,8 +1615,8 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на ошибочный 4 тип параметра функции
 	def test_total_resistance_type_4_args_error(self) -> Any:
+		""" Тестирование на ошибочный 4 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1626,8 +1626,8 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на меньшое 1 кол-во аргументов
 	def test_total_resistance_less_to_1_args(self) -> Any:
+		""" Тестирование на меньшое 1 кол-во аргументов """
 		with pytest.raises(TypeError):
 			model = ModelFlight(  # type: ignore[call-arg]
 					self.speed_0,
@@ -1636,8 +1636,8 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на меньшое 2 кол-во аргументов
 	def test_total_resistance_less_to_2_args(self) -> Any:
+		""" Тестирование на меньшое 2 кол-во аргументов """
 		with pytest.raises(TypeError):
 			model = ModelFlight(  # type: ignore[call-arg]
 					self.mass,
@@ -1646,8 +1646,8 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на меньшое 3 кол-во аргументов
 	def test_total_resistance_less_to_3_args(self) -> Any:
+		""" Тестирование на меньшое 3 кол-во аргументов """
 		with pytest.raises(TypeError):
 			model = ModelFlight(  # type: ignore[call-arg]
 					self.mass,
@@ -1656,8 +1656,8 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на меньшое 4 кол-во аргументов
 	def test_total_resistance_less_to_4_args(self) -> Any:
+		""" Тестирование на меньшое 4 кол-во аргументов """
 		with pytest.raises(TypeError):
 			model = ModelFlight(  # type: ignore[call-arg]
 					self.mass,
@@ -1666,15 +1666,15 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование без аргументов аргументов
 	def test_total_resistance_without_args(self) -> Any:
+		""" Тестирование без аргументов аргументов """
 		with pytest.raises(TypeError):
 			model = ModelFlight()  # type: ignore[call-arg]
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_total_resistance_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			model = ModelFlight(  # type: ignore[call-arg]
 					self.mass,
@@ -1685,8 +1685,8 @@ class TestModelFlightError:
 			result = model._total_resistance()
 			return result
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_total_speed_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.fake,  # type: ignore[arg-type]
@@ -1696,8 +1696,8 @@ class TestModelFlightError:
 			result = model._total_speed()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_total_speed_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1707,8 +1707,8 @@ class TestModelFlightError:
 			result = model._total_speed()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_total_speed_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1718,8 +1718,8 @@ class TestModelFlightError:
 			result = model._total_speed()
 			return result
 
-	# Тестирование на ошибочный 4 тип параметра функции
 	def test_total_speed_type_4_args_error(self) -> Any:
+		""" Тестирование на ошибочный 4 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1729,8 +1729,8 @@ class TestModelFlightError:
 			result = model._total_speed()
 			return result
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_total_distance_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.fake,  # type: ignore[arg-type]
@@ -1740,8 +1740,8 @@ class TestModelFlightError:
 			result = model._total_distance()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_total_distance_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1751,8 +1751,8 @@ class TestModelFlightError:
 			result = model._total_distance()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_total_distance_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1762,8 +1762,8 @@ class TestModelFlightError:
 			result = model._total_distance()
 			return result
 
-	# Тестирование на ошибочный 4 тип параметра функции
 	def test_total_distance_type_4_args_error(self) -> Any:
+		""" Тестирование на ошибочный 4 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1773,8 +1773,8 @@ class TestModelFlightError:
 			result = model._total_distance()
 			return result
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_model_stack_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.fake,  # type: ignore[arg-type]
@@ -1784,8 +1784,8 @@ class TestModelFlightError:
 			result = model.model_stack()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_model_stack_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1795,8 +1795,8 @@ class TestModelFlightError:
 			result = model.model_stack()
 			return result
 
-	# Тестирование на ошибочный 3 тип параметра функции
 	def test_model_stack_type_3_args_error(self) -> Any:
+		""" Тестирование на ошибочный 3 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,
@@ -1806,8 +1806,8 @@ class TestModelFlightError:
 			result = model.model_stack()
 			return result
 
-	# Тестирование на ошибочный 4 тип параметра функции
 	def test_model_stack_type_4_args_error(self) -> Any:
+		""" Тестирование на ошибочный 4 тип параметра функции """
 		with pytest.raises(TypeError):
 			model = ModelFlight(
 					self.mass,

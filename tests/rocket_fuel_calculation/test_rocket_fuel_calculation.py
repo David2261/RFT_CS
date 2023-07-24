@@ -18,15 +18,15 @@ class TestTotalOil:
 	Mf = 430
 	Isp = 4200
 
-	# Функция нахождения натурального логарифма
 	def test_natural_logarithm(self) -> bool:  # type: ignore[return]
+		""" Функция нахождения натурального логарифма """
 		fuel = TotalOil(self.Me, self.Mf, self.Isp)
 		check = fuel._natural_logarithm()
 		result = np.log(self.Mf / self.Me)
 		assert result == check
 
-	# Функция нахождения натурального логарифма
 	def test_natural_logarithm_type(self) -> bool:  # type: ignore[return]
+		""" Функция нахождения натурального логарифма """
 		fuel = TotalOil(self.Me, self.Mf, self.Isp)
 		result = fuel._natural_logarithm()
 		assert isinstance(result, (int, float))
@@ -48,8 +48,8 @@ class TestTotalOil:
 		result = fuel._natural_logarithm()
 		assert result is not None
 
-	# Функция расчет с помощью Эйлерова числа E
 	def test_euler(self) -> bool:  # type: ignore[return]
+		""" Функция расчет с помощью Эйлерова числа E """
 		fuel = TotalOil(self.Me, self.Mf, self.Isp)
 		check = fuel._euler()
 		G = ACCELERATION_FREE_FALL
@@ -57,8 +57,8 @@ class TestTotalOil:
 		result = np.exp(speed / (self.Isp * G))
 		assert result == check
 
-	# Функция нахождения натурального логарифма
 	def test_euler_type(self) -> bool:  # type: ignore[return]
+		""" Функция нахождения типа с помощью Эйлерова числа E """
 		fuel = TotalOil(self.Me, self.Mf, self.Isp)
 		result = fuel._euler()
 		assert isinstance(result, (int, float))
@@ -88,8 +88,8 @@ class TestTotalOil:
 		result = self.Isp * G * nl
 		assert result == check
 
-	# Функция нахождения натурального логарифма
 	def test_total_speed_type(self) -> bool:  # type: ignore[return]
+		""" Функция нахождения суммы всех скоростей """
 		fuel = TotalOil(self.Me, self.Mf, self.Isp)
 		result = fuel.total_speed()
 		assert isinstance(result, (int, float))
@@ -117,8 +117,8 @@ class TestTotalOil:
 		result = self.Me * (fuel._euler() - 1)
 		assert result == check
 
-	# Функция нахождения натурального логарифма
 	def test_total_oil_type(self) -> bool:  # type: ignore[return]
+		""" Функция для расчета топлива """
 		fuel = TotalOil(self.Me, self.Mf, self.Isp)
 		result = fuel.total_oil()
 		assert isinstance(result, (int, float))
@@ -150,43 +150,43 @@ class TestTotalOilError:
 	Isp = 4200
 	fake = 'ake'
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_natural_logarithm_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.fake, self.Mf, self.Isp)
 			result = fuel._natural_logarithm()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_natural_logarithm_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, self.fake, self.Isp)
 			result = fuel._natural_logarithm()
 			return result
 
-	# Тестирование на 1 аргумент
 	def test_natural_logarithm_less_to_1_args_error(self) -> Any:
+		""" Тестирование на 1 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(None, self.Mf, self.Isp)
 			result = fuel._natural_logarithm()
 			return result
 
-	# Тестирование на 2 аргумент
 	def test_natural_logarithm_less_to_2_args_error(self) -> Any:
+		""" Тестирование на 2 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, None, self.Isp)
 			result = fuel._natural_logarithm()
 			return result
 
-	# Тестирование без аргументов
 	def test_natural_logarithm_without_args(self) -> Any:
+		""" Тестирование без аргументов """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(None, self.Me, self.Mf)
 			result = fuel._natural_logarithm()
 			return result
 
-	# Тестирование на большее кол-во аргументов
 	def test_natural_logarithm_more_args(self) -> Any:
+		""" Тестирование на большее кол-во аргументов """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(
 				self.Me,
@@ -196,99 +196,99 @@ class TestTotalOilError:
 			result = fuel._natural_logarithm()
 			return result
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_euler_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.fake, self.Mf, self.Isp)
 			result = fuel._euler()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_euler_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, self.fake, self.Isp)
 			result = fuel._euler()
 			return result
 
-	# Тестирование на 1 аргумент
 	def test_euler_less_to_1_args_error(self) -> Any:
+		""" Тестирование на 1 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(None, self.Mf, self.Isp)
 			result = fuel._euler()
 			return result
 
-	# Тестирование на 2 аргумент
 	def test_euler_less_to_2_args_error(self) -> Any:
+		""" Тестирование на 2 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, None, self.Isp)
 			result = fuel._euler()
 			return result
 
-	# Тестирование на 3 аргумент
 	def test_euler_less_to_3_args_error(self) -> Any:
+		""" Тестирование на 3 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, self.Mf, None)
 			result = fuel._euler()
 			return result
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_total_speed_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.fake, self.Mf, self.Isp)
 			result = fuel.total_speed()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_total_speed_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, self.fake, self.Isp)
 			result = fuel.total_speed()
 			return result
 
-	# Тестирование на 1 аргумент
 	def test_total_speed_less_to_1_args_error(self) -> Any:
+		""" Тестирование на 1 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(None, self.Mf, self.Isp)
 			result = fuel.total_speed()
 			return result
 
-	# Тестирование на 2 аргумент
 	def test_total_speed_less_to_2_args_error(self) -> Any:
+		""" Тестирование на 2 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, None, self.Isp)
 			result = fuel.total_speed()
 			return result
 
-	# Тестирование на ошибочный 1 тип параметра функции
 	def test_total_oil_type_1_args_error(self) -> Any:
+		""" Тестирование на ошибочный 1 тип параметра функции """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.fake, self.Mf, self.Isp)
 			result = fuel.total_oil()
 			return result
 
-	# Тестирование на ошибочный 2 тип параметра функции
 	def test_total_oil_type_2_args_error(self) -> Any:
+		""" Тестирование на ошибочный 2 тип параметра функции """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, self.fake, self.Isp)
 			result = fuel.total_oil()
 			return result
 
-	# Тестирование на 1 аргумент
 	def test_total_oil_less_to_1_args_error(self) -> Any:
+		""" Тестирование на 1 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(None, self.Mf, self.Isp)
 			result = fuel.total_oil()
 			return result
 
-	# Тестирование на 2 аргумент
 	def test_total_oil_less_to_2_args_error(self) -> Any:
+		""" Тестирование на 2 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, None, self.Isp)
 			result = fuel.total_oil()
 			return result
 
-	# Тестирование на 3 аргумент
 	def test_total_oil_less_to_3_args_error(self) -> Any:
+		""" Тестирование на 3 аргумент """
 		with pytest.raises(TypeError):
 			fuel = TotalOil(self.Me, self.Mf, None)
 			result = fuel.total_oil()

@@ -5,14 +5,14 @@ import sqlite3
 import logging
 import logging.config
 
-from setup.logging_conf import LOGGING_CONF
+from RFTCS.setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
 log_info = logging.getLogger("root")
 
 try:
-	from exceptions.exception import (
+	from RFTCS.exceptions.exception import (
 		invalid_general,
 		invalid_import,
 		invalid_file
@@ -22,7 +22,7 @@ except Exception as ex:
 
 # Bad request!!!
 try:
-	from config import path
+	from .config import path
 	log_info.info("Импортирование файлов в databaseSQL.py")
 except ImportError:
 	from .config import path

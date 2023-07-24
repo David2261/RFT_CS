@@ -96,8 +96,8 @@ class LandingFormat:
 		return text
 
 
-# Функция для вывода результатов, той или иной функции
 def main_rocket_format(num: float, idea: int) -> str:
+	""" Функция для вывода результатов, той или иной функции """
 	log_info.info("Запуск функции 'main_rocket_format'")
 	num = str(num)  # type: ignore[assignment]
 	if idea == 1:

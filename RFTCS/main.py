@@ -38,8 +38,8 @@ except ImportError as e:
 	raise ImportError(invalid_import(e))
 
 
-# Вывод первой подсказки
 def output_info() -> list:
+	""" Вывод первой подсказки """
 	log_info.info("Запуск функции output_")
 	print(
 		"Какой формат вывода информации хотите?\n"
@@ -60,6 +60,7 @@ def output_info() -> list:
 
 
 def fuel_input(stage: int) -> list:
+	""" Функция ввода данных для расчета топлива """
 	speed = 0
 	Isp_total: float = 0
 	Mass_full_total: float = 0
@@ -117,6 +118,7 @@ def fuel_input(stage: int) -> list:
 
 
 def flight_model_input(stage: int) -> list:
+	""" Функция для ввода данных расчета траектории полета ракеты """
 	n = 0
 	sum_resistance = 0
 	total_speed: Union[int, float] = 0
@@ -155,6 +157,7 @@ def flight_model_input(stage: int) -> list:
 
 
 def landing_model_input(stage: int) -> list:
+	""" Функция для ввода данных моделирования полета ракеты """
 	n = 0
 	mm = 0
 	log_info.info("Включение landing_model_input")
@@ -187,6 +190,7 @@ def landing_model_input(stage: int) -> list:
 
 
 def function_output(enter: list, stage: int) -> None:
+	""" Функция вывода данных """
 	# 1 - строка, 2 - таблица
 	display = enter[0]
 	# 1 - топливо, 2 - Полет, 3 - Моделирование полета
@@ -244,6 +248,7 @@ def function_output(enter: list, stage: int) -> None:
 
 
 def main() -> None:
+	""" Начальная точка работы программы """
 	log_info.info("Начало функции main")
 	stage = int(input("Напишите количество ступеней: "))
 	try:

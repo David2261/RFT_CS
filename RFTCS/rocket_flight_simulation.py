@@ -53,10 +53,10 @@ except ImportError as e:
 	raise ImportError(invalid_import(e))
 
 
-# Расстояние от горящей поверхности топлива до стенки камеры сгорания.
 def distance_N_step(
 			fuelFlow: Union[int, float],
 			n: Union[int, float]) -> Union[int, float]:
+	""" Расстояние от горящей поверхности топлива до стенки камеры сгорания """
 	try:
 		r0 = INITIAL_DISTANCE
 		r_n = r0 - n * fuelFlow
@@ -68,6 +68,7 @@ def distance_N_step(
 
 
 def tg_Beta(spd: Union[int, float]) -> Any:
+	""" Угол полета ракеты относительно поверности земли """
 	try:
 		log_info.info("Запуск функции 'tg_Beta'")
 		start = BEGIN_RADIUS_ROCKET
@@ -82,8 +83,8 @@ def tg_Beta(spd: Union[int, float]) -> Any:
 	return corn
 
 
-# Эллиптическая дальность полета
 def elliptical_range(speed: Union[int, float]) -> Any:
+	""" Эллиптическая дальность полета """
 	try:
 		log_info.info("Запуск функции 'elliptical_range'")
 		R = EARTH_RADIUS
@@ -98,10 +99,10 @@ def elliptical_range(speed: Union[int, float]) -> Any:
 	return L
 
 
-# Масса всей ракеты
 def mass_rocket(
 			m_empty_rocket: Union[int, float],
 			m_fuel_rocket: Union[int, float]) -> Union[int, float]:
+	""" Масса всей ракеты """
 	try:
 		log_info.info("Запуск функции 'mass_rocket'")
 		res = float(m_empty_rocket + m_fuel_rocket)
@@ -111,8 +112,8 @@ def mass_rocket(
 	return res
 
 
-# Количество выделяемого газа за 1 моль
 def amount_gas_released(mass: Union[int, float]) -> Union[int, float]:
+	""" Количество выделяемого газа за 1 моль """
 	try:
 		log_info.info("Запуск функции 'amount_gas_released'")
 		amm = AVERAGE_MOLAR_MASS
@@ -126,8 +127,8 @@ def amount_gas_released(mass: Union[int, float]) -> Union[int, float]:
 	return res
 
 
-# Избыточное давление в камере сгорания на n-шаге
 def overpressure(U: Union[int, float]) -> Union[int, float]:
+	""" Избыточное давление в камере сгорания на n-шаге """
 	try:
 		log_info.info("Запуск функции 'overpressure'")
 		amm = AVERAGE_MOLAR_MASS
@@ -144,8 +145,8 @@ def overpressure(U: Union[int, float]) -> Union[int, float]:
 	return res
 
 
-# Сила выталкивания (тяги) газов через сопло
 def thrust_force(P_n: Union[int, float]) -> Union[int, float]:
+	""" Сила выталкивания (тяги) газов через сопло """
 	try:
 		log_info.info("Запуск функции 'thrust_force'")
 		res = float(P_n) * float(CROSS_SECTION_AREA)
@@ -155,10 +156,10 @@ def thrust_force(P_n: Union[int, float]) -> Union[int, float]:
 	return res
 
 
-# Импульс, сообщаемого ракете на n-шаге
 def impuls(
 			P_n: Union[int, float],
 			time: Union[int, float]) -> Union[int, float]:
+	""" Импульс, сообщаемого ракете на n-шаге """
 	try:
 		log_info.info("Запуск функции 'impuls'")
 		tf = thrust_force(P_n)
@@ -169,11 +170,11 @@ def impuls(
 	return res
 
 
-# Высота ракеты над стартовой площадкой
 def height_rocket(
 			h_n: Union[int, float],
 			u: Union[int, float],
 			t: Union[int, float]) -> Union[int, float]:
+	""" Высота ракеты над стартовой площадкой """
 	try:
 		log_info.info("Запуск функции 'height_rocket'")
 		res = float(h_n) + float(u) * float(t)
@@ -198,8 +199,8 @@ class CylindricalCavity:
 		self.L = Long
 
 	@staticmethod
-	# Радиус внутренней цилиндрической полости
 	def _cylindrical_cavity(n: int, U: Union[float, int]) -> float:
+		""" Радиус внутренней цилиндрической полости """
 		try:
 			log_info.info("Запуск функции '_cylindrical_cavity'")
 			R_0 = INITIAL_DISTANCE
@@ -209,8 +210,8 @@ class CylindricalCavity:
 			raise TypeError(invalid_type(te))
 		return float(R_n)
 
-	# Объем цилиндрической полости
 	def volume_cylindrical_cavity(self):
+		""" Объем цилиндрической полости """
 		try:
 			log_info.info("Запуск функции 'volume_cylindrical_cavity'")
 			R_n = self._cylindrical_cavity(self.n, self.U)
@@ -230,8 +231,8 @@ class Resistance:
 		self.thrust_force = tf
 		self.mass = mass
 
-	# Аэродинамический напор
 	def _aerodynamic_pressure(self):
+		""" Аэродинамический напор """
 		try:
 			log_info.info("Запуск функции '_aerodynamic_pressure'")
 			AD = ATMOSPHERIC_DENSITY
@@ -245,8 +246,8 @@ class Resistance:
 			raise ZeroDivisionError(invalid_zero_division(zde))
 		return res
 
-	""" Аэродинамическое сопротивление """
 	def aerodynamic_drag(self):
+		""" Аэродинамическое сопротивление """
 		try:
 			log_info.info("Запуск функции 'aerodynamic_drag'")
 			Cx = CROSS_SECTION_AREA
@@ -258,8 +259,8 @@ class Resistance:
 			raise TypeError(invalid_type(te))
 		return res
 
-	""" Гравитационные потери """
 	def gravitation_losses(self):
+		""" Гравитационные потери """
 		try:
 			log_info.info("Запуск функции 'gravitation_losses'")
 			G = ACCELERATION_FREE_FALL
@@ -270,8 +271,8 @@ class Resistance:
 			raise TypeError(invalid_type(te))
 		return res
 
-	""" Потеря скорости на управление """
 	def control_losses(self):
+		""" Потеря скорости на управление """
 		try:
 			log_info.info("Запуск функции 'control_losses'")
 			angel = 1 - np.cos(TVV)
@@ -302,8 +303,8 @@ class Speed:
 		self.time = time
 		self.speed_0 = speed_0
 
-	# Равнодействующая сила
 	def _resultant_force(self):
+		""" Равнодействующая сила """
 		try:
 			log_info.info("Запуск функции '_resultant_force'")
 			G = ACCELERATION_FREE_FALL
@@ -313,8 +314,8 @@ class Speed:
 			raise TypeError(invalid_type(te))
 		return res
 
-	# Ускорение ракеты
 	def rocket_acceleration(self):
+		""" Ускорение ракеты """
 		try:
 			log_info.info("Запуск функции 'rocket_acceleration'")
 			F = self._resultant_force()
@@ -328,6 +329,7 @@ class Speed:
 		return res
 
 	def rocket_speed(self):
+		""" Скорость ракеты """
 		try:
 			log_info.info("Запуск функции 'rocket_speed'")
 			a = self.rocket_acceleration()
@@ -353,8 +355,8 @@ class ModelFlight:
 		self.time = time
 		self.fuel_flow = fuel_flow
 
-	# Общее сопротивление
 	def _total_resistance(self):
+		""" Общее сопротивление """
 		try:
 			log_info.info("Запуск функции '_total_resistance'")
 			speed = self._total_speed()
@@ -369,8 +371,8 @@ class ModelFlight:
 			raise TypeError(invalid_type(te))
 		return res
 
-	# Общая скорость
 	def _total_speed(self):
+		""" Общая скорость """
 		try:
 			log_info.info("Запуск функции '_total_speed'")
 			tf = thrust_force(self.fuel_flow)
@@ -383,8 +385,8 @@ class ModelFlight:
 			raise invalid_general(e)
 		return speed
 
-	# Общее расстояние
 	def _total_distance(self) -> float:
+		""" Общее расстояние """
 		try:
 			log_info.info("Запуск функции '_total_distance'")
 			speed = self._total_speed()
