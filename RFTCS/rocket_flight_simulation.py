@@ -200,7 +200,7 @@ class CylindricalCavity:
 
 	@staticmethod
 	def _cylindrical_cavity(n: int, U: Union[float, int]) -> float:
-		""" Радиус внутренней цилиндрической полости """
+		""" Радиус внутренней цилиндрической полости, м """
 		try:
 			log_info.info("Запуск функции '_cylindrical_cavity'")
 			R_0 = INITIAL_DISTANCE
@@ -211,7 +211,7 @@ class CylindricalCavity:
 		return float(R_n)
 
 	def volume_cylindrical_cavity(self):
-		""" Объем цилиндрической полости """
+		""" Объем цилиндрической полости, м^3 """
 		try:
 			log_info.info("Запуск функции 'volume_cylindrical_cavity'")
 			R_n = self._cylindrical_cavity(self.n, self.U)
@@ -232,7 +232,7 @@ class Resistance:
 		self.mass = mass
 
 	def _aerodynamic_pressure(self):
-		""" Аэродинамический напор """
+		""" Аэродинамический напор, км/ч """
 		try:
 			log_info.info("Запуск функции '_aerodynamic_pressure'")
 			AD = ATMOSPHERIC_DENSITY
@@ -247,7 +247,7 @@ class Resistance:
 		return res
 
 	def aerodynamic_drag(self):
-		""" Аэродинамическое сопротивление """
+		""" Аэродинамическое сопротивление, км/ч """
 		try:
 			log_info.info("Запуск функции 'aerodynamic_drag'")
 			Cx = CROSS_SECTION_AREA
@@ -260,7 +260,7 @@ class Resistance:
 		return res
 
 	def gravitation_losses(self):
-		""" Гравитационные потери """
+		""" Гравитационные потери, км/ч """
 		try:
 			log_info.info("Запуск функции 'gravitation_losses'")
 			G = ACCELERATION_FREE_FALL
@@ -272,7 +272,7 @@ class Resistance:
 		return res
 
 	def control_losses(self):
-		""" Потеря скорости на управление """
+		""" Потеря скорости на управление, км/ч """
 		try:
 			log_info.info("Запуск функции 'control_losses'")
 			angel = 1 - np.cos(TVV)
@@ -329,7 +329,7 @@ class Speed:
 		return res
 
 	def rocket_speed(self):
-		""" Скорость ракеты """
+		""" Скорость ракеты, км/ч """
 		try:
 			log_info.info("Запуск функции 'rocket_speed'")
 			a = self.rocket_acceleration()
@@ -356,7 +356,7 @@ class ModelFlight:
 		self.fuel_flow = fuel_flow
 
 	def _total_resistance(self):
-		""" Общее сопротивление """
+		""" Общее сопротивление, км/ч """
 		try:
 			log_info.info("Запуск функции '_total_resistance'")
 			speed = self._total_speed()
@@ -372,7 +372,7 @@ class ModelFlight:
 		return res
 
 	def _total_speed(self):
-		""" Общая скорость """
+		""" Общая скорость, км/ч """
 		try:
 			log_info.info("Запуск функции '_total_speed'")
 			tf = thrust_force(self.fuel_flow)
@@ -386,7 +386,7 @@ class ModelFlight:
 		return speed
 
 	def _total_distance(self) -> float:
-		""" Общее расстояние """
+		""" Общее расстояние, км """
 		try:
 			log_info.info("Запуск функции '_total_distance'")
 			speed = self._total_speed()

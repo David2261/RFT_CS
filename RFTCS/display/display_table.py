@@ -22,7 +22,7 @@ def display_info():
 def fuel_display(stack: list) -> None:
 	log_info.info("Запуск функции 'fuel_display'")
 	pt.clear()
-	pt.field_names = ["Speed total", "Total oil"]
+	pt.field_names = ["Speed total (км/час)", "Total oil (т)"]
 	pt.add_row(stack)
 	print(pt)
 
@@ -30,7 +30,7 @@ def fuel_display(stack: list) -> None:
 def flight_simulation_display(stack: list) -> None:
 	log_info.info("Запуск функции 'flight_simulation_display'")
 	pt.clear()
-	pt.field_names = ["Amount of losses", "Distance", "Mass"]
+	pt.field_names = ["Amount of losses (км/час)", "Distance (км)", "Mass (т)"]
 	pt.add_row(stack)
 	print(pt)
 

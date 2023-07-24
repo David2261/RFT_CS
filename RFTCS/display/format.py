@@ -22,7 +22,7 @@ class RocketFormat:
 		self.num = num
 
 	def rocket_total_speed(self) -> str:
-		text = f"Сумма всех скоростей = {str(self.num)} м/с"
+		text = f"Сумма всех скоростей = {str(self.num)} км/час"
 		print(Fore.GREEN + text)
 		return text
 
@@ -32,12 +32,12 @@ class RocketFormat:
 		return text
 
 	def _rocket_massa_construction(self) -> str:
-		text = f"Сумма всей конструкции ракеты = {str(self.num)} кг"
+		text = f"Сумма всей конструкции ракеты = {str(self.num)} т"
 		print(Fore.GREEN + text)
 		return text
 
 	def _rocket_total_oil(self) -> str:
-		text = f"Сумма всего топлива = {str(self.num)} кг"
+		text = f"Сумма всего топлива = {str(self.num)} т"
 		print(Fore.GREEN + text)
 		return text
 
@@ -86,12 +86,12 @@ class LandingFormat:
 		return text
 
 	def _rocket_flight_y(self) -> str:
-		text = f"Расстояние полета ракеты = {self.num}"
+		text = f"Расстояние полета ракеты = {self.num} км"
 		print(Fore.GREEN + text)
 		return text
 
 	def _rocket_flight_x(self) -> str:
-		text = f"Угол поворота ракеты tg Beta = {self.num}"
+		text = f"Угол поворота ракеты tg Beta = {self.num} градусов"
 		print(Fore.GREEN + text)
 		return text
 

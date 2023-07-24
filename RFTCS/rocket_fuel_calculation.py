@@ -79,7 +79,7 @@ class TotalOil(TypeTO):
 		return res
 
 	def total_speed(self) -> Any:
-		""" Сумма всех скоростей """
+		""" Сумма всех скоростей, км/ч """
 		try:
 			G = ACCELERATION_FREE_FALL
 			nl = self._natural_logarithm()
@@ -91,7 +91,7 @@ class TotalOil(TypeTO):
 		return delta_V
 
 	def total_oil(self) -> Any:
-		""" Функция для расчета топлива """
+		""" Функция для расчета топлива, т """
 		try:
 			res = self.Me * (self._euler() - 1)
 			log_info.info("Запуск функции 'total_oil'")
