@@ -24,11 +24,9 @@ except Exception as ex:
 try:
 	from .config import path
 	log_info.info("Импортирование файлов в databaseSQL.py")
-except ImportError:
-	from .config import path
-except Exception as ex:
+except ImportError as ex:
 	logger.error(invalid_import(ex))
-	raise invalid_import(ex)
+	raise ex
 
 
 class DataBaseSQL:
@@ -48,7 +46,7 @@ class DataBaseSQL:
 		raise FileNotFoundError(invalid_file(ex))
 	except Exception as ex:
 		logger.error(invalid_general(ex))
-		raise invalid_general(ex)
+		raise ex
 
 	def check_db_table(self):
 		try:
@@ -156,7 +154,7 @@ class ReadSQL:
 		raise FileNotFoundError(invalid_file(ex))
 	except Exception as ex:
 		logger.error(invalid_general(ex))
-		raise invalid_general(ex)
+		raise ex
 
 	def read_all_data(self):
 		try:
@@ -223,7 +221,7 @@ class PopSQL:
 		raise FileNotFoundError(invalid_file(ex))
 	except Exception as ex:
 		logger.error(invalid_general(ex))
-		raise invalid_general(ex)
+		raise ex
 
 	def pop_data(self):
 		try:

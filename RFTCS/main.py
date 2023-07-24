@@ -73,7 +73,8 @@ def fuel_input(stage: int) -> list:
 	while n < stage:
 		try:
 			try:
-				Isp = float(input(f"Напишите удельный импульс для {n + 1} ступени (кг/с): "))
+				Isp = float(input(f"Напишите удельный импульс для {n + 1}\
+														ступени (кг/с): "))
 			except ValueError as e:
 				logger.error(invalid_entire(e))
 				raise ValueError(invalid_entire(e))
@@ -106,7 +107,7 @@ def fuel_input(stage: int) -> list:
 			log_info.info(f"Пройден цикл = {n+1}")
 		except ValueError as e:
 			logger.error(invalid_entire(e))
-			raise TypeError(invalid_type(e))
+			raise TypeError(e)
 		fuel = TotalOil(Mass_empty, Mass_full_total, Isp)
 		Mass_fuel_total += fuel.total_oil()
 		print("\n")
@@ -240,9 +241,9 @@ def function_output(enter: list, stage: int) -> None:
 					round(flight_data[2], 2),
 				]
 				flight_simulation_display(stack)
-		except Exception as ex:
+		except ValueError as ex:
 			logger.error(invalid_entire(ex))
-			raise ValueError(invalid_entire(ex))
+			raise ValueError(ex)
 		db = DataBaseSQL(
 			"ModelFlight", flight_data[0], flight_data[1], flight_data[2])
 		db.record_data()

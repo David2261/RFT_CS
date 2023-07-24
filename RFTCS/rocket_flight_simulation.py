@@ -226,7 +226,7 @@ class Resistance:
 	log_info.info("Запуск класса 'Resistance'")
 	""" Сопротивление """
 
-	def __init__(self, speed: int, tf: int, mass: int) -> None:
+	def __init__(self, speed: float, tf: float, mass: float) -> None:
 		self.V = speed
 		self.thrust_force = tf
 		self.mass = mass
@@ -349,7 +349,7 @@ class ModelFlight:
 				fuel_flow: float,
 				mass: float,
 				speed_0: float,
-				time: int) -> None:
+				time: float) -> None:
 		self.mass = mass
 		self.speed_0 = speed_0
 		self.time = time

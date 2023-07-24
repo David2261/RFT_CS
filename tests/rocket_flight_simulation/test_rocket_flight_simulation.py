@@ -1064,7 +1064,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		check = speed._resultant_force()
 		G = ACCELERATION_FREE_FALL
@@ -1078,7 +1078,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		result = speed._resultant_force()
 		assert isinstance(result, (float, int))
@@ -1089,7 +1089,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		result = speed._resultant_force()
 		check = result + 1
@@ -1100,7 +1100,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		result = speed._resultant_force()
 		check = result - 1
@@ -1111,7 +1111,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		result = speed._resultant_force()
 		assert result is not None
@@ -1122,7 +1122,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		check = speed.rocket_acceleration()
 		F = speed._resultant_force()
@@ -1135,7 +1135,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		result = speed.rocket_acceleration()
 		assert isinstance(result, (float, int))
@@ -1146,7 +1146,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		result = speed.rocket_acceleration()
 		check = result + 1
@@ -1157,7 +1157,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		result = speed.rocket_acceleration()
 		check = result - 1
@@ -1168,7 +1168,7 @@ class TestSpeed:
 				self.thrust_force,
 				self.gravitation_losses,
 				self.mass,
-				self.time,
+				self.time,  # type: ignore[arg-type]
 				self.speed_0)
 		result = speed.rocket_acceleration()
 		assert result is not None
@@ -1190,9 +1190,9 @@ class TestSpeedError:
 		with pytest.raises(TypeError):
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
-					self.fake,
+					self.fake,  # type: ignore[arg-type]
 					self.mass,
-					self.time,
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed._resultant_force()
 			return result
@@ -1203,8 +1203,8 @@ class TestSpeedError:
 			speed = Speed(
 					self.thrust_force,
 					self.gravitation_losses,
-					self.fake,
-					self.time,
+					self.fake,  # type: ignore[arg-type]
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed._resultant_force()
 			return result
@@ -1216,8 +1216,8 @@ class TestSpeedError:
 					self.thrust_force,
 					self.gravitation_losses,
 					self.mass,
-					self.time,
-					self.fake)
+					self.time,  # type: ignore[arg-type]
+					self.fake)  # type: ignore[arg-type]
 			result = speed._resultant_force()
 			return result
 
@@ -1227,7 +1227,7 @@ class TestSpeedError:
 			speed = Speed(  # type: ignore[call-arg]
 					self.gravitation_losses,
 					self.mass,
-					self.time,
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed._resultant_force()
 			return result
@@ -1238,7 +1238,7 @@ class TestSpeedError:
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
 					self.mass,
-					self.time,
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed._resultant_force()
 			return result
@@ -1249,7 +1249,7 @@ class TestSpeedError:
 			speed = Speed(  # type: ignore[call-arg]
 					self.thrust_force,
 					self.gravitation_losses,
-					self.time,
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed._resultant_force()
 			return result
@@ -1272,7 +1272,7 @@ class TestSpeedError:
 					self.thrust_force,
 					self.gravitation_losses,
 					self.mass,
-					self.time)
+					self.time)  # type: ignore[arg-type]
 			result = speed._resultant_force()
 			return result
 
@@ -1290,9 +1290,9 @@ class TestSpeedError:
 					self.thrust_force,
 					self.gravitation_losses,
 					self.mass,
-					self.time,
+					self.time,  # type: ignore[arg-type]
 					self.speed_0,
-					self.fake)
+					self.fake)  # type: ignore[arg-type]
 			result = speed._resultant_force()
 			return result
 
@@ -1301,9 +1301,9 @@ class TestSpeedError:
 		with pytest.raises(TypeError):
 			speed = Speed(
 					self.thrust_force,
-					self.fake,
+					self.fake,  # type: ignore[arg-type]
 					self.mass,
-					self.time,
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed.rocket_acceleration()
 			return result
@@ -1314,8 +1314,8 @@ class TestSpeedError:
 			speed = Speed(
 					self.thrust_force,
 					self.gravitation_losses,
-					self.fake,
-					self.time,
+					self.fake,  # type: ignore[arg-type]
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed.rocket_acceleration()
 			return result
@@ -1327,8 +1327,8 @@ class TestSpeedError:
 					self.thrust_force,
 					self.gravitation_losses,
 					self.mass,
-					self.time,
-					self.fake)
+					self.time,  # type: ignore[arg-type]
+					self.fake)  # type: ignore[arg-type]
 			result = speed.rocket_acceleration()
 			return result
 
@@ -1337,9 +1337,9 @@ class TestSpeedError:
 		with pytest.raises(TypeError):
 			speed = Speed(
 					self.thrust_force,
-					self.fake,
+					self.fake,  # type: ignore[arg-type]
 					self.mass,
-					self.time,
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed.rocket_speed()
 			return result
@@ -1350,8 +1350,8 @@ class TestSpeedError:
 			speed = Speed(
 					self.thrust_force,
 					self.gravitation_losses,
-					self.fake,
-					self.time,
+					self.fake,  # type: ignore[arg-type]
+					self.time,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed.rocket_speed()
 			return result
@@ -1363,7 +1363,7 @@ class TestSpeedError:
 					self.thrust_force,
 					self.gravitation_losses,
 					self.mass,
-					self.fake,
+					self.fake,  # type: ignore[arg-type]
 					self.speed_0)
 			result = speed.rocket_speed()
 			return result
@@ -1375,8 +1375,8 @@ class TestSpeedError:
 					self.thrust_force,
 					self.gravitation_losses,
 					self.mass,
-					self.time,
-					self.fake)
+					self.time,  # type: ignore[arg-type]
+					self.fake)  # type: ignore[arg-type]
 			result = speed.rocket_speed()
 			return result
 

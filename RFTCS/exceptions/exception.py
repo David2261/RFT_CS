@@ -1,6 +1,7 @@
+from typing import Union
 
 
-def invalid_entire(text: str) -> str:
+def invalid_entire(text: Union[str, ValueError]) -> str:
 	""" Value error (ValueError) """
 	description = f"Вы ввели некоректные данные: {text}"
 	return description
@@ -60,7 +61,7 @@ def invalid_zero_division(text: ZeroDivisionError) -> str:
 	return description
 
 
-def invalid_general(text: Exception) -> str:
+def invalid_general(text: BaseException) -> str:
 	""" General error (Exceptions) """
 	description = f"Ошибка в {text}"
 	return description
