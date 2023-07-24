@@ -29,14 +29,14 @@ class TestFlightBallistics:
 		assert isinstance(res, (float, int))
 
 	def test_double_angle_sine_less(self) -> bool:  # type: ignore[return]
-		""" Тестирование на логическую операцию функции """
+		""" Тестирование на логическую выполнение функции """
 		FB = FlightBallistics(self.speed)
 		result = FB._double_angle_sine()
 		check = result + 1
 		assert result < check
 
 	def test_double_angle_sine_more(self) -> bool:  # type: ignore[return]
-		""" Тестирование на логическую операцию функции """
+		""" Тестирование на логическое выполнение функции """
 		FB = FlightBallistics(self.speed)
 		result = FB._double_angle_sine()
 		check = result - 1
@@ -58,7 +58,7 @@ class TestFlightBallistics:
 		assert isinstance(res, (float, int))
 
 	def test_flight_range_less(self) -> bool:  # type: ignore[return]
-		""" Тестирование на логическую операцию функции """
+		""" Тестирование на логическое выполнение функции """
 		FB = FlightBallistics(self.speed)
 		result = FB.flight_range()
 		check = result + 1
@@ -79,7 +79,7 @@ class TestFlightBallistics:
 		assert isinstance(res, (float, int))
 
 	def test_flight_time_less(self) -> bool:  # type: ignore[return]
-		""" Тестирование на логическую операцию функции """
+		""" Тестирование на логическое выполнение функции """
 		G = ACCELERATION_FREE_FALL
 		A = FPV
 		answer = ((2 * self.speed * np.sin(A)) / G)
@@ -87,7 +87,7 @@ class TestFlightBallistics:
 		assert result.flight_time() < (answer + 1)
 
 	def test_flight_time_more(self) -> bool:  # type: ignore[return]
-		""" Тестирование на логическую операцию функции """
+		""" Тестирование на логическое выполнение функции """
 		G = ACCELERATION_FREE_FALL
 		A = FPV
 		answer = ((2 * self.speed * np.sin(A)) / G)
