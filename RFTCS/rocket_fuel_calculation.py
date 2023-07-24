@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.11
 """
 В данном файле будут производиться расчеты топлива ракеты.
 Основные формулы:
@@ -13,19 +13,19 @@ import numpy as np
 import logging
 import logging.config
 
-from exceptions.exception import (
+from .exceptions.exception import (
 	invalid_import,
 	invalid_type,
 	invalid_zero_division,
 )
-from setup.logging_conf import LOGGING_CONF
+from .setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
 log_info = logging.getLogger("root")
 
 try:
-	from setup.constant import ACCELERATION_FREE_FALL
+	from .setup.constant import ACCELERATION_FREE_FALL
 
 	log_info.info("Включение импортов 'rocket_fuel_calculation.py'")
 except ImportError as e:
@@ -49,8 +49,8 @@ class TotalOil(TypeTO):
 		self.Mf = mass_rocket
 		self.Isp = Isp
 
-	# Функция нахождения натурального логарифма
 	def _natural_logarithm(self) -> Any:
+		""" Функция нахождения натурального логарифма """
 		try:
 			num = self.Mf / self.Me
 			res = np.log(num)
@@ -63,8 +63,8 @@ class TotalOil(TypeTO):
 			raise ZeroDivisionError(invalid_zero_division(zde))
 		return res
 
-	# Функция расчет с помощью Эйлерова числа E
 	def _euler(self) -> Any:
+		""" Функция расчет с помощью Эйлерова числа E """
 		try:
 			G = ACCELERATION_FREE_FALL
 			speed = self.total_speed()
@@ -78,8 +78,8 @@ class TotalOil(TypeTO):
 			raise ZeroDivisionError(invalid_zero_division(zde))
 		return res
 
-	# Сумма всех скоростей
 	def total_speed(self) -> Any:
+		""" Сумма всех скоростей, км/ч """
 		try:
 			G = ACCELERATION_FREE_FALL
 			nl = self._natural_logarithm()
@@ -90,8 +90,8 @@ class TotalOil(TypeTO):
 			raise TypeError(invalid_type(te))
 		return delta_V
 
-	# Функция для расчета топлива
 	def total_oil(self) -> Any:
+		""" Функция для расчета топлива, т """
 		try:
 			res = self.Me * (self._euler() - 1)
 			log_info.info("Запуск функции 'total_oil'")

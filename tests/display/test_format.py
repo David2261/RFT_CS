@@ -1,12 +1,6 @@
-import os
-import sys
-
-path = os.path.join(os.getcwd(), '../../RFTCS/display/')
-sys.path.append(path)
-
 import pytest
 
-from display.format import main_rocket_format
+from RFTCS.display.format import main_rocket_format
 
 
 @pytest.mark.format
@@ -14,7 +8,7 @@ class TestRocketFormat:
 	"""Тест RocketFormat"""
 	def test_rocket_total_speed(self):
 		test_result = main_rocket_format(23.3, 1)
-		result = "Сумма всех скоростей = 23.3 м/с"
+		result = "Сумма всех скоростей = 23.3 км/час"
 		assert test_result == result
 
 	def test_rocket_natural_logarithm(self):
@@ -24,12 +18,12 @@ class TestRocketFormat:
 
 	def test_rocket_massa_construction(self):
 		test_result = main_rocket_format(21.2, 3)
-		result = "Сумма всей конструкции ракеты = 21.2 кг"
+		result = "Сумма всей конструкции ракеты = 21.2 т"
 		assert test_result == result
 
 	def test_rocket_total_oil(self):
 		test_result = main_rocket_format(78.2, 4)
-		result = "Сумма всего топлива = 78.2 кг"
+		result = "Сумма всего топлива = 78.2 т"
 		assert test_result == result
 
 
@@ -67,4 +61,3 @@ class TestFlightFormat:
 		test_result = main_rocket_format(43.6, 5)
 		result = "Сила сопротивления = 43.6 H"
 		assert test_result == result
-

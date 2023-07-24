@@ -1,16 +1,17 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 from typing import Union
 
 import logging
 import logging.config
 
-from exceptions.exception import (
+from RFTCS.exceptions.exception import (
 	invalid_entire,
 	invalid_type,
 	invalid_general,
 	invalid_import
 )
-from setup.logging_conf import LOGGING_CONF
+from RFTCS.setup.logging_conf import LOGGING_CONF
 
 DEBUG = True
 
@@ -20,17 +21,17 @@ log_info = logging.getLogger("root")
 
 
 try:
-	from display.format import main_rocket_format
-	from rocket_flight_simulation import Resistance, ModelFlight
-	from rocket_fuel_calculation import TotalOil
-	from rocket_flight_trajectory import FlightBallistics
-	from display.display_table import (
+	from RFTCS.display.format import main_rocket_format
+	from RFTCS.rocket_flight_simulation import Resistance, ModelFlight
+	from RFTCS.rocket_fuel_calculation import TotalOil
+	from RFTCS.rocket_flight_trajectory import FlightBallistics
+	from RFTCS.display.display_table import (
 		display_info,
 		fuel_display,
 		flight_simulation_display,
 		landing_display,
 	)
-	from dbms.databaseSQL import DataBaseSQL
+	from RFTCS.dbms.databaseSQL import DataBaseSQL
 
 	log_info.info("Импортирование файлов в main.py")
 except ImportError as e:
@@ -38,8 +39,8 @@ except ImportError as e:
 	raise ImportError(invalid_import(e))
 
 
-# Вывод первой подсказки
 def output_info() -> list:
+	""" Вывод первой подсказки """
 	log_info.info("Запуск функции output_")
 	print(
 		"Какой формат вывода информации хотите?\n"
@@ -60,6 +61,7 @@ def output_info() -> list:
 
 
 def fuel_input(stage: int) -> list:
+	""" Функция ввода данных для расчета топлива """
 	speed = 0
 	Isp_total: float = 0
 	Mass_full_total: float = 0
@@ -71,7 +73,8 @@ def fuel_input(stage: int) -> list:
 	while n < stage:
 		try:
 			try:
-				Isp = float(input(f"Напишите удельный импульс для {n + 1} ступени: "))
+				Isp = float(input(f"Напишите удельный импульс для {n + 1}\
+														ступени (кг/с): "))
 			except ValueError as e:
 				logger.error(invalid_entire(e))
 				raise ValueError(invalid_entire(e))
@@ -81,7 +84,7 @@ def fuel_input(stage: int) -> list:
 			Isp_total += Isp
 			try:
 				Mass_full = float(
-					input(f"Напишите масса полного топлива для {n + 1} ступени: ")
+					input(f"Напишите масса полного топлива для {n + 1} ступени (т): ")
 				)
 			except ValueError as e:
 				logger.error(invalid_entire(e))
@@ -92,7 +95,7 @@ def fuel_input(stage: int) -> list:
 			Mass_full_total += Mass_full
 			try:
 				Mass_empty = float(
-					input(f"Напишите масса без топлива для {n + 1} ступени: ")
+					input(f"Напишите масса без топлива для {n + 1} ступени (т): ")
 				)
 			except ValueError as e:
 				logger.error(invalid_entire(e))
@@ -104,7 +107,7 @@ def fuel_input(stage: int) -> list:
 			log_info.info(f"Пройден цикл = {n+1}")
 		except ValueError as e:
 			logger.error(invalid_entire(e))
-			raise TypeError(invalid_type(e))
+			raise TypeError(e)
 		fuel = TotalOil(Mass_empty, Mass_full_total, Isp)
 		Mass_fuel_total += fuel.total_oil()
 		print("\n")
@@ -117,6 +120,7 @@ def fuel_input(stage: int) -> list:
 
 
 def flight_model_input(stage: int) -> list:
+	""" Функция для ввода данных расчета траектории полета ракеты """
 	n = 0
 	sum_resistance = 0
 	total_speed: Union[int, float] = 0
@@ -126,10 +130,10 @@ def flight_model_input(stage: int) -> list:
 
 	while n < stage:
 		try:
-			speed = float(input("Напишите скорость ракеты: "))
-			fuel_flow = float(input("Напишите расход ступени: "))
-			mass = float(input("Напишите массу ракеты: "))
-			time = float(input("Время работы двигателя: "))
+			speed = float(input("Напишите скорость ракеты (км/час): "))
+			fuel_flow = float(input("Напишите расход ступени (м/с): "))
+			mass = float(input("Напишите массу ракеты (т): "))
+			time = float(input("Время работы двигателя (час): "))
 		except ValueError as e:
 			logger.error(invalid_entire(e))
 			raise ValueError(invalid_entire(e))
@@ -155,12 +159,13 @@ def flight_model_input(stage: int) -> list:
 
 
 def landing_model_input(stage: int) -> list:
+	""" Функция для ввода данных моделирования полета ракеты """
 	n = 0
 	mm = 0
 	log_info.info("Включение landing_model_input")
 	try:
-		time = float(input("Время полета ракеты: "))
-		speed_0 = float(input("Напишите начальную скорость ракеты: "))
+		time = float(input("Время полета ракеты (час): "))
+		speed_0 = float(input("Напишите начальную скорость ракеты (км/час): "))
 	except ValueError as e:
 		logger.error(invalid_entire(e))
 		raise ValueError(invalid_entire(e))
@@ -169,8 +174,8 @@ def landing_model_input(stage: int) -> list:
 		raise TypeError(invalid_type(e))
 	while n < stage:
 		try:
-			mass = float(input(f"Напишите массу ступени ({n+1}): "))
-			fuel_flow = float(input("Напишите расход ступени: "))
+			mass = float(input(f"Напишите массу ступени ({n+1}) (т): "))
+			fuel_flow = float(input("Напишите расход ступени (т/час): "))
 		except ValueError as e:
 			logger.error(invalid_entire(e))
 			raise ValueError(invalid_entire(e))
@@ -187,6 +192,7 @@ def landing_model_input(stage: int) -> list:
 
 
 def function_output(enter: list, stage: int) -> None:
+	""" Функция вывода данных """
 	# 1 - строка, 2 - таблица
 	display = enter[0]
 	# 1 - топливо, 2 - Полет, 3 - Моделирование полета
@@ -235,15 +241,16 @@ def function_output(enter: list, stage: int) -> None:
 					round(flight_data[2], 2),
 				]
 				flight_simulation_display(stack)
-		except Exception as ex:
+		except ValueError as ex:
 			logger.error(invalid_entire(ex))
-			raise ValueError(invalid_entire(ex))
+			raise ValueError(ex)
 		db = DataBaseSQL(
 			"ModelFlight", flight_data[0], flight_data[1], flight_data[2])
 		db.record_data()
 
 
 def main() -> None:
+	""" Начальная точка работы программы """
 	log_info.info("Начало функции main")
 	stage = int(input("Напишите количество ступеней: "))
 	try:

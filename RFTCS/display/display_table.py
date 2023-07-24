@@ -1,16 +1,11 @@
-import os
-import sys
 from prettytable import PrettyTable
 
 pt = PrettyTable()
 
-path = os.path.join(os.getcwd(), '../RFTCS/')
-sys.path.append(path)
-
 import logging
 import logging.config
 
-from setup.logging_conf import LOGGING_CONF
+from RFTCS.setup.logging_conf import LOGGING_CONF
 
 logging.config.dictConfig(LOGGING_CONF)
 logger = logging.getLogger("dev")
@@ -27,7 +22,7 @@ def display_info():
 def fuel_display(stack: list) -> None:
 	log_info.info("Запуск функции 'fuel_display'")
 	pt.clear()
-	pt.field_names = ["Speed total", "Total oil"]
+	pt.field_names = ["Speed total (км/час)", "Total oil (т)"]
 	pt.add_row(stack)
 	print(pt)
 
@@ -35,7 +30,7 @@ def fuel_display(stack: list) -> None:
 def flight_simulation_display(stack: list) -> None:
 	log_info.info("Запуск функции 'flight_simulation_display'")
 	pt.clear()
-	pt.field_names = ["Amount of losses", "Distance", "Mass"]
+	pt.field_names = ["Amount of losses (км/час)", "Distance (км)", "Mass (т)"]
 	pt.add_row(stack)
 	print(pt)
 
