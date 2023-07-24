@@ -148,7 +148,7 @@ class TestTotalOilError:
 	Me = 230
 	Mf = 430
 	Isp = 4200
-	fake = 'ake'
+	fake = 'fake'
 
 	def test_natural_logarithm_type_1_args_error(self) -> Any:
 		""" Тестирование на ошибочный 1 тип параметра функции """
