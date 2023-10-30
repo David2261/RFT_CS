@@ -34,3 +34,26 @@ static PyModuleDef core_mod = {
 PyMODINIT_FUNC PyInit_core_api(void) {
 	return PyModule_Create(&core_mod);
 }
+
+
+static PyMethodDef core_funcs[] = {
+	{
+		"flight_range",
+		(PyCFunction)ext_flight_range,
+		METH_VARARGS,
+		"flight_range"
+	},
+	{NULL, NULL, 0, NULL},
+};
+
+static PyModuleDef core_mod = {
+	PyModuleDef_HEAD_INIT,
+	"core_api",
+	"Core Api",
+	-1,
+	core_funcs
+};
+
+PyMODINIT_FUNC PyInit_core_api(void) {
+	return PyModule_Create(&core_mod);
+}

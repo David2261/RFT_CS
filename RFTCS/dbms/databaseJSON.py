@@ -1,7 +1,26 @@
 import json
 from datetime import datetime
 import random
-from numpyencoder import NumpyEncoder
+
+import logging
+import logging.config
+
+from RFTCS.setup.logging_conf import LOGGING_CONF
+
+logging.config.dictConfig(LOGGING_CONF)
+logger = logging.getLogger("dev")
+log_info = logging.getLogger("root")
+
+try:
+    from numpyencoder import NumpyEncoder
+except Exception as ex:
+    logger.error(f"Ошибка с импортированием функкций исключений... {ex}")
+    print("You may not have connected the numpy library")
+
+try:
+    from RFTCS.exceptions.exception import invalid_general
+except Exception as ex:
+    logger.error(f"Ошибка с импортированием функкций исключений... {ex}")
 
 
 class JsonLoad:
@@ -63,27 +82,40 @@ class JsonLoad:
         return json_data
 
     def json_entire(self):
-        with open('record.json', 'r', encoding='utf-8', errors='ignore') as f:
-            data_file = json.loads(f.read())
+        try:
+            with open(
+                    'record.json',
+                    'r',
+                    encoding='utf-8',
+                    errors='ignore') as f:
+                data_file = json.loads(f.read())
+        except Exception as ex:
+            logger.error(invalid_general(ex))
         json_data = self.generate_data()
         data_file.append(json_data)
-        with open('record.json', 'w', encoding='utf-8') as file:
-            json.dump(
-                data_file,
-                file,
-                indent=2,
-                separators=(', ', ': '),
-                cls=NumpyEncoder)
+        try:
+            with open('record.json', 'w', encoding='utf-8') as file:
+                json.dump(
+                    data_file,
+                    file,
+                    indent=2,
+                    separators=(', ', ': '),
+                    cls=NumpyEncoder)
+        except Exception as ex:
+            logger.error(invalid_general(ex))
 
     def json_generate(self):
         json_data = self.generate_data()
-        with open('record.json', 'w', encoding='utf-8') as file:
-            json.dump(
-                json_data,
-                file,
-                indent=2,
-                separators=(', ', ': '),
-                cls=NumpyEncoder)
+        try:
+            with open('record.json', 'w', encoding='utf-8') as file:
+                json.dump(
+                    json_data,
+                    file,
+                    indent=2,
+                    separators=(', ', ': '),
+                    cls=NumpyEncoder)
+        except Exception as ex:
+            logger.error(invalid_general(ex))
 
     def json_main(self):
         try:
