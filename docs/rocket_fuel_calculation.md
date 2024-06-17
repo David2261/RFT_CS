@@ -1,7 +1,8 @@
-# Численное моделирование топлива ракеты
+<p><a target="_blank" href="https://app.eraser.io/workspace/S2ejtqd2TOyWprOS73Rz" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
 
+# Численное моделирование топлива ракеты
 ## Описание
-*Численное моделирование топлива ракеты. Производяться расчеты связанные с кольчеством топлива на разных стадиях топлива.*
+_Численное моделирование топлива ракеты. Производяться расчеты связанные с кольчеством топлива на разных стадиях топлива._
 
 ## Импорты
 Импортируется библиотеки numpy и matplotlib, и typing.
@@ -10,25 +11,23 @@
 ## Классы
 - TotalOil (Класс для расчета топлива) - принимает 3 параметра (масса пустой и полной ракеты, и Isp, с типом float).
 Включает функции:
-	- \_natural_logarithm - (Скрытая функция получение натурального логарифма) - принимает 2 параметра (массу полной и пустой ракеты, с типом float).
-	- \_euler - (Скрытая функция расчет с помощью Эйлерова числа E) - принимает 1 параметр (общая скорость, с типом float).
-	- total_speed - (Функция сумма всех скоростей) - принимает 2 параметра (натуральный логарифм и Isp, с типом float).
-	- total_oil - (Функция для расчета топлива) - принимает 2 параметра (масса пустой ракеты и число эйлера, с типом float).
-
+    - _natural_logarithm - (Скрытая функция получение натурального логарифма) - принимает 2 параметра (массу полной и пустой ракеты, с типом float).
+    - _euler - (Скрытая функция расчет с помощью Эйлерова числа E) - принимает 1 параметр (общая скорость, с типом float).
+    - total_speed - (Функция сумма всех скоростей) - принимает 2 параметра (натуральный логарифм и Isp, с типом float).
+    - total_oil - (Функция для расчета топлива) - принимает 2 параметра (масса пустой ракеты и число эйлера, с типом float).
 ## Пример
 ```python
 def total_speed(self):
-	try:
-		G = ACCELERATION_FREE_FALL
-		nl = self._natural_logarithm()
-		delta_V = self.Isp * G * nl
-		log_info.info("Запуск функции 'total_speed'")
-	except Exception as e:
-		logger.error(e)
-		sys.exit(1)
-	return delta_V
+try:
+    G = ACCELERATION_FREE_FALL
+    nl = self._natural_logarithm()
+    delta_V = self.Isp * G * nl
+    log_info.info("Запуск функции 'total_speed'")
+except Exception as e:
+    logger.error(e)
+    sys.exit(1)
+return delta_V
 ```
-
 ## Пример логирования
 ```bash
 2022-12-20 19:34:30 - format.py - root - Запуск класса 'RocketFormat'
@@ -57,3 +56,8 @@ def total_speed(self):
 2022-12-20 19:34:58 - format.py - root - Запуск функции 'main_rocket_format'
 2022-12-20 19:34:58 - format.py - root - Запуск функции 'main_rocket_format'
 ```
+
+
+
+
+<!--- Eraser file: https://app.eraser.io/workspace/S2ejtqd2TOyWprOS73Rz --->
